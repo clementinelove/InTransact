@@ -219,12 +219,13 @@ struct TransactionListView: View {
           // TODO: Select Transactions (Edit Mode)..
 
           // TODO: share link
-          Button("Document Settings") {
-            Task { @MainActor in
-              await dismissAllSheets()
-              isPresentingDocumentSettings = true
-            }
-          }
+          // FIXME: document settings not implemented
+//          Button("Document Settings") {
+//            Task { @MainActor in
+//              await dismissAllSheets()
+//              isPresentingDocumentSettings = true
+//            }
+//          }
           
           Button {
             isShowingCurrencyPicker = true

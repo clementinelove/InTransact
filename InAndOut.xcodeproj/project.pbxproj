@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5843B9D12A122E910048C0CA /* TransactionDetailInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9D02A122E910048C0CA /* TransactionDetailInspector.swift */; };
 		5843B9D32A12EA530048C0CA /* DocumentSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9D22A12EA530048C0CA /* DocumentSettingsView.swift */; };
 		5843B9D52A137C050048C0CA /* CurrencyPickerContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9D42A137C050048C0CA /* CurrencyPickerContent.swift */; };
 		5843B9D72A13893C0048C0CA /* TransactionFilterBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9D62A13893C0048C0CA /* TransactionFilterBadge.swift */; };
@@ -20,7 +19,7 @@
 		5843B9E82A151F610048C0CA /* CurrencyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9E72A151F610048C0CA /* CurrencyTextField.swift */; };
 		5843B9EA2A168AC00048C0CA /* SeparatedValueBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9E92A168AC00048C0CA /* SeparatedValueBuilder.swift */; };
 		5843B9EC2A177B1A0048C0CA /* CurrencyCalculatationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9EB2A177B1A0048C0CA /* CurrencyCalculatationTest.swift */; };
-		5858FB192A07D17F005FAAA6 /* DocumentGroup-InAndOutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB182A07D17F005FAAA6 /* DocumentGroup-InAndOutApp.swift */; };
+		5858FB192A07D17F005FAAA6 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB182A07D17F005FAAA6 /* App.swift */; };
 		5858FB1B2A07D17F005FAAA6 /* InAndOutDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB1A2A07D17F005FAAA6 /* InAndOutDocument.swift */; };
 		5858FB1F2A07D180005FAAA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5858FB1E2A07D180005FAAA6 /* Assets.xcassets */; };
 		5858FB242A07D180005FAAA6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5858FB232A07D180005FAAA6 /* Preview Assets.xcassets */; };
@@ -74,7 +73,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5843B9D02A122E910048C0CA /* TransactionDetailInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailInspector.swift; sourceTree = "<group>"; };
 		5843B9D22A12EA530048C0CA /* DocumentSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSettingsView.swift; sourceTree = "<group>"; };
 		5843B9D42A137C050048C0CA /* CurrencyPickerContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPickerContent.swift; sourceTree = "<group>"; };
 		5843B9D62A13893C0048C0CA /* TransactionFilterBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFilterBadge.swift; sourceTree = "<group>"; };
@@ -88,7 +86,7 @@
 		5843B9E92A168AC00048C0CA /* SeparatedValueBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatedValueBuilder.swift; sourceTree = "<group>"; };
 		5843B9EB2A177B1A0048C0CA /* CurrencyCalculatationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCalculatationTest.swift; sourceTree = "<group>"; };
 		5858FB152A07D17F005FAAA6 /* InAndOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InAndOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5858FB182A07D17F005FAAA6 /* DocumentGroup-InAndOutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DocumentGroup-InAndOutApp.swift"; sourceTree = "<group>"; };
+		5858FB182A07D17F005FAAA6 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		5858FB1A2A07D17F005FAAA6 /* InAndOutDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAndOutDocument.swift; sourceTree = "<group>"; };
 		5858FB1E2A07D180005FAAA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5858FB202A07D180005FAAA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -252,11 +250,10 @@
 			isa = PBXGroup;
 			children = (
 				589E20282A0D33C7008A5BDA /* Controls */,
-				5858FB182A07D17F005FAAA6 /* DocumentGroup-InAndOutApp.swift */,
+				5858FB182A07D17F005FAAA6 /* App.swift */,
 				5858FB512A07D19A005FAAA6 /* DocumentMainView.swift */,
-				585E82922A118FD300B79AD2 /* TransactionMainView.swift */,
 				589E20242A0CFB39008A5BDA /* TransactionListView.swift */,
-				5843B9D02A122E910048C0CA /* TransactionDetailInspector.swift */,
+				585E82922A118FD300B79AD2 /* TransactionMainView.swift */,
 				5858FB492A07D191005FAAA6 /* TransactionDetailView.swift */,
 				5858FB462A07D191005FAAA6 /* TransactionRowView.swift */,
 				5858FB542A07D29D005FAAA6 /* TransactionEditView.swift */,
@@ -458,10 +455,9 @@
 				589E20932A10CE6A008A5BDA /* TransactionDetailView.swift in Sources */,
 				5843B9D92A138ED10048C0CA /* EmptyListPlaceholder.swift in Sources */,
 				589E20922A10CE6A008A5BDA /* ItemTransactionRow.swift in Sources */,
-				5858FB192A07D17F005FAAA6 /* DocumentGroup-InAndOutApp.swift in Sources */,
+				5858FB192A07D17F005FAAA6 /* App.swift in Sources */,
 				589E209A2A10CE6A008A5BDA /* ItemTransactionEditView.swift in Sources */,
 				587F244E2A17C25200C3AF61 /* RoundingRules.swift in Sources */,
-				5843B9D12A122E910048C0CA /* TransactionDetailInspector.swift in Sources */,
 				5858FB532A07D19A005FAAA6 /* DocumentMainView.swift in Sources */,
 				587F24502A17C2BD00C3AF61 /* ItemTransaction.swift in Sources */,
 				585E82932A118FD300B79AD2 /* TransactionMainView.swift in Sources */,
