@@ -16,15 +16,6 @@ struct CurrencyPickerContent: View {
   
   var body: some View {
     List {
-      if let currentLocaleCurrencyIdentifier = Locale.current.currency?.identifier {
-        Picker(selection: currencyCodeAutoDismissBinding) {
-          currencyRow(currentLocaleCurrencyIdentifier)
-        } label: {
-          Text("Current System Locale")
-        }
-        .pickerStyle(.inline)
-      }
-      
       Section {
         Picker(selection: currencyCodeAutoDismissBinding) {
           ForEach(Locale.commonISOCurrencyCodes, id: \.self) { currencyCode in
@@ -60,7 +51,7 @@ struct CurrencyPickerContent: View {
 #elseif os(macOS)
     // TODO: make it searchable on macOS
 #endif
-    .navigationTitle("Currency")
+    .navigationTitle("Document Currency")
     
   }
   

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		582820322A193E3B0001CCA0 /* DocumentSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820312A193E3B0001CCA0 /* DocumentSplitView.swift */; };
+		582820352A196D310001CCA0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 582820332A196D310001CCA0 /* Localizable.strings */; };
 		5843B9D32A12EA530048C0CA /* DocumentSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9D22A12EA530048C0CA /* DocumentSettingsView.swift */; };
 		5843B9D52A137C050048C0CA /* CurrencyPickerContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9D42A137C050048C0CA /* CurrencyPickerContent.swift */; };
 		5843B9D72A13893C0048C0CA /* TransactionFilterBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9D62A13893C0048C0CA /* TransactionFilterBadge.swift */; };
@@ -72,6 +74,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		582820312A193E3B0001CCA0 /* DocumentSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSplitView.swift; sourceTree = "<group>"; };
+		582820342A196D310001CCA0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		5843B9D22A12EA530048C0CA /* DocumentSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSettingsView.swift; sourceTree = "<group>"; };
 		5843B9D42A137C050048C0CA /* CurrencyPickerContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPickerContent.swift; sourceTree = "<group>"; };
 		5843B9D62A13893C0048C0CA /* TransactionFilterBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionFilterBadge.swift; sourceTree = "<group>"; };
@@ -152,6 +156,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		582167FA2A192E6900E87CE5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		5843B9E02A14CC680048C0CA /* DocumentModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,9 +202,11 @@
 		5858FB172A07D17F005FAAA6 /* InAndOut */ = {
 			isa = PBXGroup;
 			children = (
+				582167FA2A192E6900E87CE5 /* Resources */,
 				5858FB6F2A0B79B4005FAAA6 /* README.md */,
 				5858FB1E2A07D180005FAAA6 /* Assets.xcassets */,
 				5858FB202A07D180005FAAA6 /* Info.plist */,
+				582820332A196D310001CCA0 /* Localizable.strings */,
 				5858FB212A07D180005FAAA6 /* InAndOut.entitlements */,
 				5858FB222A07D180005FAAA6 /* Preview Content */,
 				589E202F2A0E2733008A5BDA /* Model */,
@@ -250,6 +263,7 @@
 				589E20282A0D33C7008A5BDA /* Controls */,
 				5858FB182A07D17F005FAAA6 /* App.swift */,
 				5858FB512A07D19A005FAAA6 /* DocumentMainView.swift */,
+				582820312A193E3B0001CCA0 /* DocumentSplitView.swift */,
 				589E20242A0CFB39008A5BDA /* TransactionListView.swift */,
 				585E82922A118FD300B79AD2 /* TransactionMainView.swift */,
 				5858FB492A07D191005FAAA6 /* TransactionDetailView.swift */,
@@ -410,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5858FB242A07D180005FAAA6 /* Preview Assets.xcassets in Resources */,
+				582820352A196D310001CCA0 /* Localizable.strings in Resources */,
 				5858FB1F2A07D180005FAAA6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,6 +458,7 @@
 				589E20232A0C5645008A5BDA /* DisclaimerView.swift in Sources */,
 				5843B9DD2A143E260048C0CA /* CSVSupport.swift in Sources */,
 				587F24532A18CC3600C3AF61 /* ItemTemplateRow.swift in Sources */,
+				582820322A193E3B0001CCA0 /* DocumentSplitView.swift in Sources */,
 				589E20912A10CE6A008A5BDA /* TransactionRowView.swift in Sources */,
 				5843B9EA2A168AC00048C0CA /* SeparatedValueBuilder.swift in Sources */,
 				589E20992A10CE6A008A5BDA /* LocationPicker.swift in Sources */,
@@ -506,6 +522,17 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		582820332A196D310001CCA0 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				582820342A196D310001CCA0 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		5858FB3B2A07D180005FAAA6 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -557,6 +584,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -610,6 +638,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -632,6 +661,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = InAndOut/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "In&Out";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -653,7 +683,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.yuhao.InAndOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -676,6 +706,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = InAndOut/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "In&Out";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -697,7 +728,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.yuhao.InAndOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;

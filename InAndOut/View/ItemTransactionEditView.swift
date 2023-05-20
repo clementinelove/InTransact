@@ -338,7 +338,7 @@ struct ItemTransactionEditView: View {
   }
   
   var title: String {
-    editMode == .edit ? "Edit Item" : "New Item"
+    editMode == .edit ? String(localized: "Edit Item") : String(localized: "New Item")
   }
   
   var quantityInputControl: some View {
@@ -383,13 +383,13 @@ struct ItemTransactionEditView: View {
   var priceLabel: String {
     switch viewModel.priceInfo.priceType {
       case .perUnitBeforeTax:
-        return "Unit Price Before Tax"
+        return String(localized: "Unit Price Before Tax")
       case .perUnitAfterTax:
-        return "Unit Price After Tax"
+        return String(localized: "Unit Price After Tax")
       case .sumBeforeTax:
-        return "Sum Price Before Tax"
+        return String(localized: "Sum Before Tax")
       case .sumAfterTax:
-        return "Sum Price After Tax"
+        return String(localized: "Sum After Tax")
     }
   }
   

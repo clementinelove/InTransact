@@ -12,8 +12,14 @@ struct DocumentMainView: View {
   @EnvironmentObject var document: InAndOutDocument
   @Environment(\.undoManager) var undoManager
   
+  
+  
   var body: some View {
+    #if os(iOS)
     TransactionListView()
+    #elseif os(macOS)
+    DocumentSplitView()
+    #endif
 //    #if os(iOS)
 //
 //    TransactionListView()
@@ -27,6 +33,7 @@ struct DocumentMainView: View {
 //      Text("Select a sidebar item to start")
 //    }
 //    #endif
+    
   }
 }
 

@@ -44,7 +44,7 @@ enum INOExportColumn {
                                              { $0.itemName })
   
   static let variantName = Self.itemTransaction(.init(columnName: "Variant Name")
-                                                { $0.variant ?? String(localized: "Variant Placeholder")})
+                                                { $0.variant ?? ""})
   
   static func totalAfterTax(settings: Setting) -> INOExportColumn {
     .itemTransaction(.init(columnName: "Price") { itemTransaciton in

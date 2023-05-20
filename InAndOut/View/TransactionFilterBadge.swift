@@ -53,7 +53,7 @@ struct TransactionFilterBadge_Previews: PreviewProvider {
       NavigationStack {
         List {
           ForEach(0..<100) { i in
-            Text("Okay \(i)")
+            Text(verbatim: "Okay \(i)")
           }
           .listSectionSeparator(.hidden)
         }
