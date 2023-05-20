@@ -38,13 +38,23 @@ enum INOExportColumn {
                                                     { $0.transactionID })
   
   static let transactionDate = Self.transaction(.init(columnName: "Date")
-                                                      { $0.date.formatted() })
+                                                { $0.date.formatted(date: .numeric, time: .shortened) })
   
   static let itemName = Self.itemTransaction(.init(columnName: "Item Name")
                                              { $0.itemName })
   
   static let variantName = Self.itemTransaction(.init(columnName: "Variant Name")
                                                 { $0.variant ?? String(localized: "Variant Placeholder")})
+  
+  static func totalAfterTax(settings: Setting) -> INOExportColumn {
+    .itemTransaction(.init(columnName: "Price") { itemTransaciton in
+      itemTransaciton
+        .priceInfo
+        .totalAfterTax(taxItemRounding: settings.roundingRules.taxItemRule,
+                       totalRounding: settings.roundingRules.itemTotalRule)
+        .formatted(.currency(code: settings.currencyIdentifier))
+    })
+  }
   
   static let itemQuantity = Self.itemTransaction(.init(columnName: "Item Quantity") { itemTransaciton in
     itemTransaciton.priceInfo.quantity.description
@@ -114,4 +124,6 @@ extension INODocument {
     
     return svDocumentString.data(using: .utf8, allowLossyConversion: false)
   }
+  
+  
 }
