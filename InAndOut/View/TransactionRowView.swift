@@ -10,6 +10,8 @@ import SwiftUI
 
 struct TransactionRowView: View {
   
+  private static let localizationTable = "TransactionRow"
+  
   @EnvironmentObject var document: InAndOutDocument
   @Binding var transaction: Transaction
   let currencyIdentifier: String
@@ -21,7 +23,8 @@ struct TransactionRowView: View {
     
     VStack(alignment: .leading, spacing: 4) {
       // MARK: Date and Transaction Identifier
-      Text(transaction.transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? "NO ID SPECIFIED")
+      Text(transaction.transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? String(localized: "No ID Specified", comment: "Transaction ID placeholder when its value is not available"))
+        .textCase(.uppercase)
         .font(.system(.caption, design: .monospaced))
         .foregroundColor(Global.transactionIDHighlightColor)
         .fontWeight(.medium)
@@ -35,7 +38,7 @@ struct TransactionRowView: View {
           .lineLimit(1)
         Spacer()
         
-        Text(transaction.total(roundingRules: document.content.settings.roundingRules).formatted(.currency(code: currencyIdentifier)))
+        Text(transaction.total(roundingRules: document.roundingRules).formatted(.currency(code: currencyIdentifier)))
           .lineLimit(1)
           .layoutPriority(1)
           .font(.subheadline)
@@ -48,15 +51,19 @@ struct TransactionRowView: View {
         let type = transaction.transactionType
         HStack(alignment: .firstTextBaseline, spacing: 4) {
           Image(systemName: type == .itemsIn ? "arrow.down.circle": "arrow.up.circle")
-          Text(type == .itemsIn ? "IN" : "OUT")
-            .lineLimit(1)
+          if type == .itemsIn {
+            Text("In", comment: "Transaction type 'items in' shorthand")
+          } else {
+            Text("Out", comment: "Transaction type 'items out' shorthand")
+          }
         }
+        .lineLimit(1)
         
         Text("·").fontWeight(.bold)
         
         HStack(alignment: .firstTextBaseline, spacing: 4) {
           
-          Text(transaction.date.formatted(.relative(presentation: .named)).capitalized)
+          Text(transaction.date.formatted(.relative(presentation: .named)).localizedCapitalized)
             .lineLimit(1)
         }
         
@@ -84,7 +91,7 @@ struct TransactionRowView: View {
         //            .lineLimit(1)
         
         // MARK: Item Details
-        Text(transaction.subtransactions.isEmpty ? "No Items Available" : itemDetails)
+        Text(transaction.subtransactions.isEmpty ? String(localized: "No Items", comment: "Transaction item details placeholder when there is no item presented in the transaction") : itemDetails)
           .lineLimit(1)
           .baselineOffset(1)
       }
@@ -97,6 +104,7 @@ struct TransactionRowView: View {
     var itemNameToQuantity: [String: ItemQuantity] = [:]
     for transaction in transaction.subtransactions {
       let itemName = transaction.itemName
+      
       if let quantity = itemNameToQuantity[itemName] {
         itemNameToQuantity[itemName] = quantity + transaction.priceInfo.quantity
       } else {
@@ -125,3 +133,5 @@ struct TransactionRowView_Previews: PreviewProvider {
     }
   }
 }
+
+

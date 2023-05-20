@@ -58,7 +58,9 @@ struct TransactionMainView: View {
             document.addNewTransaction(transaction, undoManager: undoManager)
           }
         }
-        .toolbarRole(.navigationStack)
+        #if os(iOS)
+.toolbarRole(.navigationStack)
+#endif
       }
     }
   }

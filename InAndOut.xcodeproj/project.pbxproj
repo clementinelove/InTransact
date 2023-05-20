@@ -38,7 +38,6 @@
 		585E82932A118FD300B79AD2 /* TransactionMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585E82922A118FD300B79AD2 /* TransactionMainView.swift */; };
 		587F244E2A17C25200C3AF61 /* RoundingRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F244D2A17C25200C3AF61 /* RoundingRules.swift */; };
 		587F24502A17C2BD00C3AF61 /* ItemTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F244F2A17C2BD00C3AF61 /* ItemTransaction.swift */; };
-		587F24512A18C25700C3AF61 /* ItemTransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB5D2A08F693005FAAA6 /* ItemTransactionDetailView.swift */; };
 		587F24532A18CC3600C3AF61 /* ItemTemplateRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F24522A18CC3600C3AF61 /* ItemTemplateRow.swift */; };
 		589E20232A0C5645008A5BDA /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20222A0C5645008A5BDA /* DisclaimerView.swift */; };
 		589E203A2A0EC9D5008A5BDA /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20392A0EC9D5008A5BDA /* DocumentViewModel.swift */; };
@@ -106,7 +105,6 @@
 		5858FB542A07D29D005FAAA6 /* TransactionEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditView.swift; sourceTree = "<group>"; };
 		5858FB562A07D5D4005FAAA6 /* ItemTransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTransactionRow.swift; sourceTree = "<group>"; };
 		5858FB592A07E8D6005FAAA6 /* NTPlatformKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NTPlatformKit; path = ../NTPlatformKit; sourceTree = "<group>"; };
-		5858FB5D2A08F693005FAAA6 /* ItemTransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTransactionDetailView.swift; sourceTree = "<group>"; };
 		5858FB662A0A2FCA005FAAA6 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		5858FB682A0A2FFF005FAAA6 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		5858FB6F2A0B79B4005FAAA6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -258,7 +256,6 @@
 				5858FB462A07D191005FAAA6 /* TransactionRowView.swift */,
 				5858FB542A07D29D005FAAA6 /* TransactionEditView.swift */,
 				5858FB562A07D5D4005FAAA6 /* ItemTransactionRow.swift */,
-				5858FB5D2A08F693005FAAA6 /* ItemTransactionDetailView.swift */,
 				5858FB4A2A07D191005FAAA6 /* ItemTransactionEditView.swift */,
 				589E202B2A0D3608008A5BDA /* ItemListView.swift */,
 				589E202D2A0D55C3008A5BDA /* ItemDetailView.swift */,
@@ -390,6 +387,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 5858FB0C2A07D17F005FAAA6;
 			packageReferences = (
@@ -438,7 +436,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				589E203A2A0EC9D5008A5BDA /* DocumentViewModel.swift in Sources */,
-				587F24512A18C25700C3AF61 /* ItemTransactionDetailView.swift in Sources */,
 				589E20982A10CE6A008A5BDA /* ItemTemplateEditView.swift in Sources */,
 				5858FB672A0A2FCA005FAAA6 /* Formatters.swift in Sources */,
 				5843B9D52A137C050048C0CA /* CurrencyPickerContent.swift in Sources */,
@@ -564,6 +561,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -615,6 +613,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
@@ -633,6 +632,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = InAndOut/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -641,8 +641,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphonesimulator*]" = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -653,10 +653,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.yuhao.InAndOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -674,6 +676,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = InAndOut/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -682,8 +685,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UISupportsDocumentBrowser[sdk=iphonesimulator*]" = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
@@ -694,10 +697,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.yuhao.InAndOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

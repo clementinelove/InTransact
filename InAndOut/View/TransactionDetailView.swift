@@ -29,7 +29,7 @@ struct TransactionDetailView: View {
         VStack(alignment: .leading) {
           VStack(alignment: .leading) {
             
-            Text("Transaction")
+            Text("Transaction", comment: "Navigation title of a transaction")
               .font(.caption.smallCaps())
             
             Text(transaction.transactionID)
@@ -68,9 +68,10 @@ struct TransactionDetailView: View {
           VStack(spacing: 10) {
             Divider()
             HStack {
-              Text("Total".uppercased())
+              Text("Total", comment: "Labels the total amount of a transaction")
+                .textCase(.uppercase)
               Spacer()
-              Text(transaction.total(roundingRules: document.content.settings.roundingRules).formatted(.currency(code: document.content.settings.currencyIdentifier)))
+              Text(transaction.total(roundingRules: document.roundingRules).formatted(.currency(code: document.currencyCode)))
             }
             .font(.body.bold())
             Divider()
@@ -101,7 +102,9 @@ struct TransactionDetailView: View {
         TransactionEditView(edit: transaction) { editedTransaction in
           document.replaceTransactionContent(with: editedTransaction, undoManager: undoManager)
         }
-        .toolbarRole(.navigationStack)
+        #if os(iOS)
+.toolbarRole(.navigationStack)
+#endif
       }
     }
     .alert("Delete Transaction \"\(transaction.transactionID)\"?", isPresented: $showDeleteConfirmationAlert) {
@@ -199,7 +202,7 @@ struct TransactionSnapShotView: View {
       HStack {
         Text("Total".uppercased())
         Spacer()
-        Text(transaction.total.formatted(.currency(code: document.content.settings.currencyIdentifier)))
+        Text(transaction.total.formatted(.currency(code: document.currencyCode)))
       }
       .font(.body.bold())
       
@@ -219,7 +222,7 @@ struct TransactionSnapShotView: View {
             }
             
             
-            Text(t.total.formatted(.currency(code: document.content.settings.currencyIdentifier)))
+            Text(t.total.formatted(.currency(code: document.currencyCode)))
               .multilineTextAlignment(.trailing)
               .gridColumnAlignment(.trailing)
           }

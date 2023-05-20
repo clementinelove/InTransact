@@ -23,7 +23,6 @@ struct ItemTemplateRow: View {
           Text(itemTemplate.itemName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? "(Unnamed Item)")
             .foregroundStyle(.primary)
           Spacer()
-          // FIXME: was price before tax
           Text("\(itemTemplate.priceInfo.pricePerUnitBeforeTax.formatted(.currency(code: document.currencyCode)))")
             .font(.subheadline)
             .foregroundStyle(.secondary)
@@ -31,7 +30,6 @@ struct ItemTemplateRow: View {
         Text(itemTemplate.variantName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? "(Unnamed Variant)")
           .font(.subheadline)
           .foregroundStyle(.secondary)
-        // TODO: grammar agreement plural here
       }
     }
   }

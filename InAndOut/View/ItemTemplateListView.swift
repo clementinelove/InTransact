@@ -33,7 +33,9 @@ struct ItemTemplateListView: View {
       NavigationStack {
         ItemTemplateDetailView(itemTemplate: template, parentDismiss: dismiss, onApply: onSelect)
           
-          .toolbarRole(.navigationStack)
+          #if os(iOS)
+.toolbarRole(.navigationStack)
+#endif
       }
     }
     .overlay {
@@ -123,14 +125,14 @@ struct ItemTemplateDetailView: View {
         .foregroundStyle(.primary)
         
         LabeledContent("Price Per Unit (Before Tax)") {
-          Text(itemTemplate.priceInfo.pricePerUnitBeforeTax.formatted(.currency(code: document.content.settings.currencyIdentifier)))
+          Text(itemTemplate.priceInfo.pricePerUnitBeforeTax.formatted(.currency(code: document.currencyCode)))
             .textSelection(.enabled)
         }
         .foregroundStyle(.primary)
         
         LabeledContent("Total Before Tax") {
           VStack(alignment: .trailing, spacing: 4) {
-            Text(itemTemplate.priceInfo.totalBeforeTax.formatted(.currency(code: document.content.settings.currencyIdentifier)))
+            Text(itemTemplate.priceInfo.totalBeforeTax.formatted(.currency(code: document.currencyCode)))
               .font(.body)
           }
         }
@@ -146,7 +148,7 @@ struct ItemTemplateDetailView: View {
               .priceInfo
               .totalAfterTax(taxItemRounding: document.roundingRules.taxItemRule,
                              totalRounding: document.roundingRules.transactionTotalRule)
-                .formatted(.currency(code: document.content.settings.currencyIdentifier)))
+                .formatted(.currency(code: document.currencyCode)))
             .font(.body)
           }
         }
@@ -186,8 +188,14 @@ struct ItemTemplateDetailView: View {
         VStack(alignment: .leading) {
           Text("Regular Tax")
             .font(.caption2)
-          LabeledContent("\(taxItem.name) (\(taxItem.rate.formatted(.percent)))", value: taxItem.taxCost(of: itemTemplate.priceInfo.totalBeforeTax) , format: .currency(code: Global.currentCurrencyCode))
-            .foregroundStyle(.primary)
+          
+          LabeledContent {
+            Text(verbatim: taxItem.taxCost(of: itemTemplate.priceInfo.totalBeforeTax)
+              .formatted(.currency(code: document.currencyCode)))
+          } label: {
+            Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent)))")
+          }
+          .foregroundStyle(.primary)
         }
       }
     }
@@ -200,8 +208,13 @@ struct ItemTemplateDetailView: View {
         VStack(alignment: .leading) {
           Text("Compound Tax")
             .font(.caption2)
-          LabeledContent("\(taxItem.name) (\(taxItem.rate.formatted(.percent)))", value: taxItem.taxCost(of: itemTemplate.priceInfo.totalAfterRegularTax(roundedWith: document.content.settings.roundingRules.taxItemRule)), format: .currency(code: Global.currentCurrencyCode))
-            .foregroundStyle(.primary)
+          LabeledContent {
+            Text(verbatim: taxItem.taxCost(of: itemTemplate.priceInfo.totalAfterRegularTax(roundedWith: document.roundingRules.taxItemRule))
+              .formatted(.currency(code: document.currencyCode)))
+          } label: {
+            Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent)))")
+          }
+          .foregroundStyle(.primary)
         }
       }
     }
@@ -214,8 +227,13 @@ struct ItemTemplateDetailView: View {
         VStack(alignment: .leading) {
           Text("Fixed Tax")
             .font(.caption2)
-          LabeledContent("\(taxItem.name)", value: taxItem.amount, format: .currency(code: Global.currentCurrencyCode))
-            .foregroundStyle(.primary)
+          
+          LabeledContent {
+            Text(verbatim: taxItem.amount.formatted(.currency(code: document.currencyCode)))
+          } label: {
+            Text(verbatim: "\(taxItem.name)")
+          }
+          .foregroundStyle(.primary)
         }
       }
     }

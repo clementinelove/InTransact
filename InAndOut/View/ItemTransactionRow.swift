@@ -14,7 +14,7 @@ struct ItemTransactionRow: View {
   
   var showTaxDetails = false
   
-  static let emptyItemNamePlaceholder = "Unknown Item Name"
+  static let emptyItemNamePlaceholder = String(localized: "Unknown Item Name", comment: "Placeholder for empty item name") 
   
   var displayItemName: String {
     let trimmed = itemTransaction.itemName.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -63,17 +63,17 @@ struct ItemTransactionRow: View {
           Text("\(itemTransaction.priceInfo.quantity) \(Global.timesSymbol) \(pricePerUnitBeforeTaxString)")
           if showTaxDetails {
             ForEach(itemTransaction.priceInfo.regularTaxItems) { taxItem in
-              Text("\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(taxItem.taxCost(of: itemTransaction.priceInfo.totalBeforeTax).rounded(using: document.content.settings.roundingRules.taxItemRule).formatted(.currency(code: document.content.settings.currencyIdentifier)))")
+              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(taxItem.taxCost(of: itemTransaction.priceInfo.totalBeforeTax).rounded(using: document.roundingRules.taxItemRule).formatted(.currency(code: document.currencyCode)))")
                 .foregroundStyle(.secondary)
             }
             
             ForEach(itemTransaction.priceInfo.compoundTaxItems) { taxItem in
-              Text("\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(taxItem.taxCost(of: itemTransaction.priceInfo.totalAfterRegularTax(roundedWith: document.content.settings.roundingRules.taxItemRule)).rounded(using: document.content.settings.roundingRules.taxItemRule).formatted(.currency(code: document.content.settings.currencyIdentifier)))")
+              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(taxItem.taxCost(of: itemTransaction.priceInfo.totalAfterRegularTax(roundedWith: document.roundingRules.taxItemRule)).rounded(using: document.roundingRules.taxItemRule).formatted(.currency(code: document.currencyCode)))")
                 .foregroundStyle(.secondary)
             }
             
             ForEach(itemTransaction.priceInfo.fixedAmountTaxItems) { taxItem in
-              Text("\(taxItem.name) \(taxItem.amount.formatted(.currency(code: document.content.settings.currencyIdentifier)))")
+              Text(verbatim: "\(taxItem.name) \(taxItem.amount.formatted(.currency(code: document.currencyCode)))")
                 .foregroundStyle(.secondary)
             }
           }

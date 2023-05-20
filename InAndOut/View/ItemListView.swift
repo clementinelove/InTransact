@@ -35,9 +35,10 @@ struct ItemListView: View {
                 Text("\(item.name)")
                   .font(.headline)
                   .lineLimit(1)
-                Text("\(item.variantCount) variants")
+                // Grammar agreement
+                Text("^[\(item.variantCount) Variant](inflect: true)")
                   .font(.subheadline)
-                Text("\(item.transactions.count) related transactions")
+                Text("^[\(item.transactions.count) Transaction](inflect: true)")
                   .foregroundStyle(.secondary)
                   .font(.subheadline)
               }

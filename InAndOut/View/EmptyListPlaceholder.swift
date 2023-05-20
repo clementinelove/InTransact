@@ -9,8 +9,8 @@ import SwiftUI
 
 struct EmptyListPlaceholder: View {
   
-  let placeholderText: String
-  init(_ placeholderText: String = "Empty") {
+  let placeholderText: LocalizedStringKey
+  init(_ placeholderText: LocalizedStringKey = "Empty") {
     self.placeholderText = placeholderText
   }
   

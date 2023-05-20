@@ -126,7 +126,7 @@ struct TransactionEditView: View {
             .tag(TransactionType.itemsOut)
         }
       } footer: {
-        Text("Items In: records items moving in\nItems Out: records items moving out")
+        Text("Items In: records items moving in\nItems Out: records items moving out", comment: "Footer text that explains the meaning of each transaction type")
       }
       
       Section {
@@ -137,17 +137,22 @@ struct TransactionEditView: View {
             Button {
               viewModel.transactionID = UUID().uuidString
             } label: {
-              Label("Generate Random ID", systemImage: "number.circle")
+              Label {
+                Text("Generate Random ID", comment: "Button title to generate random ID for transaction")
+              } icon: {
+                Image(systemName: "number.circle")
+              }
             }
           } label: {
             Image(systemName: "dice")
           }
         }
+        
         TextField("Keeper Name", text: $viewModel.keeperName)
         // TODO: add contact picker for keeper info
         DatePicker("Date", selection: $viewModel.date, displayedComponents: [.date, .hourAndMinute])
       } footer: {
-        Text("Every transaction needs be identified by a transaction ID. If you leave this field to be empty, \(Global.appName) will generate a random ID for you.")
+        Text("Every transaction needs be identified by a transaction ID. A random ID will be generated for you if you leave this field to be empty.", comment: "Footer text that explains a random ID is needed for every transaction and a random ID will be generated for user if they leave this field to be empty")
       }
       
       /*
@@ -165,7 +170,7 @@ struct TransactionEditView: View {
       }
        */
       
-      Section("Items") {
+      Section {
         
         ForEach($viewModel.subtransactions) { item in
           Button {
@@ -198,10 +203,16 @@ struct TransactionEditView: View {
         Button {
           showAddItemTransactionView = true
         } label: {
-          Label("Add Item", systemImage: "plus")
-            .imageScale(.large)
+          Label {
+            Text("Add Item", comment: "Button title that adds a new item to a transaction")
+          } icon: {
+            Image(systemName: "plus")
+              .imageScale(.large)
+          }
         }
         
+      } header: {
+        Text("Items", comment: "Section title, in which lists items that contained in a transaction")
       }
       
       Section {
@@ -223,7 +234,9 @@ struct TransactionEditView: View {
           // Don't save here
         }
           
-          .toolbarRole(.navigationStack)
+          #if os(iOS)
+.toolbarRole(.navigationStack)
+#endif
       }
     }
     // MARK: Add new item
@@ -238,7 +251,9 @@ struct TransactionEditView: View {
         ItemTransactionEditView { subtransaction in
           viewModel.append(subtransaction: subtransaction)
         }
-        .toolbarRole(.navigationStack)
+        #if os(iOS)
+.toolbarRole(.navigationStack)
+#endif
       }
     }
     // MARK: Toolbar
@@ -266,7 +281,7 @@ struct TransactionEditView: View {
     // MARK: view end
   }
   
-  var title: String {
+  var title: LocalizedStringKey {
     viewModel.editMode == .edit ? "Edit Transaction" : "New Transaction"
   }
   

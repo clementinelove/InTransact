@@ -50,7 +50,7 @@ struct ItemDetailView: View {
             
             
           } label: {
-            TransactionRowView(transaction: transaction, currencyIdentifier: document.content.settings.currencyIdentifier)
+            TransactionRowView(transaction: transaction, currencyIdentifier: document.currencyCode)
           }
         }
       }

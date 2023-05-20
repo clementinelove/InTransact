@@ -225,7 +225,7 @@ struct ItemTransactionEditView: View {
         // MARK: Price
         VStack(alignment: .leading) {
           
-          Text("\(priceLabel) (\(document.content.settings.currencyIdentifier))") 
+          Text("\(priceLabel) (\(document.currencyCode))") 
             .font(Self.verticalLabelFont)
           
             CurrencyTextField(amount: $viewModel.priceInfo.price,
@@ -240,10 +240,6 @@ struct ItemTransactionEditView: View {
         }
         
         quantityInputControl
-
-      } footer: {
-        Text("\(Global.appName) can calculate average unit price for you if the price type is not unit price.")
-        // TODO: maybe specify how it's rounded?
       }
       
       // MARK: Tax Rates
@@ -256,7 +252,7 @@ struct ItemTransactionEditView: View {
         } header: {
           Text("Tax Info")
         } footer: {
-          Text("A regular tax is calculated based on its price before tax; a compound tax is calculated after all regular tax were applied.")
+          Text("A regular tax is calculated based on its price before tax; a compound tax is calculated after all regular tax were applied.", comment: "Explains the meaning of regular tax and compound tax")
           // TODO: show examples in a sheet
         }
       
@@ -265,11 +261,11 @@ struct ItemTransactionEditView: View {
           viewModel.priceInfo.priceType == .sumBeforeTax {
         Section {
           Toggle(isOn: $viewModel.hasExplicitAfterTaxTotal.animated) {
-            Text("Explicit After Tax Total")
+            Text("Explicit After Tax Total", comment: "Toggle title that switches explicit after tax total input")
           }
           if viewModel.hasExplicitAfterTaxTotal {
             VStack(alignment: .leading) {
-              Text("After Tax Total (\(document.content.settings.currencyIdentifier))")
+              Text("After Tax Total (\(document.currencyCode))", comment: "Label of after tax total text field")
                 .font(Self.verticalLabelFont)
               
               CurrencyTextField(amount: $viewModel.explicitAfterTaxTotal,
@@ -285,7 +281,7 @@ struct ItemTransactionEditView: View {
             }
           }
         } footer: {
-          Text("You can explicitly specifiy the after-tax total for this entry, it will be used to calculate the total of the whole transaction directly.")
+          Text("You can explicitly specifiy the after-tax total for this entry, it will be used to calculate the total of the whole transaction directly.", comment: "Section footer text that explains the use of explicit after tax total")
         }
       }
       
@@ -293,7 +289,7 @@ struct ItemTransactionEditView: View {
       Section {
         Toggle("Save Item Info as Template", isOn: $viewModel.saveAsItemTemplate)
       } footer: {
-        Text("Save these information as template when the transaction is saved. This will override exising template for the same item name and variant.")
+        Text("Save these information as template when the transaction is saved. This will override exising template for the same item name and variant.", comment: "Section footer text that explains the use when user choose to save item information they entered in a form as a template")
       }
       
     }
@@ -313,7 +309,9 @@ struct ItemTransactionEditView: View {
             viewModel.applyTemplate(template)
           }
         }
-        .toolbarRole(.navigationStack)
+        #if os(iOS)
+.toolbarRole(.navigationStack)
+#endif
       }
     }
     .navigationTitle(title)
@@ -346,7 +344,7 @@ struct ItemTransactionEditView: View {
   var quantityInputControl: some View {
     VStack(alignment: .leading) {
         
-        Text("Quantity")
+      Text("Quantity", comment: "Label that specifies quantity of a item in a transaction")
           .font(Self.verticalLabelFont)
         TextField("", text: $viewModel.quantityText)
           .multilineTextAlignment(.leading)
@@ -467,7 +465,7 @@ struct ItemTransactionEditView: View {
           viewModel.priceInfo.regularTaxItems.append(RateTaxItem.fresh())
         }
       } label: {
-        Label { Text("Add New Regular Tax") } icon: {
+        Label { Text("Add New Regular Tax", comment: "Button title that adds a new regular tax entry") } icon: {
           Image(systemName: "plus.circle.fill")
             .foregroundStyle(.white, .green)
         }
@@ -505,7 +503,7 @@ struct ItemTransactionEditView: View {
           viewModel.priceInfo.compoundTaxItems.append(RateTaxItem.fresh())
         }
       } label: {
-        Label { Text("Add New Compound Tax") } icon: {
+        Label { Text("Add New Compound Tax", comment: "Button title that adds a new compound tax entry") } icon: {
           Image(systemName: "plus.circle.fill")
             .foregroundStyle(.white, .green)
         }
@@ -544,7 +542,7 @@ struct ItemTransactionEditView: View {
           viewModel.priceInfo.fixedAmountTaxItems.append(FixedAmountItem.fresh())
         }
       } label: {
-        Label { Text("Add New Fixed Amount Tax") } icon: {
+        Label { Text("Add New Fixed Amount Tax", comment: "Button title that adds a new fixed amount tax entry") } icon: {
           Image(systemName: "plus.circle.fill")
             .foregroundStyle(.white, .green)
         }

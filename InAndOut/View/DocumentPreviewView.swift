@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NTPlatformKit
 
 struct DocumentPreviewView: View {
   
@@ -15,10 +16,10 @@ struct DocumentPreviewView: View {
   var body: some View {
     VStack {
       Text("Hello, World!")
-      if let renderedImage,
-      let imageData = UIImage(cgImage: renderedImage).pngData() {
-        ShareLink(item: imageData, preview: SharePreview("File", image: Image(renderedImage, scale: 1, label: Text("Image"))))
-      }
+//      if let renderedImage,
+//      let imageData = UIImage(cgImage: renderedImage).pngData() {
+//        ShareLink(item: imageData, preview: SharePreview("File", image: Image(renderedImage, scale: 1, label: Text("Image"))))
+//      }
     }
     .task(id: 1) {
       let renderer = ImageRenderer(content: DocumentPreviewImage(document: .mock()))

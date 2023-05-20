@@ -21,6 +21,8 @@ import OrderedCollections
 // MARK: - View
 struct TransactionListView: View {
   
+  private static let localizationTable = "TransactionList"
+  
   class TransactionInspectorState: ObservableObject, Hashable {
     func hash(into hasher: inout Hasher) {
       hasher.combine(showInspector)
@@ -111,7 +113,7 @@ struct TransactionListView: View {
               transactionInspectorState.inspect(index: index)
               
             } label: {
-              TransactionRowView(transaction: $document.content.transactions[index], currencyIdentifier: document.content.settings.currencyIdentifier)
+              TransactionRowView(transaction: $document.content.transactions[index], currencyIdentifier: document.currencyCode)
             }
             //        .contextMenu {
             //          // copy, share, duplicate, delete
@@ -171,8 +173,8 @@ struct TransactionListView: View {
     .searchable(text: $searchText, placement: .toolbar)
     // MARK: toolbar
     .toolbar {
+      #if os(iOS)
       ToolbarItemGroup(placement: .bottomBar) {
-        
         newTransactionButton
           .padding(.bottom, 6)
         Spacer()
@@ -186,16 +188,23 @@ struct TransactionListView: View {
         }
         .padding(.bottom, 6)
       }
-      
+      #endif
       ToolbarItemGroup(placement: .primaryAction) {
         
         Menu {
           Picker(selection: $selectedSortKey) {
-            Label("Sort By Date", systemImage: "calendar")
-              .tag(TransactionSortKey.date)
-            Label("Sort By Total", systemImage: "dollarsign.circle")
-              .tag(TransactionSortKey.total)
-            
+            Label {
+              Text("Sort By Date", comment: "Button title to sort transactions by date")
+            } icon: {
+              Image(systemName: "calendar")
+            }
+            .tag(TransactionSortKey.date)
+            Label {
+              Text("Sort By Total", comment: "Button title to sort transactions by transaction total")
+            } icon: {
+              Image(systemName: "calendar")
+            }
+            .tag(TransactionSortKey.total)
           } label: {
             // ..
           }.labelsHidden()
@@ -204,11 +213,18 @@ struct TransactionListView: View {
           
           // Sort Picker
           Picker(selection: $selectedSortOrder) {
-            Text(selectedSortKey == .date ? "Latest First" : "Largest First")
-              .tag(SortOrder.reverse)
-            Text(selectedSortKey == .date ? "Earliest First": "Smallest First")
-              .tag(SortOrder.forward)
-            
+            if selectedSortKey == .date
+            {
+              Text("Latest First", comment: "Button title that sort transactions by latest date first")
+                .tag(SortOrder.reverse)
+              Text("Earliest First", comment: "Button title that sort transactions by earliest date first")
+                .tag(SortOrder.forward)
+            } else {
+              Text("Largest First", comment: "Button title that sort transactions by largest total first")
+                .tag(SortOrder.reverse)
+              Text("Smallest First", comment: "Button title that sort transactions by smallest total first")
+                .tag(SortOrder.forward)
+            }
           } label: { }.labelsHidden()
           
         } label: {
@@ -230,8 +246,14 @@ struct TransactionListView: View {
           Button {
             isShowingCurrencyPicker = true
           } label: {
-            Label("Change Currency", systemImage: "banknote")
-            Text(document.content.settings.currencyIdentifier)
+            
+            Label {
+              Text("Change Currency", comment: "Button title that taps to change the current document currency")
+            } icon: {
+              Image(systemName: "banknote")
+            }
+            
+            Text(verbatim: document.currencyCode)
           }
 
         } label: {
@@ -254,7 +276,9 @@ struct TransactionListView: View {
               }
             }
           }
-          .toolbarRole(.navigationStack)
+          #if os(iOS)
+.toolbarRole(.navigationStack)
+#endif
       }
     }
     // MARK: Document Settings
@@ -265,7 +289,9 @@ struct TransactionListView: View {
     } content: {
       NavigationStack {
         DocumentSettingsView()
+          #if os(iOS)
           .toolbarRole(.navigationStack)
+          #endif
       }
     }
     // MARK: Currency Picker
@@ -277,11 +303,11 @@ struct TransactionListView: View {
     }) {
       NavigationStack {
         CurrencyPickerContent(currencyIdentifier: Binding(get: {
-          document.content.settings.currencyIdentifier
+          document.currencyCode
         }, set: { newIdentifier in
           document.updateCurrency(newIdentifier, undoManager: undoManager)
         }))
-        .navigationTitle("Update Document Currency")
+        .navigationTitle(Text("Update Document Currency", comment: "Navigation title of view that changes current document currency"))
         .toolbar(content: {
           ToolbarItem(placement: .confirmationAction) {
             Button("Done") {
@@ -289,7 +315,9 @@ struct TransactionListView: View {
             }
           }
         })
-          .toolbarRole(.navigationStack)
+          #if os(iOS)
+.toolbarRole(.navigationStack)
+#endif
       }
     }
     // MARK: Transaction Detail Sheet
@@ -317,7 +345,9 @@ struct TransactionListView: View {
             document.addNewTransaction(transaction, undoManager: undoManager)
           }
         }
-        .toolbarRole(.navigationStack)
+        #if os(iOS)
+.toolbarRole(.navigationStack)
+#endif
       }
     }
     // MARK: View End
@@ -374,7 +404,7 @@ struct TransactionListView: View {
             }
           }
         } else {
-          Text("No transaction is present")
+          Text("No Transaction Selected")
             .foregroundStyle(.secondary)
             .task {
               // Immediately dismiss when no transaction presents
@@ -386,7 +416,9 @@ struct TransactionListView: View {
         }
       }
       .id(transactionInspectorState)
-      .toolbarRole(.navigationStack)
+      #if os(iOS)
+.toolbarRole(.navigationStack)
+#endif
     }
   }
   
@@ -409,16 +441,20 @@ struct TransactionListView: View {
         isAddNewTransactionPresented = true
       }
     } label: {
-      Label("New Transaction", systemImage: "plus.circle")
-        .fontDesign(.rounded)
-        .fontWeight(.medium)
-        .labelStyle(.titleAndIcon)
+      Label {
+        Text("New Transaction", comment: "Button title that adds a new transaction")
+          .fontDesign(.rounded)
+      } icon: {
+        Image(systemName: "plus.circle")
+      }
+      .fontWeight(.medium)
+      .labelStyle(.titleAndIcon)
     }
   }
   
   // MARK: Sorting Related
   var sortComparator: ((Transaction, Transaction) -> Bool) {
-    let roundingRules = document.content.settings.roundingRules
+    let roundingRules = document.roundingRules
     switch selectedSortKey {
       case .total:
         switch selectedSortOrder {
@@ -492,7 +528,7 @@ struct TransactionSearchResultView: View {
       t.itemAndVariantNames.contains { $0.localizedCaseInsensitiveContains(trimmedSearchText) } ||
       t.date.formatted(date: .long, time: .complete).localizedCaseInsensitiveContains(trimmedSearchText) ||
       t.date.formatted(.relative(presentation: .named)).localizedCaseInsensitiveContains(trimmedSearchText) ||
-      t.total(roundingRules: document.content.settings.roundingRules).formatted().contains(trimmedSearchText)
+      t.total(roundingRules: document.roundingRules).formatted().contains(trimmedSearchText)
     }.map { $0.offset }
     // TODO: sort the result
   }
@@ -512,7 +548,7 @@ struct TransactionSearchResultView: View {
               }
             } label: {
               TransactionRowView(transaction: $document.content.transactions[i],
-                                 currencyIdentifier: document.content.settings.currencyIdentifier)
+                                 currencyIdentifier: document.currencyCode)
             }
           }
         }
