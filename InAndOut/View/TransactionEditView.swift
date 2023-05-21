@@ -68,8 +68,7 @@ class TransactionViewModel: ObservableObject {
   }
   
   var hasChanges: Bool {
-    return
-    self.transactionType != transaction.transactionType ||
+    return self.transactionType != transaction.transactionType ||
     self.transactionID.trimmingCharacters(in: .whitespacesAndNewlines) != transaction.transactionID ||
     self.date != transaction.date ||
     self.keeperName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) != transaction.keeperName?.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ||
@@ -232,7 +231,7 @@ struct TransactionEditView: View {
         ItemTransactionEditView(edit: item.wrappedValue) { resultItemTransaction in
           item.wrappedValue = resultItemTransaction
           // Don't save here
-        }  
+        }
           #if os(iOS)
         .toolbarRole(.navigationStack)
 #endif

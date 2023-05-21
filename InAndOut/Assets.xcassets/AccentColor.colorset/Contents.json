@@ -1,6 +1,15 @@
 {
   "colors" : [
     {
+      "color" : {
+        "color-space" : "display-p3",
+        "components" : {
+          "alpha" : "1.000",
+          "blue" : "0.139",
+          "green" : "0.595",
+          "red" : "0.230"
+        }
+      },
       "idiom" : "universal"
     },
     {
@@ -10,6 +19,15 @@
           "value" : "dark"
         }
       ],
+      "color" : {
+        "color-space" : "display-p3",
+        "components" : {
+          "alpha" : "1.000",
+          "blue" : "0.149",
+          "green" : "0.639",
+          "red" : "0.247"
+        }
+      },
       "idiom" : "universal"
     }
   ],

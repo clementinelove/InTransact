@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Use it using if else branches with List
 struct EmptyListPlaceholder: View {
   
   let placeholderText: LocalizedStringKey
@@ -27,13 +28,7 @@ struct EmptyListPlaceholder: View {
 struct EmptyListPlaceholder_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      if true {
-        EmptyListPlaceholder("No Transactions")
-      } else {
-        List {
-          // ...
-        }
-      }
+      EmptyListPlaceholder("No Transactions")
     }
   }
 }
