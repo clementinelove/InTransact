@@ -232,10 +232,9 @@ struct TransactionEditView: View {
         ItemTransactionEditView(edit: item.wrappedValue) { resultItemTransaction in
           item.wrappedValue = resultItemTransaction
           // Don't save here
-        }
-          
+        }  
           #if os(iOS)
-.toolbarRole(.navigationStack)
+        .toolbarRole(.navigationStack)
 #endif
       }
     }

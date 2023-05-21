@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>%lld Variant(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@variants@</string>
+		<key>variants</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>zero</key>
+			<string>No Variants</string>
+			<key>one</key>
+			<string>1 Variant</string>
+			<key>other</key>
+			<string>%lld Variants</string>
+		</dict>
+	</dict>
+	<key>%lld Transaction(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@transactions@</string>
+		<key>transactions</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>lld</string>
+			<key>zero</key>
+			<string>No Transactions</string>
+			<key>one</key>
+			<string>1 Transaction</string>
+			<key>other</key>
+			<string>%lld Transactions</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

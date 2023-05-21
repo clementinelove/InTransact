@@ -1,5 +1,5 @@
 /* Explains the meaning of regular tax and compound tax */
-"A regular tax is calculated based on its price before tax; a compound tax is calculated after all regular tax were applied." = "常规税是在税前价格的基础上计算的；复率税是在税前价格应用了常规税后再计算的。";
+"A regular tax is calculated based on its price before tax; a compound tax is calculated after all regular tax were applied." = "常规税基于税前价格计算；复率税基于应用了常规税的价格计算。";
 
 /* No comment provided by engineer. */
 "Add" = "添加";
@@ -32,7 +32,7 @@
 "Change Currency" = "更改货币";
 
 /* No comment provided by engineer. */
-"Copy Info from Item Template" = "复制该条目模版信息";
+"Copy Info from Item Template" = "从条目模版复制信息";
 
 /* No comment provided by engineer. */
 "Compound Tax" = "复率税";
@@ -163,13 +163,15 @@
 "Save Item Info as Template" = "保存条目信息为模版";
 
 /* Section footer text that explains the use when user choose to save item information they entered in a form as a template */
-"Save these information as template when the transaction is saved. This will override exising template for the same item name and variant." = "在保存交易时将这些信息保存为模版。这将会覆盖有同样条目名称和变体的现有模版。";
+"Save these information as template when the transaction is saved. This will override exising template for the same item name and variant." = "在保存交易时将这些信息保存为模版。这将覆盖有同样条目名称和变体的现有模版。";
 
 /* No comment provided by engineer. */
 "Search Location..." = "搜索地点……";
 
 /* Button title that sort transactions by smallest total first */
 "Smallest First" = "最小额的排最前";
+
+"Sort Method" = "排序方式";
 
 /* Button title to sort transactions by date */
 "Sort By Date" = "按日期排序";

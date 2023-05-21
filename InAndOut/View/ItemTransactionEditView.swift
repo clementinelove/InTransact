@@ -135,7 +135,7 @@ class ItemTransactionViewModel: ObservableObject {
                     itemID: itemID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines),
                     itemName: itemName.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines),
                     variant: variantName.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines),
-                    priceInfo: priceInfo)
+                    priceInfo: priceInfo.compacted)
   }
 }
 // MARK: - View
@@ -571,6 +571,7 @@ struct ItemTransactionEditView: View {
       if viewModel.hasChanges {
         attemptToDiscardChanges = true
       } else {
+        onCommit(viewModel.updatedItemTransaction)
         dismiss()
       }
     }

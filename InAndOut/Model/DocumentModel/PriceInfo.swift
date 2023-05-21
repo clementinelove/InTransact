@@ -185,6 +185,23 @@ public struct PriceInfo: Codable, Equatable {
   }
 }
 
+extension PriceInfo {
+  /// Remove all tax item with empty name and value, this is useful when user adds redundant tax items without entering any value
+  var compacted: PriceInfo {
+    var copied = self
+    copied.regularTaxItems = copied.regularTaxItems.filter { item in
+      !item.rate.isZero || !item.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    copied.compoundTaxItems = copied.compoundTaxItems.filter { item in
+      !item.rate.isZero || !item.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    copied.fixedAmountTaxItems = copied.fixedAmountTaxItems.filter { item in
+      !item.amount.isZero || !item.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    return copied
+  }
+}
+
 public struct RateTaxItem: Codable, Identifiable, Equatable {
   public var id = UUID()
   public var name: String

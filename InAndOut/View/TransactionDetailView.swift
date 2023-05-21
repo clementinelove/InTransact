@@ -31,27 +31,59 @@ struct TransactionDetailView: View {
             
             Text("Transaction", comment: "Navigation title of a transaction")
               .font(.caption.smallCaps())
+              .fontWeight(.medium)
             
-            Text(transaction.transactionID)
-              .font(.title3.bold())
-              .foregroundColor(.accentColor)
-              .padding(.bottom, 2)
+            HStack {
+              if let transactionID = transaction.transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+                  Text(transactionID)
+                  .font(.title3.monospaced().bold())
+                .foregroundColor(Global.transactionIDHighlightColor)
+              } else {
+                Text("No ID Specified")
+                  .font(.title3.monospaced().bold())
+                  .foregroundColor(.gray)
+              }
+              
+              Spacer()
+            }
+            .padding(.bottom, 2)
+            
+            // MARK: Date
             Text(transaction.date.formatted(date: .long, time: .shortened))
               .font(.subheadline)
+              .padding(.bottom)
             
-            // MARK: Location
-            
-            
-            // MARK: Keeper
-            if let keeper = transaction.keeperName?.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+            VStack(alignment: .leading, spacing: 6) {
               HStack {
-                Image(systemName: "pencil.line")
-                  .symbolVariant(.fill)
-                Text(keeper)
-                  .textSelection(.enabled)
+                Label {
+                  switch transaction.transactionType {
+                    case .itemsIn:
+                      Text("Items In")
+                    case .itemsOut:
+                      Text("Items Out")
+                  }
+                } icon: {
+                  Image(systemName: transaction.transactionType == .itemsIn ? "arrow.down.circle" : "arrow.up.circle")
+                    .fontWeight(.medium)
+                }
               }
-              .padding(.vertical, 6)
+              
+              // MARK: Keeper
+              if let keeper = transaction.keeperName?.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+                Label {
+                  Text(verbatim: keeper)
+                } icon: {
+                  Image(systemName: "pencil.circle")
+                }
+              }
             }
+            .font(.callout)
+            .padding(.bottom, 4)
+            
+
+            
+            
+
             
             
             // MARK: Comments

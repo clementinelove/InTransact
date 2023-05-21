@@ -11,6 +11,13 @@ import SwiftUI
 enum TransactionSortKey {
   case total
   case date
+  
+  var description: LocalizedStringKey {
+    switch self {
+      case .date: return "Date"
+      case .total: return "Total"
+    }
+  }
 }
 
 import Combine
@@ -104,6 +111,7 @@ struct TransactionListView: View {
     Group {
       if document.content.transactions.isEmpty {
         EmptyListPlaceholder("No Transactions")
+        
       } else {
         List {
           ForEach(sortedTransactionIndexes, id: \.self) { index in
@@ -154,8 +162,11 @@ struct TransactionListView: View {
         }
       }
     }
+
 #if os(iOS)
+//    .toolbar(.hidden, for: .navigationBar)
     .navigationBarTitleDisplayMode(.inline)
+    .navigationTitle("")
 #endif
     .listStyle(.plain)
     // MARK: List End without Overlay
@@ -171,96 +182,6 @@ struct TransactionListView: View {
                                   inspectorDetent: $transactionDetailDetent)
     }
     .searchable(text: $searchText, placement: .toolbar)
-    // MARK: toolbar
-    .toolbar {
-      #if os(iOS)
-      ToolbarItemGroup(placement: .bottomBar) {
-        newTransactionButton
-          .padding(.bottom, 6)
-        Spacer()
-        Button {
-          Task { @MainActor in
-            await dismissAllSheets()
-            isPresentingItemStatisticsView = true
-          }
-        } label: {
-          Image(systemName: "chart.bar")
-        }
-        .padding(.bottom, 6)
-      }
-      #endif
-      ToolbarItemGroup(placement: .primaryAction) {
-        
-        Menu {
-          Picker(selection: $selectedSortKey) {
-            Label {
-              Text("Sort By Date", comment: "Button title to sort transactions by date")
-            } icon: {
-              Image(systemName: "calendar")
-            }
-            .tag(TransactionSortKey.date)
-            Label {
-              Text("Sort By Total", comment: "Button title to sort transactions by transaction total")
-            } icon: {
-              Image(systemName: "calendar")
-            }
-            .tag(TransactionSortKey.total)
-          } label: {
-            // ..
-          }.labelsHidden()
-          
-          Divider()
-          
-          // Sort Picker
-          Picker(selection: $selectedSortOrder) {
-            if selectedSortKey == .date
-            {
-              Text("Latest First", comment: "Button title that sort transactions by latest date first")
-                .tag(SortOrder.reverse)
-              Text("Earliest First", comment: "Button title that sort transactions by earliest date first")
-                .tag(SortOrder.forward)
-            } else {
-              Text("Largest First", comment: "Button title that sort transactions by largest total first")
-                .tag(SortOrder.reverse)
-              Text("Smallest First", comment: "Button title that sort transactions by smallest total first")
-                .tag(SortOrder.forward)
-            }
-          } label: { }.labelsHidden()
-          
-        } label: {
-          Image(systemName: "arrow.up.arrow.down")
-        }
-        
-        Menu {
-          // TODO: Select Transactions (Edit Mode)..
-
-          // TODO: share link
-          // FIXME: document settings not implemented
-//          Button("Document Settings") {
-//            Task { @MainActor in
-//              await dismissAllSheets()
-//              isPresentingDocumentSettings = true
-//            }
-//          }
-          
-          Button {
-            isShowingCurrencyPicker = true
-          } label: {
-            
-            Label {
-              Text("Change Currency", comment: "Button title that taps to change the current document currency")
-            } icon: {
-              Image(systemName: "banknote")
-            }
-            
-            Text(verbatim: document.currencyCode)
-          }
-
-        } label: {
-          Image(systemName: "ellipsis.circle")
-        }
-      }
-    }
     // MARK: Item Statistics
     .sheet(isPresented: $isPresentingItemStatisticsView) {
       Task { @MainActor in
@@ -277,8 +198,8 @@ struct TransactionListView: View {
             }
           }
           #if os(iOS)
-.toolbarRole(.navigationStack)
-#endif
+          .toolbarRole(.navigationStack)
+          #endif
       }
     }
     // MARK: Document Settings
@@ -350,9 +271,110 @@ struct TransactionListView: View {
 #endif
       }
     }
+    .toolbar {
+      
+      ToolbarItemGroup(placement: .bottomBar) {
+        newTransactionButton
+          .padding(.bottom, 6)
+        Spacer()
+        itemCountButton
+      }
+      
+      ToolbarItemGroup(placement: .primaryAction) {
+        sortMethodMenu
+      }
+      
+      ToolbarItem(placement: .secondaryAction) {
+        // TODO: share link
+        // FIXME: document settings not implemented
+        //          Button("Document Settings") {
+        //            Task { @MainActor in
+        //              await dismissAllSheets()
+        //              isPresentingDocumentSettings = true
+        //            }
+        //          }
+        
+        Button {
+          isShowingCurrencyPicker = true
+        } label: {
+          
+          Label {
+            Text("Change Currency", comment: "Button title that taps to change the current document currency")
+          } icon: {
+            Image(systemName: "banknote")
+          }
+          
+          Text(verbatim: document.currencyCode)
+        }
+      }
+    }
     // MARK: View End
   }
 
+  // MARK: Item Count Sheet Button
+  var itemCountButton: some View {
+    // Shouldn't use a button here because button can still be triggered when a menu is presented, which cause very serious bugs in SwiftUI
+    Menu {
+      
+    } label: {
+      Image(systemName: "chart.bar")
+    } primaryAction: {
+      Task { @MainActor in
+        await dismissAllSheets()
+        isPresentingItemStatisticsView = true
+      }
+    }
+  }
+  
+  // MARK: Sort Menu
+  var sortMethodMenu: some View {
+    Menu {
+      Picker(selection: $selectedSortKey) {
+        Label {
+          Text("Sort By Date", comment: "Button title to sort transactions by date")
+        } icon: {
+          Image(systemName: "calendar")
+        }
+        .tag(TransactionSortKey.date)
+        Label {
+          Text("Sort By Total", comment: "Button title to sort transactions by transaction total")
+        } icon: {
+          Image(systemName: "calendar")
+        }
+        .tag(TransactionSortKey.total)
+      } label: {
+        // ..
+      }.labelsHidden()
+      
+      Divider()
+      // Sort Picker
+      Picker(selection: $selectedSortOrder) {
+        if selectedSortKey == .date
+        {
+          Text("Latest First", comment: "Button title that sort transactions by latest date first")
+            .tag(SortOrder.reverse)
+          Text("Earliest First", comment: "Button title that sort transactions by earliest date first")
+            .tag(SortOrder.forward)
+        } else {
+          Text("Largest First", comment: "Button title that sort transactions by largest total first")
+            .tag(SortOrder.reverse)
+          Text("Smallest First", comment: "Button title that sort transactions by smallest total first")
+            .tag(SortOrder.forward)
+        }
+      } label: { }.labelsHidden()
+      
+    } label: {
+        Label {
+          Text("Sort Method", comment: "Button title that selects sort method and sort order")
+            
+          + Text(verbatim: " – ") + Text(selectedSortKey.description)
+        } icon: {
+          Image(systemName: "arrow.up.arrow.down")
+        }
+        .labelStyle(.iconOnly)
+    }
+  }
+  
   @ViewBuilder
   var transactionDetailInspector: some View {
     NavigationStack {
@@ -435,11 +457,9 @@ struct TransactionListView: View {
   }
   
   var newTransactionButton: some View {
-    Button {
-      Task { @MainActor in
-        await dismissAllSheets()
-        isAddNewTransactionPresented = true
-      }
+    // Shouldn't use a button here because button can still be triggered when a menu is presented, which cause very serious bugs in SwiftUI
+    Menu {
+      // ...
     } label: {
       Label {
         Text("New Transaction", comment: "Button title that adds a new transaction")
@@ -447,8 +467,13 @@ struct TransactionListView: View {
       } icon: {
         Image(systemName: "plus.circle")
       }
-      .fontWeight(.medium)
       .labelStyle(.titleAndIcon)
+      .fontWeight(.medium)
+    } primaryAction: {
+      Task { @MainActor in
+        await dismissAllSheets()
+        isAddNewTransactionPresented = true
+      }
     }
   }
   

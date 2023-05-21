@@ -31,14 +31,13 @@ struct ItemListView: View {
             } label: {
               
               VStack(alignment: .leading) {
-                
                 Text("\(item.name)")
                   .font(.headline)
                   .lineLimit(1)
                 // Grammar agreement
-                Text("^[\(item.variantCount) Variant](inflect: true)")
+                Text("\(item.variantCount) Variant(s)", comment: "Related Item Templates")
                   .font(.subheadline)
-                Text("^[\(item.transactions.count) Transaction](inflect: true)")
+                Text("\(item.transactions.count) Transaction(s)")
                   .foregroundStyle(.secondary)
                   .font(.subheadline)
               }
