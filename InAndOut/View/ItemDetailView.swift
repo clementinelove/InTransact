@@ -10,7 +10,7 @@ import DequeModule
 import OrderedCollections
 
 struct ItemDetailView: View {
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @ObservedObject var item: Item
   
   var body: some View {
@@ -104,7 +104,7 @@ struct ItemDetailView_Previews: PreviewProvider {
         ItemDetailView(item: Item(name: "4K Ultra HD Smart TV", transactions: [
           .mock(), .mock(), .mock()
         ]))
-        .environmentObject(InAndOutDocument.mock())
+        .environmentObject(InTransactDocument.mock())
       }
     }
 }

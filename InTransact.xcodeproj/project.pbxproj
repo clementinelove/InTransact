@@ -91,16 +91,16 @@
 		5843B9E72A151F610048C0CA /* CurrencyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTextField.swift; sourceTree = "<group>"; };
 		5843B9E92A168AC00048C0CA /* SeparatedValueBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatedValueBuilder.swift; sourceTree = "<group>"; };
 		5843B9EB2A177B1A0048C0CA /* CurrencyCalculatationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCalculatationTest.swift; sourceTree = "<group>"; };
-		5858FB152A07D17F005FAAA6 /* InAndOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InAndOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5858FB152A07D17F005FAAA6 /* InTransact.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InTransact.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5858FB182A07D17F005FAAA6 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		5858FB1A2A07D17F005FAAA6 /* InAndOutDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAndOutDocument.swift; sourceTree = "<group>"; };
 		5858FB1E2A07D180005FAAA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5858FB202A07D180005FAAA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5858FB212A07D180005FAAA6 /* InAndOut.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InAndOut.entitlements; sourceTree = "<group>"; };
 		5858FB232A07D180005FAAA6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		5858FB292A07D180005FAAA6 /* InAndOutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InAndOutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5858FB292A07D180005FAAA6 /* InTransactTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InTransactTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5858FB2D2A07D180005FAAA6 /* InAndOutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAndOutTests.swift; sourceTree = "<group>"; };
-		5858FB332A07D180005FAAA6 /* InAndOutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InAndOutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5858FB332A07D180005FAAA6 /* InTransactUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InTransactUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5858FB372A07D180005FAAA6 /* InAndOutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAndOutUITests.swift; sourceTree = "<group>"; };
 		5858FB392A07D180005FAAA6 /* InAndOutUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAndOutUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5858FB462A07D191005FAAA6 /* TransactionRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRowView.swift; sourceTree = "<group>"; };
@@ -197,9 +197,9 @@
 		5858FB162A07D17F005FAAA6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5858FB152A07D17F005FAAA6 /* InAndOut.app */,
-				5858FB292A07D180005FAAA6 /* InAndOutTests.xctest */,
-				5858FB332A07D180005FAAA6 /* InAndOutUITests.xctest */,
+				5858FB152A07D17F005FAAA6 /* InTransact.app */,
+				5858FB292A07D180005FAAA6 /* InTransactTests.xctest */,
+				5858FB332A07D180005FAAA6 /* InTransactUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -316,9 +316,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5858FB142A07D17F005FAAA6 /* InAndOut */ = {
+		5858FB142A07D17F005FAAA6 /* InTransact */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5858FB3D2A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InAndOut" */;
+			buildConfigurationList = 5858FB3D2A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InTransact" */;
 			buildPhases = (
 				5858FB112A07D17F005FAAA6 /* Sources */,
 				5858FB122A07D17F005FAAA6 /* Frameworks */,
@@ -328,7 +328,7 @@
 			);
 			dependencies = (
 			);
-			name = InAndOut;
+			name = InTransact;
 			packageProductDependencies = (
 				5858FB5B2A07E8DE005FAAA6 /* NTPlatformKit */,
 				5858FB602A09A25D005FAAA6 /* Collections */,
@@ -336,12 +336,12 @@
 				5858FB642A09A25D005FAAA6 /* OrderedCollections */,
 			);
 			productName = InAndOut;
-			productReference = 5858FB152A07D17F005FAAA6 /* InAndOut.app */;
+			productReference = 5858FB152A07D17F005FAAA6 /* InTransact.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5858FB282A07D180005FAAA6 /* InAndOutTests */ = {
+		5858FB282A07D180005FAAA6 /* InTransactTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5858FB402A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InAndOutTests" */;
+			buildConfigurationList = 5858FB402A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InTransactTests" */;
 			buildPhases = (
 				5858FB252A07D180005FAAA6 /* Sources */,
 				5858FB262A07D180005FAAA6 /* Frameworks */,
@@ -352,14 +352,14 @@
 			dependencies = (
 				5858FB2B2A07D180005FAAA6 /* PBXTargetDependency */,
 			);
-			name = InAndOutTests;
+			name = InTransactTests;
 			productName = InAndOutTests;
-			productReference = 5858FB292A07D180005FAAA6 /* InAndOutTests.xctest */;
+			productReference = 5858FB292A07D180005FAAA6 /* InTransactTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		5858FB322A07D180005FAAA6 /* InAndOutUITests */ = {
+		5858FB322A07D180005FAAA6 /* InTransactUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5858FB432A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InAndOutUITests" */;
+			buildConfigurationList = 5858FB432A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InTransactUITests" */;
 			buildPhases = (
 				5858FB2F2A07D180005FAAA6 /* Sources */,
 				5858FB302A07D180005FAAA6 /* Frameworks */,
@@ -370,9 +370,9 @@
 			dependencies = (
 				5858FB352A07D180005FAAA6 /* PBXTargetDependency */,
 			);
-			name = InAndOutUITests;
+			name = InTransactUITests;
 			productName = InAndOutUITests;
-			productReference = 5858FB332A07D180005FAAA6 /* InAndOutUITests.xctest */;
+			productReference = 5858FB332A07D180005FAAA6 /* InTransactUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -398,7 +398,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5858FB102A07D17F005FAAA6 /* Build configuration list for PBXProject "InAndOut" */;
+			buildConfigurationList = 5858FB102A07D17F005FAAA6 /* Build configuration list for PBXProject "InTransact" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -415,9 +415,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5858FB142A07D17F005FAAA6 /* InAndOut */,
-				5858FB282A07D180005FAAA6 /* InAndOutTests */,
-				5858FB322A07D180005FAAA6 /* InAndOutUITests */,
+				5858FB142A07D17F005FAAA6 /* InTransact */,
+				5858FB282A07D180005FAAA6 /* InTransactTests */,
+				5858FB322A07D180005FAAA6 /* InTransactUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -517,12 +517,12 @@
 /* Begin PBXTargetDependency section */
 		5858FB2B2A07D180005FAAA6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5858FB142A07D17F005FAAA6 /* InAndOut */;
+			target = 5858FB142A07D17F005FAAA6 /* InTransact */;
 			targetProxy = 5858FB2A2A07D180005FAAA6 /* PBXContainerItemProxy */;
 		};
 		5858FB352A07D180005FAAA6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5858FB142A07D17F005FAAA6 /* InAndOut */;
+			target = 5858FB142A07D17F005FAAA6 /* InTransact */;
 			targetProxy = 5858FB342A07D180005FAAA6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -675,7 +675,6 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = InAndOut/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "In&Out";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -694,10 +693,10 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.yuhao.InAndOut;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.clems.InTransact;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -720,7 +719,6 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = InAndOut/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "In&Out";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -739,10 +737,10 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.yuhao.InAndOut;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.clems.InTransact;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -763,14 +761,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.yuhao.InAndOutTests;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.clems.InTransactTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InAndOut.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/InAndOut";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InTransact.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/InTransact";
 			};
 			name = Debug;
 		};
@@ -786,14 +784,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.yuhao.InAndOutTests;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.clems.InTransactTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InAndOut.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/InAndOut";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/InTransact.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/InTransact";
 			};
 			name = Release;
 		};
@@ -808,7 +806,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.yuhao.InAndOutUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.clems.InTransactUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -830,7 +828,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.yuhao.InAndOutUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = cc.clems.InTransactUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -844,7 +842,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5858FB102A07D17F005FAAA6 /* Build configuration list for PBXProject "InAndOut" */ = {
+		5858FB102A07D17F005FAAA6 /* Build configuration list for PBXProject "InTransact" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5858FB3B2A07D180005FAAA6 /* Debug */,
@@ -853,7 +851,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5858FB3D2A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InAndOut" */ = {
+		5858FB3D2A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InTransact" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5858FB3E2A07D180005FAAA6 /* Debug */,
@@ -862,7 +860,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5858FB402A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InAndOutTests" */ = {
+		5858FB402A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InTransactTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5858FB412A07D180005FAAA6 /* Debug */,
@@ -871,7 +869,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5858FB432A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InAndOutUITests" */ = {
+		5858FB432A07D180005FAAA6 /* Build configuration list for PBXNativeTarget "InTransactUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5858FB442A07D180005FAAA6 /* Debug */,

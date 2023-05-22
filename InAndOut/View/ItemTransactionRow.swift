@@ -9,7 +9,7 @@ import SwiftUI
 import NTPlatformKit
 
 struct ItemTransactionRow: View {
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @Binding var itemTransaction: ItemTransaction
   
   var showTaxDetails = false
@@ -104,7 +104,7 @@ struct ItemTransactionRow_Previews: PreviewProvider {
       }
     }
     .listStyle(.plain)
-    .environmentObject(InAndOutDocument.mock())
+    .environmentObject(InTransactDocument.mock())
     .previewDisplayName("Plain")
     
     
@@ -119,7 +119,7 @@ struct ItemTransactionRow_Previews: PreviewProvider {
     #if os(iOS)
     .listStyle(.insetGrouped)
     #endif
-    .environmentObject(InAndOutDocument.mock())
+    .environmentObject(InTransactDocument.mock())
     .previewDisplayName("Inset Grouped")
       
   }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ItemTemplateRow: View {
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   let itemTemplate: ItemTemplate
   
   static let itemIDPlaceholder = String(localized: "No Item ID", comment: "Item ID Placeholder in template row")
@@ -47,6 +47,6 @@ struct ItemTemplateRow_Previews: PreviewProvider {
       }
       
     }
-      .environmentObject(InAndOutDocument.mock())
+      .environmentObject(InTransactDocument.mock())
   }
 }

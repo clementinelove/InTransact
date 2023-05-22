@@ -5,11 +5,17 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>1</integer>
+			<key>CFBundleTypeName</key>
+			<string>InTransact Document</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.inandout.document</string>
+				<string>com.intransact.document</string>
 			</array>
 			<key>NSUbiquitousDocumentUserActivityType</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).example-document</string>
@@ -24,74 +30,23 @@
 				<string>public.content</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>InAndOut Document</string>
+			<string>InTransact Document</string>
 			<key>UTTypeIcons</key>
-			<dict/>
-			<key>UTTypeIdentifier</key>
-			<string>com.inandout.document</string>
-			<key>UTTypeTagSpecification</key>
 			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>ino</string>
-				</array>
+				<key>UTTypeIconBackgroundName</key>
+				<string>int-fill</string>
+				<key>UTTypeIconBadgeName</key>
+				<string>int-image</string>
+				<key>UTTypeIconText</key>
+				<string>INT</string>
 			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Transaction</string>
-			<key>UTTypeIcons</key>
-			<dict/>
 			<key>UTTypeIdentifier</key>
-			<string>com.inandout.transaction</string>
+			<string>com.intransact.document</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
-					<string>transaction</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Item Transaction</string>
-			<key>UTTypeIcons</key>
-			<dict/>
-			<key>UTTypeIdentifier</key>
-			<string>com.inandout.transaction.item</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>tran-item</string>
-				</array>
-			</dict>
-		</dict>
-	</array>
-	<key>UTImportedTypeDeclarations</key>
-	<array>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.plain-text</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Example Text</string>
-			<key>UTTypeIdentifier</key>
-			<string>com.example.plain-text</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>exampletext</string>
+					<string>int</string>
 				</array>
 			</dict>
 		</dict>

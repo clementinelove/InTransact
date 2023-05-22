@@ -42,22 +42,6 @@ class Item: ObservableObject, Identifiable, Hashable {
   }
 }
 
-
-
-// TODO: Transferable
-//extension UTType {
-//  static var note = UTType(exportedAs: "com.inandout.transaction")
-
-//}
-//
-//extension Transaction: Transferable {
-//  static var transferRepresentation: some TransferRepresentation {
-//    FileRepresentation(exportedContentType: .jpeg) { transaction in
-//      ImageRenderer(content: TransactionDetailView(transaction: transaction))
-//    }
-//  }
-//  }
-
 struct ItemTemplate: Codable, Hashable, Identifiable, Equatable {
   
   static func == (lhs: ItemTemplate, rhs: ItemTemplate) -> Bool {
@@ -76,7 +60,7 @@ struct ItemTemplate: Codable, Hashable, Identifiable, Equatable {
   var priceInfo: PriceInfo
 }
 
-struct INODocument: Identifiable, Codable {
+struct INTDocument: Identifiable, Codable {
   var id: UUID = UUID()
   var settings: Setting = Setting()
 //  var entityTemplates: [Entity]
@@ -97,11 +81,11 @@ struct INODocument: Identifiable, Codable {
 }
 
 extension UTType {
-  static let inAndOutDocument: UTType = UTType(exportedAs: "com.inandout.document")
+  static let inTransactDocument: UTType = UTType(exportedAs: "com.intransact.document")
 }
 
-extension INODocument: Transferable {
+extension INTDocument: Transferable {
   static var transferRepresentation: some TransferRepresentation {
-    CodableRepresentation(contentType: .inAndOutDocument)
+    CodableRepresentation(contentType: .inTransactDocument)
   }
 }

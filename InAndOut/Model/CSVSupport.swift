@@ -77,11 +77,11 @@ enum INOExportColumn {
 //  }
 //
 //  static let variantName = ExportTableColumn(columnName: "Item Name") { item in
-//    item.variant ?? INODocument.emptyValuePlaceholder
+//    item.variant ?? INTDocument.emptyValuePlaceholder
 //  }
 //}
 
-extension INODocument {
+extension INTDocument {
   
   enum Granularity {
     case transaction

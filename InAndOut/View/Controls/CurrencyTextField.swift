@@ -10,7 +10,7 @@ import SwiftUI
 // TODO: maybe replace 0 with empty string when editing?
 struct CurrencyTextField<FocusValue: Hashable>: View {
   
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @Binding var amount: Decimal
   var focusedBinding: FocusState<FocusValue?>.Binding
   let value: FocusValue

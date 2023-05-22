@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DocumentMainView: View {
   
-  @EnvironmentObject var document: InAndOutDocument
+  @EnvironmentObject var document: InTransactDocument
   @Environment(\.undoManager) var undoManager
   
   
@@ -41,7 +41,7 @@ struct DocumentMainView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationStack {
       DocumentMainView()
-        .environmentObject(InAndOutDocument.mock())
+        .environmentObject(InTransactDocument.mock())
     }
   }
 }

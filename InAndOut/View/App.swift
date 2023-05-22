@@ -11,7 +11,7 @@ import SwiftUI
 struct InAndOutApp: App {
   
   var body: some Scene {
-    DocumentGroup(newDocument: { InAndOutDocument() } ) { configuration  in
+    DocumentGroup(newDocument: { InTransactDocument() } ) { configuration  in
       //            ContentView(document: file.$document)
       DocumentMainView()
         

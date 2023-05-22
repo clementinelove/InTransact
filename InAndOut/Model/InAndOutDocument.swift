@@ -1,5 +1,5 @@
 //
-//  InAndOutDocument.swift
+//  InTransactDocument.swift
 //  InAndOut
 //
 //  Created by Yuhao Zhang on 2023-05-07.
@@ -11,21 +11,21 @@ import DequeModule
 import OrderedCollections
 import OSLog
 
-fileprivate let logger = Logger(subsystem: Global.appName, category: "InAndOutDocument")
+fileprivate let logger = Logger(subsystem: Global.subsystem, category: "InTransactDocument")
 
-final class InAndOutDocument: ReferenceFileDocument {
+final class InTransactDocument: ReferenceFileDocument {
   
-  @Published var content: INODocument
-  typealias Snapshot = INODocument
+  @Published var content: INTDocument
+  typealias Snapshot = INTDocument
   
 #if os(iOS) // Edit mode doesn't exist in macOS.
   @Environment(\.editMode) var editMode
 #endif // os(iOS)
   
   
-  static var readableContentTypes: [UTType] { [.inAndOutDocument] }
+  static var readableContentTypes: [UTType] { [.inTransactDocument] }
   
-  func snapshot(contentType: UTType) throws -> INODocument {
+  func snapshot(contentType: UTType) throws -> INTDocument {
     content // Make a copy
   }
   
@@ -33,7 +33,7 @@ final class InAndOutDocument: ReferenceFileDocument {
     if mock {
       self.content = .mock()
     } else {
-      self.content = INODocument(settings: Setting())
+      self.content = INTDocument(settings: Setting())
     }
   }
   
@@ -43,10 +43,10 @@ final class InAndOutDocument: ReferenceFileDocument {
       throw CocoaError(.fileReadCorruptFile)
     }
     // TODO: decode
-    self.content = try JSONDecoder().decode(INODocument.self, from: data)
+    self.content = try JSONDecoder().decode(INTDocument.self, from: data)
   }
   
-  func fileWrapper(snapshot: INODocument, configuration: WriteConfiguration) throws -> FileWrapper {
+  func fileWrapper(snapshot: INTDocument, configuration: WriteConfiguration) throws -> FileWrapper {
     logger.debug("Save called")
     let data = try JSONEncoder().encode(snapshot)
     let fileWrapper = FileWrapper(regularFileWithContents: data)
@@ -55,7 +55,7 @@ final class InAndOutDocument: ReferenceFileDocument {
   
 }
 
-extension InAndOutDocument {
+extension InTransactDocument {
   // MARK: Shortcuts
   var currencyCode: String {
     content.settings.currencyIdentifier
@@ -67,7 +67,7 @@ extension InAndOutDocument {
   
 }
 
-extension InAndOutDocument {
+extension InTransactDocument {
   
   // TODO: localize action names
   func updateCurrency(_ currencyIdentifier: String, undoManager: UndoManager? = nil) {

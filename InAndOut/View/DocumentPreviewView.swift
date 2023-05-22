@@ -31,7 +31,7 @@ struct DocumentPreviewView: View {
 }
 
 struct DocumentPreviewImage: View {
-  var document: INODocument
+  var document: INTDocument
   var body: some View {
     VStack(alignment: .leading) {
       ForEach(document.transactions) { transaction in
@@ -59,7 +59,7 @@ struct DocumentPreviewView_Previews: PreviewProvider {
     static var previews: some View {
       DocumentPreviewImage(document: .mock())
       DocumentPreviewView()
-        .environmentObject(InAndOutDocument.mock())
+        .environmentObject(InTransactDocument.mock())
       
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 import DequeModule
 
 struct ItemListView: View {
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @Environment(\.dismiss) private var dismiss
   @Binding var nameFilter: String
   @Binding var variantNameFilter: String
@@ -114,7 +114,7 @@ struct ItemListView_Previews: PreviewProvider {
       .sheet(isPresented: .constant(true)) {
       NavigationStack {
         ItemListView(nameFilter: .constant(""), variantNameFilter: .constant(""))
-          .environmentObject(InAndOutDocument.mock())
+          .environmentObject(InTransactDocument.mock())
       }
     }
     

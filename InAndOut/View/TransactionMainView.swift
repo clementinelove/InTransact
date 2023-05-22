@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TransactionMainView: View {
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @Environment(\.undoManager) var undoManager
   @State private var isAddNewTransactionPresented = false
   var body: some View {
@@ -120,7 +120,7 @@ struct TransactionMainView_Previews: PreviewProvider {
     NavigationStack {
       TransactionMainView()
     }
-    .environmentObject(InAndOutDocument.mock())
+    .environmentObject(InTransactDocument.mock())
     
   }
 }

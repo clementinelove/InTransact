@@ -161,7 +161,7 @@ struct ItemTransactionEditView: View {
   @State private var lastValidQuantity: ItemQuantity = 0
   @State private var attemptToDiscardChanges = false
   @State private var isShowingTemplates = false
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   
   private let editMode: EditMode
   private let onCommit: ((ItemTransaction) -> Void)
@@ -582,14 +582,14 @@ struct ItemTransactionEditView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationStack {
       ItemTransactionEditView(edit: .fresh()) { _ in }
-        .environmentObject(InAndOutDocument.mock())
+        .environmentObject(InTransactDocument.mock())
     }
     .previewDisplayName("Edit")
     NavigationStack {
       ItemTransactionEditView { _ in
         // save ...
       }
-      .environmentObject(InAndOutDocument.mock())
+      .environmentObject(InTransactDocument.mock())
     }
     .previewDisplayName("New")
   }

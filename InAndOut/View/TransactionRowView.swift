@@ -12,7 +12,7 @@ struct TransactionRowView: View {
   
   private static let localizationTable = "TransactionRow"
   
-  @EnvironmentObject var document: InAndOutDocument
+  @EnvironmentObject var document: InTransactDocument
   @Binding var transaction: Transaction
   let currencyIdentifier: String
   @Environment(\.locale) private var locale
@@ -129,7 +129,7 @@ struct TransactionRowView_Previews: PreviewProvider {
         }
       }
       .listStyle(.plain)
-      .environmentObject(InAndOutDocument.mock())
+      .environmentObject(InTransactDocument.mock())
     }
   }
 }

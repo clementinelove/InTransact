@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ItemTemplateListView: View {
   
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @Environment(\.dismiss) private var dismiss
   @State private var selectedTemplate: ItemTemplate? = nil
   @State private var searchText: String = ""
@@ -62,7 +62,7 @@ struct ItemTemplateListView: View {
 
 struct ItemTemplateSearchResultListView: View {
   
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @Environment(\.isSearching) private var isSearching
   
   @Binding var searchText: String
@@ -97,7 +97,7 @@ struct ItemTemplateSearchResultListView: View {
 
 struct ItemTemplateDetailView: View {
   
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @Environment(\.dismiss) private var dismiss
   let itemTemplate: ItemTemplate
   var parentDismiss: DismissAction?
@@ -255,11 +255,11 @@ struct ItemTemplateListView_Previews: PreviewProvider {
     static var previews: some View {
       NavigationStack {
         ItemTemplateListView(asSheet: true) { _ in }
-          .environmentObject(InAndOutDocument.mock())
+          .environmentObject(InTransactDocument.mock())
       }
       .previewDisplayName("Item Templates")
       
       ItemTemplateDetailView(itemTemplate: .mock())
-        .environmentObject(InAndOutDocument.mock())
+        .environmentObject(InTransactDocument.mock())
     }
 }

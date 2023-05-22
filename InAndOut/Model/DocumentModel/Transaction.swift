@@ -12,10 +12,10 @@ import NTPlatformKit
 
 public typealias ItemQuantity = UInt32
 
-extension UTType {
-  static var transaction: UTType = UTType(exportedAs: "com.inandout.transaction")
-  static var itemTransaction: UTType = UTType(exportedAs: "com.inandout.transaction.item")
-}
+//extension UTType {
+//  static var transaction: UTType = UTType(exportedAs: "com..transaction")
+//  static var itemTransaction: UTType = UTType(exportedAs: "com.inandout.transaction.item")
+//}
 
 enum TransactionType: Int, Codable, CaseIterable, CustomStringConvertible {
   case itemsIn

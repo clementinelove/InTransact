@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TransactionDetailView: View {
   
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @Environment(\.displayScale) private var displayScale
   @Environment(\.dismiss) private var dismiss
   @Environment(\.undoManager) private var undoManager
@@ -273,7 +273,7 @@ struct TransactionDetailView_Previews: PreviewProvider {
         TransactionDetailView(transaction: .constant(.mock()), onDelete: { })
           .padding()
       }
-        .environmentObject(InAndOutDocument.mock())
+        .environmentObject(InTransactDocument.mock())
     }
 //    TransactionSnapShotView(transaction: .mock())
   }

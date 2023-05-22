@@ -58,7 +58,7 @@ struct TransactionListView: View {
     }
   }
   
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @Environment(\.undoManager) private var undoManager
   
   /// Presenting new transaction form in a sheet.
@@ -539,7 +539,7 @@ struct TransactionListView: View {
 
 struct TransactionSearchResultView: View {
   
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @Environment(\.isSearching) private var isSearching
   @Binding var searchText: String
   @ObservedObject var transactionInspectorState: TransactionListView.TransactionInspectorState
@@ -603,15 +603,15 @@ struct TransactionListView_Previews: PreviewProvider {
       
       NavigationStack {
         TransactionListView()
-          .environmentObject(InAndOutDocument(mock: false))
+          .environmentObject(InTransactDocument(mock: false))
       }
       
       NavigationStack {
         TransactionListView()
-          .environmentObject(InAndOutDocument(mock: true))
+          .environmentObject(InTransactDocument(mock: true))
       }
       
       TransactionSearchResultView(searchText: .constant("3"), transactionInspectorState: .init(), inspectorDetent: .constant(.large))
-        .environmentObject(InAndOutDocument(mock: true))
+        .environmentObject(InTransactDocument(mock: true))
     }
 }

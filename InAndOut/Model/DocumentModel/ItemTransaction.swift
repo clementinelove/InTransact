@@ -8,11 +8,11 @@
 import Foundation
 import CoreTransferable
 
-extension ItemTransaction: Transferable {
-  public static var transferRepresentation: some TransferRepresentation {
-    CodableRepresentation(contentType: .itemTransaction)
-  }
-}
+//extension ItemTransaction: Transferable {
+//  public static var transferRepresentation: some TransferRepresentation {
+//    CodableRepresentation(contentType: .itemTransaction)
+//  }
+//}
 
 
 public struct ItemTransaction: Identifiable, Codable, Equatable {

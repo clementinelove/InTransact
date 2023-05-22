@@ -93,7 +93,7 @@ struct TransactionEditView: View {
   
   @Environment(\.dismiss) private var dismiss
   
-  @EnvironmentObject private var document: InAndOutDocument
+  @EnvironmentObject private var document: InTransactDocument
   @StateObject private var viewModel: TransactionViewModel
   @State private var editingItem: Binding<ItemTransaction>? = nil
   @State private var showAddItemTransactionView = false
@@ -178,11 +178,11 @@ struct TransactionEditView: View {
             ItemTransactionRow(itemTransaction: item)
           }
           .foregroundStyle(.primary)
-          .draggable(item.wrappedValue) {
-            ItemTransactionRow(itemTransaction: item)
-              .padding()
-              .clipShape(RoundedRectangle(cornerRadius: 10))
-          }
+//          .draggable(item.wrappedValue) {
+//            ItemTransactionRow(itemTransaction: item)
+//              .padding()
+//              .clipShape(RoundedRectangle(cornerRadius: 10))
+//          }
         }
         .onDelete { indexSet in
           viewModel.subtransactions.remove(atOffsets: indexSet)
@@ -315,14 +315,14 @@ struct TransactionEditView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationStack {
       TransactionEditView(edit: .mock()) { _ in }
-        .environmentObject(InAndOutDocument.mock())
+        .environmentObject(InTransactDocument.mock())
     }
     .previewDisplayName("Edit")
     
     NavigationStack {
       TransactionEditView(new: .itemsIn) { _ in
       }
-      .environmentObject(InAndOutDocument.mock())
+      .environmentObject(InTransactDocument.mock())
     }
     .previewDisplayName("New")
   }

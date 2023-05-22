@@ -10,16 +10,16 @@ import DequeModule
 
 // TODO: Deque Module is everywhere and it's not necessary
 
-extension InAndOutDocument {
-  static func mock() -> InAndOutDocument {
-    InAndOutDocument(mock: true)
+extension InTransactDocument {
+  static func mock() -> InTransactDocument {
+    InTransactDocument(mock: true)
   }
 }
 
-extension INODocument {
+extension INTDocument {
   static func mock() -> Self {
-//    INODocument()
-    INODocument(settings: Setting(),
+//    INTDocument()
+    INTDocument(settings: Setting(),
                 itemTemplates: [
                   ItemTemplate(itemName: "Burger",
                                variantName: "Whooper",
