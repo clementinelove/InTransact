@@ -111,55 +111,23 @@ struct TransactionListView: View {
     Group {
       if document.content.transactions.isEmpty {
         EmptyListPlaceholder("No Transactions")
-        
       } else {
-        List {
-          ForEach(sortedTransactionIndexes, id: \.self) { index in
-            Button {
-              // tap to inspect details
-              
-              transactionInspectorState.inspect(index: index)
-              
-            } label: {
-              TransactionRowView(transaction: $document.content.transactions[index], currencyIdentifier: document.currencyCode)
+        #if os(iOS)
+        
+        transactionList
+        #elseif os(macOS)
+        NavigationSplitView {
+          transactionList
+          .navigationSplitViewColumnWidth(min: 300, ideal: 400, max: 500)
+        } detail: {
+          ScrollView(.vertical) {
+            TransactionDetailView(transaction: $document.content.transactions[transactionInspectorState.transactionIndex]) {
+              // on delete
             }
-            //        .contextMenu {
-            //          // copy, share, duplicate, delete
-            //          Button {
-            //            // FIXME: not implemented
-            //          } label: {
-            //            Label("Copy", systemImage: "doc.on.doc")
-            //          }
-            //
-            //          Button {
-            //            // FIXME: not implemented
-            //          } label: {
-            //            Label("Share", systemImage: "square.and.arrow.up")
-            //          }
-            //
-            //          Button {
-            //            // FIXME: not implemented
-            //          } label: {
-            //            Label("Duplicate", systemImage: "plus.square.on.square")
-            //          }
-            //
-            //          Button(role: .destructive) {
-            //            // FIXME: not implemented
-            //          } label: {
-            //            Label("Delete", systemImage: "plus.square.on.square")
-            //          }
-            //
-            //        }
+            .padding()
           }
-          .onDelete { indexSet in
-            let transactionsCache = processedTransactions
-            let ids = indexSet.map { offset in
-              transactionsCache[offset].element.id
-            }
-            document.deleteTransactions(withIDs: ids, undoManager: undoManager)
-          }
-          .listSectionSeparator(.hidden, edges: .top)
         }
+        #endif
       }
     }
 
@@ -167,21 +135,8 @@ struct TransactionListView: View {
 //    .toolbar(.hidden, for: .navigationBar)
     .navigationBarTitleDisplayMode(.inline)
     .navigationTitle("")
-#endif
-    .listStyle(.plain)
-    // MARK: List End without Overlay
-    .safeAreaInset(edge: .top, alignment: .center, spacing: 0) {
-      if !itemNameFilter.isEmpty {
-        TransactionFilterBadge(filteredItemName: $itemNameFilter)
-      }
-    }
-    // MARK: search bar
-    .overlay { // Use .overlay to ensure the UI under is unchanged
-      TransactionSearchResultView(searchText: $searchText,
-                                  transactionInspectorState: transactionInspectorState,
-                                  inspectorDetent: $transactionDetailDetent)
-    }
-    .searchable(text: $searchText, placement: .toolbar)
+    #endif
+    
     // MARK: Item Statistics
     .sheet(isPresented: $isPresentingItemStatisticsView) {
       Task { @MainActor in
@@ -236,8 +191,8 @@ struct TransactionListView: View {
             }
           }
         })
-          #if os(iOS)
-.toolbarRole(.navigationStack)
+#if os(iOS)
+        .toolbarRole(.navigationStack)
 #endif
       }
     }
@@ -272,13 +227,21 @@ struct TransactionListView: View {
       }
     }
     .toolbar {
-      
+      #if os(iOS)
       ToolbarItemGroup(placement: .bottomBar) {
         newTransactionButton
           .padding(.bottom, 6)
         Spacer()
         itemCountButton
+          .padding(.bottom, 6)
       }
+      #else
+      ToolbarItemGroup(placement: .primaryAction) {
+        newTransactionButton
+        Spacer()
+        itemCountButton
+      }
+      #endif
       
       ToolbarItemGroup(placement: .primaryAction) {
         sortMethodMenu
@@ -309,6 +272,110 @@ struct TransactionListView: View {
       }
     }
     // MARK: View End
+  }
+  
+//  var searchable: some View {
+//    // MARK: List End without Overlay
+//    .safeAreaInset(edge: .top, alignment: .center, spacing: 0) {
+//      if !itemNameFilter.isEmpty {
+//        TransactionFilterBadge(filteredItemName: $itemNameFilter)
+//      }
+//    }
+//    // MARK: search bar
+//    .overlay { // Use .overlay to ensure the UI under is unchanged
+//      TransactionSearchResultView(searchText: $searchText,
+//                                  transactionInspectorState: transactionInspectorState,
+//                                  inspectorDetent: $transactionDetailDetent)
+//    }
+//
+//    // Searchable modifier should always put after the search results overlay
+//#if os(iOS)
+//    .searchable(text: $searchText, placement: .toolbar)
+//#elseif os(macOS)
+//    .searchable(text: $searchText, placement: .sidebar)
+//#endif
+//  }
+  
+  var transactionList: some View {
+    #if os(iOS)
+    List {
+      ForEach(sortedTransactionIndexes, id: \.self) { index in
+        Button {
+          // tap to inspect details
+          transactionInspectorState.inspect(index: index)
+        } label: {
+          TransactionRowView(transaction: document.content.transactions[index], currencyIdentifier: document.currencyCode)
+        }
+      }
+      .onDelete { indexSet in
+        let transactionsCache = processedTransactions
+        let ids = indexSet.map { offset in
+          transactionsCache[offset].element.id
+        }
+        document.deleteTransactions(withIDs: ids, undoManager: undoManager)
+      }
+      .listSectionSeparator(.hidden, edges: .top)
+    }
+    .listStyle(.plain)
+    .safeAreaInset(edge: .top, alignment: .center, spacing: 0) {
+      if !itemNameFilter.isEmpty {
+        TransactionFilterBadge(filteredItemName: $itemNameFilter)
+      }
+    }
+    // MARK: search bar
+    .overlay { // Use .overlay to ensure the UI under is unchanged
+      TransactionSearchResultView(searchText: $searchText,
+                                  transactionInspectorState: transactionInspectorState,
+                                  inspectorDetent: $transactionDetailDetent)
+    }
+    
+    // Searchable modifier should always put after the search results overlay
+    .searchable(text: $searchText, placement: .toolbar)
+    #elseif os(macOS)
+      List(selection: $transactionInspectorState.transactionIndex) {
+        ForEach(sortedTransactionIndexes, id: \.self) { index in
+          
+          TransactionRowView(transaction: document.content.transactions[index], currencyIdentifier: document.currencyCode)
+            .tag(index)
+          //        .contextMenu {
+          //          // copy, share, duplicate, delete
+          //          Button {
+          //            // FIXME: not implemented
+          //          } label: {
+          //            Label("Copy", systemImage: "doc.on.doc")
+          //          }
+          //
+          //          Button {
+          //            // FIXME: not implemented
+          //          } label: {
+          //            Label("Share", systemImage: "square.and.arrow.up")
+          //          }
+          //
+          //          Button {
+          //            // FIXME: not implemented
+          //          } label: {
+          //            Label("Duplicate", systemImage: "plus.square.on.square")
+          //          }
+          //
+          //          Button(role: .destructive) {
+          //            // FIXME: not implemented
+          //          } label: {
+          //            Label("Delete", systemImage: "plus.square.on.square")
+          //          }
+          //
+          //        }
+        }
+        .onDelete { indexSet in
+          let transactionsCache = processedTransactions
+          let ids = indexSet.map { offset in
+            transactionsCache[offset].element.id
+          }
+          document.deleteTransactions(withIDs: ids, undoManager: undoManager)
+        }
+        .listSectionSeparator(.hidden, edges: .top)
+      }
+      .listStyle(.sidebar)
+    #endif
   }
 
   // MARK: Item Count Sheet Button
@@ -572,7 +639,7 @@ struct TransactionSearchResultView: View {
                 }
               }
             } label: {
-              TransactionRowView(transaction: $document.content.transactions[i],
+              TransactionRowView(transaction: document.content.transactions[i],
                                  currencyIdentifier: document.currencyCode)
             }
           }
@@ -605,13 +672,21 @@ struct TransactionListView_Previews: PreviewProvider {
         TransactionListView()
           .environmentObject(InTransactDocument(mock: false))
       }
+      .previewDisplayName("No Data (iOS)")
       
       NavigationStack {
         TransactionListView()
           .environmentObject(InTransactDocument(mock: true))
       }
+      .previewDisplayName("With Mock Data (iOS)")
+      
+      TransactionListView()
+        .environmentObject(InTransactDocument(mock: true))
+        .previewDisplayName("With Mock Data (macOS)")
+      
       
       TransactionSearchResultView(searchText: .constant("3"), transactionInspectorState: .init(), inspectorDetent: .constant(.large))
         .environmentObject(InTransactDocument(mock: true))
+        .previewDisplayName("Search Results")
     }
 }

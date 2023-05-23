@@ -571,7 +571,8 @@ struct ItemTransactionEditView: View {
       if viewModel.hasChanges {
         attemptToDiscardChanges = true
       } else {
-        onCommit(viewModel.updatedItemTransaction)
+        // Animation stutters when commit not called
+//        onCommit(viewModel.updatedItemTransaction)
         dismiss()
       }
     }

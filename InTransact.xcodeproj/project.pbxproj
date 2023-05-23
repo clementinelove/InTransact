@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		582820322A193E3B0001CCA0 /* DocumentSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582820312A193E3B0001CCA0 /* DocumentSplitView.swift */; };
+		582758BE2A1B6687004F0B91 /* DocumentExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582758BD2A1B6687004F0B91 /* DocumentExportView.swift */; };
 		582820352A196D310001CCA0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 582820332A196D310001CCA0 /* Localizable.strings */; };
 		582820382A1A39740001CCA0 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 5828203A2A1A39740001CCA0 /* Localizable.stringsdict */; };
 		5843B9D32A12EA530048C0CA /* DocumentSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9D22A12EA530048C0CA /* DocumentSettingsView.swift */; };
@@ -75,7 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		582820312A193E3B0001CCA0 /* DocumentSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSplitView.swift; sourceTree = "<group>"; };
+		582758BD2A1B6687004F0B91 /* DocumentExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentExportView.swift; sourceTree = "<group>"; };
 		582820342A196D310001CCA0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		582820392A1A39740001CCA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		5828203B2A1A39760001CCA0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
@@ -264,10 +264,10 @@
 		5858FB6A2A0A302C005FAAA6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				582758BD2A1B6687004F0B91 /* DocumentExportView.swift */,
 				589E20282A0D33C7008A5BDA /* Controls */,
 				5858FB182A07D17F005FAAA6 /* App.swift */,
 				5858FB512A07D19A005FAAA6 /* DocumentMainView.swift */,
-				582820312A193E3B0001CCA0 /* DocumentSplitView.swift */,
 				589E20242A0CFB39008A5BDA /* TransactionListView.swift */,
 				585E82922A118FD300B79AD2 /* TransactionMainView.swift */,
 				5858FB492A07D191005FAAA6 /* TransactionDetailView.swift */,
@@ -461,9 +461,9 @@
 				5843B9D52A137C050048C0CA /* CurrencyPickerContent.swift in Sources */,
 				5843B9D72A13893C0048C0CA /* TransactionFilterBadge.swift in Sources */,
 				589E20232A0C5645008A5BDA /* DisclaimerView.swift in Sources */,
+				582758BE2A1B6687004F0B91 /* DocumentExportView.swift in Sources */,
 				5843B9DD2A143E260048C0CA /* CSVSupport.swift in Sources */,
 				587F24532A18CC3600C3AF61 /* ItemTemplateRow.swift in Sources */,
-				582820322A193E3B0001CCA0 /* DocumentSplitView.swift in Sources */,
 				589E20912A10CE6A008A5BDA /* TransactionRowView.swift in Sources */,
 				5843B9EA2A168AC00048C0CA /* SeparatedValueBuilder.swift in Sources */,
 				589E20992A10CE6A008A5BDA /* LocationPicker.swift in Sources */,
@@ -696,7 +696,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cc.clems.InTransact;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -740,7 +740,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cc.clems.InTransact;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -12,28 +12,8 @@ struct DocumentMainView: View {
   @EnvironmentObject var document: InTransactDocument
   @Environment(\.undoManager) var undoManager
   
-  
-  
   var body: some View {
-    #if os(iOS)
     TransactionListView()
-    #elseif os(macOS)
-    DocumentSplitView()
-    #endif
-//    #if os(iOS)
-//
-//    TransactionListView()
-//
-//    #else
-//    NavigationSplitView {
-//      List {
-//
-//      }
-//    } detail: {
-//      Text("Select a sidebar item to start")
-//    }
-//    #endif
-    
   }
 }
 

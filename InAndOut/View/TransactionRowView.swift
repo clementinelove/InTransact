@@ -13,7 +13,7 @@ struct TransactionRowView: View {
   private static let localizationTable = "TransactionRow"
   
   @EnvironmentObject var document: InTransactDocument
-  @Binding var transaction: Transaction
+  var transaction: Transaction
   let currencyIdentifier: String
   @Environment(\.locale) private var locale
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -26,7 +26,11 @@ struct TransactionRowView: View {
       Text(transaction.transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? String(localized: "No ID Specified", comment: "Transaction ID placeholder when its value is not available"))
         .textCase(.uppercase)
         .font(.system(.caption, design: .monospaced))
+      #if os(iOS)
         .foregroundColor(Global.transactionIDHighlightColor)
+      #elseif os(macOS)
+        .foregroundColor(.primary)
+      #endif
         .fontWeight(.medium)
         .lineLimit(1)
         .font(.caption)
@@ -124,7 +128,7 @@ struct TransactionRowView_Previews: PreviewProvider {
     NavigationStack {
       List {
         ForEach(0..<100) { _  in
-          TransactionRowView(transaction: .constant(.mock()), currencyIdentifier: Global.currentCurrencyCode)
+          TransactionRowView(transaction: .mock(), currencyIdentifier: Global.currentCurrencyCode)
           
         }
       }

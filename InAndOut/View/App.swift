@@ -15,7 +15,6 @@ struct InAndOutApp: App {
       //            ContentView(document: file.$document)
       DocumentMainView()
         
-      // TODO: add document currency code
       // TODO: add first time feature introduction popup
     }
   }

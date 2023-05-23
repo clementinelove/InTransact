@@ -10,21 +10,39 @@ import DequeModule
 
 protocol ExportTableColumn {
   associatedtype T
+  var id: UUID { get } // I am being sloppy for UI Purposes
   var columnName: String { get }
   var columnDataExtractor: (T) -> String { get }
 }
 
 struct TransactionTableColumn: ExportTableColumn {
+  let id: UUID = UUID()
   var columnName: String
   var columnDataExtractor: (Transaction) -> String
 }
 
 struct ItemTransactionTableColumn: ExportTableColumn {
+  let id: UUID = UUID()
   var columnName: String
   var columnDataExtractor: (ItemTransaction) -> String
 }
 
-enum INOExportColumn {
+enum INTExportColumn: Identifiable {
+  
+  var id: UUID {
+    switch self {
+      case .itemTransaction(let c): return c.id
+      case .transaction(let c): return c.id
+    }
+  }
+  
+  var columnName: String {
+    switch self {
+      case .itemTransaction(let c): return c.columnName
+      case .transaction(let c): return c.columnName
+    }
+  }
+  
   case transaction(TransactionTableColumn)
   case itemTransaction(ItemTransactionTableColumn)
   
@@ -34,7 +52,7 @@ enum INOExportColumn {
   static let transactionNotes = Self.transaction(.init(columnName: "Notes")
                                                        { $0.comment })
   
-  static let transactionID = Self.transaction(.init(columnName: "Transaction ID")
+  static let transactionID = Self.transaction(.init(columnName: .init(localized: "Transaction ID"))
                                                     { $0.transactionID })
   
   static let transactionDate = Self.transaction(.init(columnName: "Date")
@@ -46,7 +64,7 @@ enum INOExportColumn {
   static let variantName = Self.itemTransaction(.init(columnName: "Variant Name")
                                                 { $0.variant ?? ""})
   
-  static func totalAfterTax(settings: Setting) -> INOExportColumn {
+  static func totalAfterTax(settings: Setting) -> INTExportColumn {
     .itemTransaction(.init(columnName: "Price") { itemTransaciton in
       itemTransaciton
         .priceInfo
@@ -88,16 +106,16 @@ extension INTDocument {
     case item
   }
   
-  func csv(columns: [INOExportColumn]) throws -> Data? {
+  func csv(columns: [INTExportColumn]) throws -> Data? {
     separatedValueDocument(seperator: ",", columns: columns)
   }
   
-  func tsv(columns: [INOExportColumn]) throws -> Data? {
+  func tsv(columns: [INTExportColumn]) throws -> Data? {
     separatedValueDocument(seperator: "\t", columns: columns)
   }
   
   /// Generate rows on per item basis
-  func separatedValueDocument(seperator: String, columns: [INOExportColumn]) -> Data? {
+  func separatedValueDocument(seperator: String, columns: [INTExportColumn]) -> Data? {
     
     var svDocumentString: String = ""
     

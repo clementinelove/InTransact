@@ -250,8 +250,8 @@ struct TransactionEditView: View {
           viewModel.append(subtransaction: subtransaction)
         }
         #if os(iOS)
-.toolbarRole(.navigationStack)
-#endif
+        .toolbarRole(.navigationStack)
+        #endif
       }
     }
     // MARK: Toolbar
