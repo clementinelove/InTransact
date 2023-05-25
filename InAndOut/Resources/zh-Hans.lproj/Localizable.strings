@@ -25,6 +25,8 @@
 /* No comment provided by engineer. */
 "Apply This Template" = "应用该模版";
 
+"A variant name can be used to refer to a different version or option of an item." = "变体名称可以用来表示某一条目的不同型号、版本或样式。";
+
 /* No comment provided by engineer. */
 "Cancel" = "取消";
 
@@ -37,11 +39,15 @@
 /* No comment provided by engineer. */
 "Compound Tax" = "复率税";
 
+"Columns" = "表列";
+
 /* No comment provided by engineer. */
 "Currency" = "货币";
 
 /* No comment provided by engineer. */
 "Date" = "日期";
+
+"Date & Time" = "日期与时间";
 
 /* No comment provided by engineer. */
 "Delete" = "删除";
@@ -80,6 +86,10 @@
 /* Footer text that explains a random ID is needed for every transaction and a random ID will be generated for user if they leave this field to be empty */
 "Every transaction needs be identified by a transaction ID. A random ID will be generated for you if you leave this field to be empty." = "每笔交易都需要交易ID来识别。当您将此字段留空时，将生成一个随机ID。";
 
+"Export" = "导出";
+
+"Export To CSV" = "导出为CSV";
+
 /* No comment provided by engineer. */
 "Filtering" = "筛选";
 
@@ -105,10 +115,20 @@
 "Items Count" = "条目数量";
 
 /* No comment provided by engineer. */
+"Item Quantity" = "数量";
+
+/* No comment provided by engineer. */
 "Items In" = "进货";
 
 /* Footer text that explains the meaning of each transaction type */
 "Items In: records items moving in\nItems Out: records items moving out" = "进货：记录进货条目\n出货：记录出货条目";
+
+/* No comment provided by engineer. */
+"Item Total After Tax" = "条目税后总额";
+
+"Item Tax Total" = "条目税务总额";
+
+"Item Unit Price Before Tax" = "条目税前单价";
 
 /* No comment provided by engineer. */
 "Items Out" = "出货";
@@ -168,6 +188,8 @@
 /* No comment provided by engineer. */
 "Search Location..." = "搜索地点……";
 
+"Share" = "共享";
+
 /* Button title that sort transactions by smallest total first */
 "Smallest First" = "最小额的排最前";
 
@@ -200,6 +222,8 @@
 /* No comment provided by engineer. */
 "Templates" = "模版";
 
+"Time" = "时间";
+
 /* Labels the total amount of a transaction */
 "Total" = "总额";
 
@@ -211,6 +235,9 @@
 
 /* Navigation title of a transaction */
 "Transaction" = "交易";
+
+"Transaction Date" = "交易日期";
+"Transaction Time" = "交易时间";
 
 /* No comment provided by engineer. */
 "Transaction %@" = "交易%@";
@@ -224,6 +251,8 @@
 /* No comment provided by engineer. */
 "Transactions" = "交易";
 
+"Transaction Total After Tax" = "交易税后总额";
+
 "Unit Price After Tax" = "税后单价";
 "Unit Price Before Tax" = "税前单价";
 
@@ -235,6 +264,8 @@
 
 /* Placeholder for empty item name */
 "Unknown Item Name" = "未知条目名";
+
+"Untitled" = "未命名";
 
 "(Unnamed Item)" = "(未命名条目)";
 "(Unnamed Variant)" = "(未命名变体)";

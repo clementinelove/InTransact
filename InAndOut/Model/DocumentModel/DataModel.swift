@@ -62,6 +62,14 @@ struct ItemTemplate: Codable, Hashable, Identifiable, Equatable {
 
 struct INTDocument: Identifiable, Codable {
   var id: UUID = UUID()
+  
+  // FIXME: DO NOT remove this fixme – update document version if document model updated.
+  /** The version of the document.
+   
+   Everytime the document model changes the developer should update the version of the document,
+   the app will be able to see if the app version is lower than the document version and show alerts to users accordingly.
+  */
+  var version: Int = 1
   var settings: Setting = Setting()
 //  var entityTemplates: [Entity]
   var itemTemplates: OrderedSet<ItemTemplate> = []

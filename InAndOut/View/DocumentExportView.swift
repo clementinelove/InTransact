@@ -6,21 +6,60 @@
 //
 
 import SwiftUI
+import Combine
 
-struct DocumentExporter {
+class DocumentExporter: ObservableObject {
   let document: InTransactDocument
-  var exportColumns: [ExportColumnRow]
+  @Published var exportColumnRows: [ExportColumnRow]
+  @Published var exportColumns: [INTExportColumn] = []
+  @Published var generatedDocumentPath: URL? = nil
+  @Published var isGeneratingDocument: Bool = false
+  private var csvGenerationTask: Task<Void, Error>? = nil
+  private var cancellables: Set<AnyCancellable> = Set()
+  private var documentTitle: String
   
-  init(document: InTransactDocument) {
+  init(documentTitle: String?, document: InTransactDocument) {
+    self.documentTitle = documentTitle ?? String(localized: "Untitled", comment: "File name without extension for exported file when the document doesn't have a title")
+    
+    
     self.document = document
     
     let defaultExportColumns: [INTExportColumn] = [
-      .transactionType, .transactionDate, .transactionID, .itemName, .variantName, .transactionNotes, .totalAfterTax(settings: document.content.settings)
+      .transactionType, .transactionDate, .transactionTime, .transactionID, .itemName, .variantName, .itemQuantity, 
+      .pricePerUnitBeforeTax(settings: document.content.settings),
+      .itemTaxTotal(settings: document.content.settings),
+      .itemTotalAfterTax(settings: document.content.settings),
+      .transactionTotalAfterTax(settings: document.content.settings),
+      .transactionNotes
     ]
     
-    self.exportColumns = defaultExportColumns.map { ExportColumnRow(exportColumn: $0)
+    self.exportColumnRows = defaultExportColumns.map { ExportColumnRow(exportColumn: $0)
     }
     
+    $exportColumnRows
+      .handleEvents(receiveRequest:  { [weak self] _ in
+        self?.generatedDocumentPath = nil
+      })
+      .compactMap {
+        $0
+          .filter { $0.isEnabled }
+          .map { $0.exportColumn }
+      }
+      .receive(on: RunLoop.main)
+      .assign(to: \.exportColumns, on: self)
+      .store(in: &cancellables)
+  }
+  
+  @MainActor
+  func generateDocument() async {
+    csvGenerationTask?.cancel()
+    csvGenerationTask = Task(priority: .userInitiated) {
+      isGeneratingDocument = true
+      generatedDocumentPath = try document.content.separatedValueDocument(fileName: "\(documentTitle).csv", seperator: ",", columns: exportColumns)
+      if !Task.isCancelled {
+        isGeneratingDocument = false
+      }
+    }
   }
 }
 
@@ -32,27 +71,21 @@ struct ExportColumnRow: Identifiable {
 
 
 struct DocumentExportView: View {
-
-  enum ExportRange {
-    case all
-    case ranged
-  }
-  
-  @State private var exporter: DocumentExporter = DocumentExporter(document: InTransactDocument(mock: false))
-  @State private var exportRange: ExportRange = .all
+  @Environment(\.dismiss) private var dismiss
+  @StateObject private var exporter: DocumentExporter
   @State private var exportStartDate: Date = Date.now
   @State private var exportEndDate: Date = Date.now
   
-  init(document: InTransactDocument) {
-    self._exporter = State(initialValue: DocumentExporter(document: document))
-    self.exportRange
+  init(title: String?, document: InTransactDocument) {
+    self._exporter = StateObject(wrappedValue: DocumentExporter(documentTitle: title, document: document))
+    
   }
   
-    var body: some View {
+  var body: some View {
       List {
         
         Section("Columns") {
-          ForEach($exporter.exportColumns) { $column in
+          ForEach($exporter.exportColumnRows) { $column in
             HStack {
               Text($column.wrappedValue.exportColumn.columnName)
               Toggle(isOn: $column.isEnabled) {
@@ -61,20 +94,65 @@ struct DocumentExportView: View {
             }
           }
           .onMove { offsets, destination in
-            exporter.exportColumns.move(fromOffsets: offsets, toOffset: destination)
+            exporter.exportColumnRows.move(fromOffsets: offsets, toOffset: destination)
           }
         }
         
       }
-      #if os(iOS)
+      .onReceive(exporter.$exportColumns) { columns in
+        Task {
+          await exporter.generateDocument()
+          NSTemporaryDirectory()
+        }
+      }
+      .safeAreaInset(edge: .bottom, spacing: 0) {
+        VStack {
+          if let filePath = exporter.generatedDocumentPath {
+            ShareLink(item: filePath) {
+              Text("Share")
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 11)
+                .fontWeight(.medium)
+            }
+            .buttonStyle(.borderedProminent)
+            .padding()
+            .disabled(exporter.isGeneratingDocument)
+            
+            .labelStyle(.titleOnly)
+          }
+        }
+        .background(.thinMaterial)
+      }
+      .toolbar {
+        ToolbarItem(placement: .cancellationAction) {
+          Button {
+            dismiss()
+          } label: {
+            Text("Done")
+          }
+
+        }
+      }
+#if os(iOS)
       .environment(\.editMode, .constant(.active))
-      #endif
-      .navigationTitle("Export")
+      .navigationBarTitleDisplayMode(.inline)
+#endif
+      .navigationTitle("Export To CSV")
     }
 }
 
+
+
 struct DocumentExportView_Previews: PreviewProvider {
     static var previews: some View {
-      DocumentExportView(document: InTransactDocument.mock())
+      Rectangle()
+        .sheet(isPresented: .constant(true)) {
+          NavigationStack {
+            DocumentExportView(title: "Test Demo", document: InTransactDocument.mock())
+              .toolbarRole(.navigationStack)
+          }
+        }
+      
+        
     }
 }

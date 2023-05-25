@@ -203,6 +203,8 @@ struct ItemTransactionEditView: View {
         TextField("Variant Name", text: $viewModel.variantName)
           .focused($focusField, equals: .variantName)
         
+      } footer: {
+        Text("A variant name can be used to refer to a different version or option of an item.")
       }
       
       Section {

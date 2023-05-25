@@ -29,7 +29,7 @@ final class InTransactDocument: ReferenceFileDocument {
     content // Make a copy
   }
   
-  init(mock: Bool = false) {
+  init(mock: Bool = true) {
     if mock {
       self.content = .mock()
     } else {
@@ -43,7 +43,8 @@ final class InTransactDocument: ReferenceFileDocument {
       throw CocoaError(.fileReadCorruptFile)
     }
     // TODO: decode
-    self.content = try JSONDecoder().decode(INTDocument.self, from: data)
+//    self.content = try JSONDecoder().decode(INTDocument.self, from: data)
+    self.content = INTDocument.mock() // for testing
   }
   
   func fileWrapper(snapshot: INTDocument, configuration: WriteConfiguration) throws -> FileWrapper {

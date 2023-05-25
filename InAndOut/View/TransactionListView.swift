@@ -79,6 +79,8 @@ struct TransactionListView: View {
   /// Tells whether user is currently viewing document settings sheet.
   @State private var isPresentingDocumentSettings = false
   
+  @State private var isPresentingDocumentExporter = false
+  
   /// Tells whether user is currently viewing currency picker options.
   @State private var isShowingCurrencyPicker = false
   
@@ -87,6 +89,7 @@ struct TransactionListView: View {
   @State var selectedSortOrder: SortOrder = .reverse
   
   @State var searchText: String = ""
+  var documentName: String? = nil
   
   /// TODO: use states rather than dyanmic var to store transactions to avoid performance issues during deletion.
   var processedTransactions: [(offset: Int, element: Transaction)] {
@@ -170,6 +173,19 @@ struct TransactionListView: View {
           #endif
       }
     }
+    // MARK: Document Exporter
+    .sheet(isPresented: $isPresentingDocumentExporter) {
+      Task { @MainActor in
+        isPresentingDocumentExporter = false
+      }
+    } content: {
+      NavigationStack {
+        DocumentExportView(title: documentName, document: document)
+#if os(iOS)
+          .toolbarRole(.navigationStack)
+#endif
+      }
+    }
     // MARK: Currency Picker
     .sheet(isPresented: $isShowingCurrencyPicker, onDismiss: {
       Task { @MainActor in
@@ -247,7 +263,7 @@ struct TransactionListView: View {
         sortMethodMenu
       }
       
-      ToolbarItem(placement: .secondaryAction) {
+      ToolbarItemGroup(placement: .secondaryAction) {
         // TODO: share link
         // FIXME: document settings not implemented
         //          Button("Document Settings") {
@@ -256,6 +272,16 @@ struct TransactionListView: View {
         //              isPresentingDocumentSettings = true
         //            }
         //          }
+        
+        Button {
+          isPresentingDocumentExporter = true
+        } label: {
+          Label {
+            Text("Export To CSV", comment: "Button title that exports the document in the csv format")
+          } icon: {
+            Image(systemName: "tablecells")
+          }
+        }
         
         Button {
           isShowingCurrencyPicker = true
@@ -336,6 +362,8 @@ struct TransactionListView: View {
         ForEach(sortedTransactionIndexes, id: \.self) { index in
           
           TransactionRowView(transaction: document.content.transactions[index], currencyIdentifier: document.currencyCode)
+            .padding(.vertical, 4)
+            .listRowSeparator(.visible, edges: .bottom)
             .tag(index)
           //        .contextMenu {
           //          // copy, share, duplicate, delete
@@ -374,6 +402,7 @@ struct TransactionListView: View {
         }
         .listSectionSeparator(.hidden, edges: .top)
       }
+      
       .listStyle(.sidebar)
     #endif
   }

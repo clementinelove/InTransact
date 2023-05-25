@@ -31,7 +31,6 @@
 		5858FB3A2A07D180005FAAA6 /* InAndOutUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB392A07D180005FAAA6 /* InAndOutUITestsLaunchTests.swift */; };
 		5858FB4D2A07D191005FAAA6 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB482A07D191005FAAA6 /* Mock.swift */; };
 		5858FB522A07D19A005FAAA6 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB502A07D19A005FAAA6 /* DataModel.swift */; };
-		5858FB532A07D19A005FAAA6 /* DocumentMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB512A07D19A005FAAA6 /* DocumentMainView.swift */; };
 		5858FB5C2A07E8DE005FAAA6 /* NTPlatformKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5858FB5B2A07E8DE005FAAA6 /* NTPlatformKit */; };
 		5858FB612A09A25D005FAAA6 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 5858FB602A09A25D005FAAA6 /* Collections */; };
 		5858FB632A09A25D005FAAA6 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 5858FB622A09A25D005FAAA6 /* DequeModule */; };
@@ -108,7 +107,6 @@
 		5858FB492A07D191005FAAA6 /* TransactionDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		5858FB4A2A07D191005FAAA6 /* ItemTransactionEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemTransactionEditView.swift; sourceTree = "<group>"; };
 		5858FB502A07D19A005FAAA6 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
-		5858FB512A07D19A005FAAA6 /* DocumentMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentMainView.swift; sourceTree = "<group>"; };
 		5858FB542A07D29D005FAAA6 /* TransactionEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEditView.swift; sourceTree = "<group>"; };
 		5858FB562A07D5D4005FAAA6 /* ItemTransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTransactionRow.swift; sourceTree = "<group>"; };
 		5858FB592A07E8D6005FAAA6 /* NTPlatformKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = NTPlatformKit; path = ../NTPlatformKit; sourceTree = "<group>"; };
@@ -267,7 +265,6 @@
 				582758BD2A1B6687004F0B91 /* DocumentExportView.swift */,
 				589E20282A0D33C7008A5BDA /* Controls */,
 				5858FB182A07D17F005FAAA6 /* App.swift */,
-				5858FB512A07D19A005FAAA6 /* DocumentMainView.swift */,
 				589E20242A0CFB39008A5BDA /* TransactionListView.swift */,
 				585E82922A118FD300B79AD2 /* TransactionMainView.swift */,
 				5858FB492A07D191005FAAA6 /* TransactionDetailView.swift */,
@@ -476,7 +473,6 @@
 				5858FB192A07D17F005FAAA6 /* App.swift in Sources */,
 				589E209A2A10CE6A008A5BDA /* ItemTransactionEditView.swift in Sources */,
 				587F244E2A17C25200C3AF61 /* RoundingRules.swift in Sources */,
-				5858FB532A07D19A005FAAA6 /* DocumentMainView.swift in Sources */,
 				587F24502A17C2BD00C3AF61 /* ItemTransaction.swift in Sources */,
 				585E82932A118FD300B79AD2 /* TransactionMainView.swift in Sources */,
 				589E20902A10CE6A008A5BDA /* ItemTemplateListView.swift in Sources */,
