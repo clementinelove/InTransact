@@ -149,7 +149,6 @@ struct DocumentExportView_Previews: PreviewProvider {
         .sheet(isPresented: .constant(true)) {
           NavigationStack {
             DocumentExportView(title: "Test Demo", document: InTransactDocument.mock())
-              .toolbarRole(.navigationStack)
           }
         }
       

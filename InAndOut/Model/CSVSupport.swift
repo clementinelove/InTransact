@@ -113,14 +113,6 @@ enum INTExportColumn: Identifiable {
   static let itemQuantity = Self.itemTransaction(.init(columnName: .init(localized: "Item Quantity")) { itemTransaciton in
     itemTransaciton.priceInfo.quantity.formatted(.number.precision(.fractionLength(0)))
   })
-
-//  static let unitPriceBeforeTax = Self.itemTransaction(.init(columnName: "Unit Price (Before Tax)")
-//                                                       { $0.pricePerUnitBeforeTax.formatted(.number) })
-//  
-//  static let unitPriceAfterTax = Self.itemTransaction(.init(columnName: "Unit Price (After Tax)")
-//                                                      { itemTransaciton in //    itemTransaciton.pricePerUnitAfterTax.formatted(.currency(code: ))
-//  })
-
 }
 
 

@@ -220,6 +220,7 @@ struct TransactionEditView: View {
       }
     }
     .scrollDismissesKeyboard(.interactively)
+    // MARK: Edit new item
     .sheet(item: $editingItem, onDismiss: {
       Task {
         await MainActor.run {

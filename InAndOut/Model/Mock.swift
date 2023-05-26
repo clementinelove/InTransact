@@ -40,7 +40,7 @@ extension Transaction {
     "Purchase of new computer equipment",
     "Advertising expenses for May 2023",
     "Payment to utility company for electricity and gas",
-    "Quarterly tax payment for Q2 2023",
+    "Quarterly \"tax payment\" for Q2 2023", // double quotes for testing with csv
     "Reimbursement for employee travel expenses",
     "Payment to landlord for office space lease",
     "Investment in new marketing campaign",

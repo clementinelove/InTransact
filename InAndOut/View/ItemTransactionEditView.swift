@@ -573,8 +573,10 @@ struct ItemTransactionEditView: View {
       if viewModel.hasChanges {
         attemptToDiscardChanges = true
       } else {
-        // Animation stutters when commit not called
-//        onCommit(viewModel.updatedItemTransaction)
+        // onCommit(_:) called because there is a bug that causes animation stutters when cancelled
+        if editMode == .edit {
+          onCommit(viewModel.updatedItemTransaction)
+        }
         dismiss()
       }
     }

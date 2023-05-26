@@ -89,7 +89,7 @@ struct TransactionListView: View {
   @State var selectedSortOrder: SortOrder = .reverse
   
   @State var searchText: String = ""
-  var documentName: String? = nil
+  var fileURL: URL? = nil
   
   /// TODO: use states rather than dyanmic var to store transactions to avoid performance issues during deletion.
   var processedTransactions: [(offset: Int, element: Transaction)] {
@@ -135,7 +135,6 @@ struct TransactionListView: View {
     }
 
 #if os(iOS)
-//    .toolbar(.hidden, for: .navigationBar)
     .navigationBarTitleDisplayMode(.inline)
     .navigationTitle("")
     #endif
@@ -189,7 +188,6 @@ struct TransactionListView: View {
     // MARK: Currency Picker
     .sheet(isPresented: $isShowingCurrencyPicker, onDismiss: {
       Task { @MainActor in
-        await dismissAllSheets()
         isShowingCurrencyPicker = false
       }
     }) {
@@ -242,6 +240,7 @@ struct TransactionListView: View {
 #endif
       }
     }
+    // MARK: List Toolbar
     .toolbar {
       #if os(iOS)
       ToolbarItemGroup(placement: .bottomBar) {
@@ -263,18 +262,19 @@ struct TransactionListView: View {
         sortMethodMenu
       }
       
+      // MARK: Ellipsis Menu
       ToolbarItemGroup(placement: .secondaryAction) {
-        // TODO: share link
-        // FIXME: document settings not implemented
-        //          Button("Document Settings") {
-        //            Task { @MainActor in
-        //              await dismissAllSheets()
-        //              isPresentingDocumentSettings = true
-        //            }
-        //          }
+        
+        // Very unstable
+//        if let fileURL {
+//          ShareLink(item: fileURL)
+//        }
         
         Button {
-          isPresentingDocumentExporter = true
+          Task { @MainActor in
+            try await dismissInspectorSheet()
+            isPresentingDocumentExporter = true
+          }
         } label: {
           Label {
             Text("Export To CSV", comment: "Button title that exports the document in the csv format")
@@ -284,7 +284,11 @@ struct TransactionListView: View {
         }
         
         Button {
-          isShowingCurrencyPicker = true
+          
+          Task { @MainActor in
+            try await dismissInspectorSheet()
+            isShowingCurrencyPicker = true
+          }
         } label: {
           
           Label {
@@ -416,7 +420,7 @@ struct TransactionListView: View {
       Image(systemName: "chart.bar")
     } primaryAction: {
       Task { @MainActor in
-        await dismissAllSheets()
+        try await dismissInspectorSheet()
         isPresentingItemStatisticsView = true
       }
     }
@@ -540,9 +544,15 @@ struct TransactionListView: View {
     }
   }
   
-  func dismissAllSheets() async {
+  /**
+   Dismiss inspector sheet. Call this whenever you need to show information in a sheet when the inspector sheet may in presentation.
+   Because SwiftUI only allows presenting one sheet at a time, and the Inspector sheet may already be presenting when user tries to
+   */
+  func dismissInspectorSheet() async throws {
     transactionInspectorState.showInspector = false
-    isAddNewTransactionPresented = false
+    
+    // Add delay to allow it fully dismiss otherwise there will be animation bug the SwiftUI will assume it hasn't dismiss cause other mess.
+    try await Task.sleep(nanoseconds: 100000)
   }
   
   func deleteTransaction(_ transaction: Transaction) {
@@ -567,7 +577,7 @@ struct TransactionListView: View {
       .fontWeight(.medium)
     } primaryAction: {
       Task { @MainActor in
-        await dismissAllSheets()
+        try await dismissInspectorSheet()
         isAddNewTransactionPresented = true
       }
     }
@@ -630,6 +640,16 @@ struct TransactionListView: View {
             return { $0.date > $1.date } // TODO: add other conditions when dates are equal
         }
     }
+  }
+  
+  var documentName: String? {
+    guard let fileURL, let percentDecodedFileName = fileURL.lastPathComponent.removingPercentEncoding else {
+      return nil
+    }
+    let seperatedFileName = percentDecodedFileName.split(separator: ".", maxSplits: Int.max)
+    // Remove file extension then addback dots again
+    let newFileName = seperatedFileName.dropLast(1).joined(separator: ".")
+    return newFileName
   }
 }
 
