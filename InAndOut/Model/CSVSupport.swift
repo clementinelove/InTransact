@@ -157,7 +157,8 @@ extension INTDocument {
               value = exportColumn.columnDataExtractor(transaction)
           }
           
-          rowCellValues.append(value.surrounded(by: "\""))
+          // Add surrounded quotes for each field
+          rowCellValues.append(value.replacingOccurrences(of: "\"", with: "\"\"").surrounded(by: "\""))
         }
         
         svDocumentString.append(buildRow(rowCellValues, separator: seperator, recordSeperator: recordSeparator))
