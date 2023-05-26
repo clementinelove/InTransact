@@ -83,6 +83,16 @@ enum INTExportColumn: Identifiable {
     }))
   }
   
+  static func pricePerUnitAfterTax(settings: Setting) -> INTExportColumn {
+    .itemTransaction(.init(columnName: .init(localized: "Item Unit Price After Tax"),
+                           columnDataExtractor: {
+      
+      $0.priceInfo.pricePerUnitAfterTax(taxItemRounding: settings.roundingRules.taxItemRule,
+                                        totalRounding: settings.roundingRules.itemTotalRule)
+        .formatted(.currency(code: settings.currencyIdentifier))
+    }))
+  }
+  
   static func itemTaxTotal(settings: Setting) -> INTExportColumn {
     .itemTransaction(.init(columnName: .init(localized: "Item Tax Total"),
                            columnDataExtractor: {
@@ -115,18 +125,6 @@ enum INTExportColumn: Identifiable {
   })
 }
 
-
-
-//extension ExportTableColumn where T == ItemTransaction {
-//  static let itemName = ExportTableColumn<ItemTransaction>(columnName: "Item Name") { item in
-//    item.itemName
-//  }
-//
-//  static let variantName = ExportTableColumn(columnName: "Item Name") { item in
-//    item.variant ?? INTDocument.emptyValuePlaceholder
-//  }
-//}
-
 extension INTDocument {
   
   enum Granularity {
@@ -157,7 +155,7 @@ extension INTDocument {
               value = exportColumn.columnDataExtractor(transaction)
           }
           
-          // Add surrounded quotes for each field
+          // Add surrounded quotes for each field (also replace double quotes with double double quotes i.e. "")
           rowCellValues.append(value.replacingOccurrences(of: "\"", with: "\"\"").surrounded(by: "\""))
         }
         

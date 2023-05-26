@@ -129,6 +129,7 @@
 "Item Tax Total" = "条目税务总额";
 
 "Item Unit Price Before Tax" = "条目税前单价";
+"Item Unit Price After Tax" = "条目税后单价";
 
 /* No comment provided by engineer. */
 "Items Out" = "出货";
@@ -169,6 +170,9 @@
 
 /* No comment provided by engineer. */
 "Price Per Unit (Before Tax)" = "单价（税前）";
+
+/* No comment provided by engineer. */
+"Price Per Unit (After Tax)" = "单价（税后）";
 
 /* No comment provided by engineer. */
 "Price Type" = "价格类型";
@@ -275,6 +279,8 @@
 
 /* No comment provided by engineer. */
 "Variant Name" = "变体名称";
+
+"When the price type used in the template is not an after tax unit price, the price per unit (after tax) is calculated using the after tax item total divides the quantity." = "当模版所用的价格类型不是税后单价时，条目的税后单价是将条目税后总额除以数量计算得出";
 
 /* Section footer text that explains the use of explicit after tax total */
 "You can explicitly specifiy the after-tax total for this entry, it will be used to calculate the total of the whole transaction directly." = "你可以手动声明该条目的税后总额，它将被直接用来被直接计算整个交易的总额。";

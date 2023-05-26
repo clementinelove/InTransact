@@ -130,10 +130,24 @@ struct ItemTemplateDetailView: View {
         }
         .foregroundStyle(.primary)
         
+        LabeledContent("Price Per Unit (After Tax)") {
+          VStack(alignment: .trailing, spacing: 4) {
+            Text(verbatim: itemTemplate
+              .priceInfo
+              .pricePerUnitAfterTax(taxItemRounding: document.roundingRules.taxItemRule,
+                             totalRounding: document.roundingRules.transactionTotalRule)
+                .formatted(.currency(code: document.currencyCode)))
+            .textSelection(.enabled)
+          }
+        }
+        .foregroundStyle(.primary)
+        
+        
         LabeledContent("Total Before Tax") {
           VStack(alignment: .trailing, spacing: 4) {
-            Text(itemTemplate.priceInfo.totalBeforeTax.formatted(.currency(code: document.currencyCode)))
+            Text(verbatim: itemTemplate.priceInfo.totalBeforeTax.formatted(.currency(code: document.currencyCode)))
               .font(.body)
+              .textSelection(.enabled)
           }
         }
         .foregroundStyle(.primary)
@@ -150,10 +164,16 @@ struct ItemTemplateDetailView: View {
                              totalRounding: document.roundingRules.transactionTotalRule)
                 .formatted(.currency(code: document.currencyCode)))
             .font(.body)
+            .textSelection(.enabled)
           }
         }
         .foregroundStyle(.primary)
+      } footer: {
+        Text("When the price type used in the template is not an after tax unit price, the price per unit (after tax) is calculated using the after tax item total divides the quantity.")
+          .fontWeight(.medium)
+          
       }
+      .listSectionSeparator(.hidden)
     }
     .safeAreaInset(edge: .bottom) {
       if let onApply, let parentDismiss {
@@ -174,7 +194,7 @@ struct ItemTemplateDetailView: View {
         .background(Material.ultraThin)
       }
     }
-    .listStyle(.plain)
+    .listStyle(.inset)
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
         doneButton

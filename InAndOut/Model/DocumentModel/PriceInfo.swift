@@ -183,6 +183,19 @@ public struct PriceInfo: Codable, Equatable {
         return (price - fixedTaxSum) / combinedTaxRate / itemQuantity
     }
   }
+  
+  /// Returns the price per unit after tax.
+  ///
+  public func pricePerUnitAfterTax(taxItemRounding: RoundingRule,
+                                  totalRounding: RoundingRule) -> Price {
+    if priceType == .perUnitAfterTax { return price } else {
+      if !itemQuantity.isZero {
+        return totalAfterTax(taxItemRounding: taxItemRounding, totalRounding: totalRounding) / itemQuantity
+      } else {
+        return 0
+      }
+    }
+  }
 }
 
 extension PriceInfo {
