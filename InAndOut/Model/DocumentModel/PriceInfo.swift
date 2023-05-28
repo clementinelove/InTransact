@@ -80,8 +80,8 @@ public struct PriceInfo: Codable, Equatable {
   
   /** The total price after tax.
    */
-  public func totalAfterTax(taxItemRounding: RoundingRule? = nil,
-                            totalRounding: RoundingRule? = nil) -> Price {
+  public func totalAfterTax(taxItemRounding: RoundingRule,
+                            itemTotalRounding: RoundingRule) -> Price {
     if let explicitAfterTaxTotal {
       return explicitAfterTaxTotal
     }
@@ -96,7 +96,7 @@ public struct PriceInfo: Codable, Equatable {
       case .sumAfterTax:
         total = price
     }
-    return total.rounded(using: totalRounding)
+    return total.rounded(using: itemTotalRounding)
   }
   
   /** Calculates the un-taxed total.
@@ -116,18 +116,18 @@ public struct PriceInfo: Codable, Equatable {
     }
   }
   
-  func totalAfterRegularTax(roundedWith taxItemRounding: RoundingRule? = nil) -> Price {
+  func totalAfterRegularTax(roundedWith taxItemRounding: RoundingRule) -> Price {
     totalBeforeTax + regularTaxSum(roundedWith: taxItemRounding)
   }
   
-  public func regularTaxSum(roundedWith taxItemRounding: RoundingRule? = nil) -> Price {
+  public func regularTaxSum(roundedWith taxItemRounding: RoundingRule) -> Price {
     return regularTaxItems
       .reduce(0) {
         $0 + $1.taxCost(of: totalBeforeTax).rounded(using: taxItemRounding)
       }
   }
   
-  public func compoundTaxSum(roundedWith taxItemRounding: RoundingRule? = nil) -> Price {
+  public func compoundTaxSum(roundedWith taxItemRounding: RoundingRule) -> Price {
     let cachedTotalAfterRegularTax = totalAfterRegularTax(roundedWith: taxItemRounding)
     return compoundTaxItems.reduce(0, { $0 + $1.taxCost(of: cachedTotalAfterRegularTax).rounded(using: taxItemRounding) })
   }
@@ -139,7 +139,7 @@ public struct PriceInfo: Codable, Equatable {
     fixedAmountTaxItems.reduce(0) { $0 + $1.amount }
   }
   
-  public func allTaxSum(roundedWith taxItemRounding: RoundingRule? = nil) -> Price {
+  public func allTaxSum(roundedWith taxItemRounding: RoundingRule) -> Price {
     regularTaxSum(roundedWith: taxItemRounding)
     + compoundTaxSum(roundedWith: taxItemRounding)
     + fixedTaxSum
@@ -190,7 +190,7 @@ public struct PriceInfo: Codable, Equatable {
                                   totalRounding: RoundingRule) -> Price {
     if priceType == .perUnitAfterTax { return price } else {
       if !itemQuantity.isZero {
-        return totalAfterTax(taxItemRounding: taxItemRounding, totalRounding: totalRounding) / itemQuantity
+        return totalAfterTax(taxItemRounding: taxItemRounding, itemTotalRounding: totalRounding) / itemQuantity
       } else {
         return 0
       }

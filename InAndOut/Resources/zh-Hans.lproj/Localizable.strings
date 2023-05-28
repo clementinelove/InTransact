@@ -65,7 +65,7 @@
 "Do you wish to discard all changes?" = "你确定要放弃所有更改吗？";
 
 /* No comment provided by engineer. */
-"Document Settings" = "文件设置";
+"Document Settings" = "文档设置";
 
 /* No comment provided by engineer. */
 "Done" = "完成";
@@ -283,7 +283,7 @@
 "When the price type used in the template is not an after tax unit price, the price per unit (after tax) is calculated using the after tax item total divides the quantity." = "当模版所用的价格类型不是税后单价时，条目的税后单价是将条目税后总额除以数量计算得出";
 
 /* Section footer text that explains the use of explicit after tax total */
-"You can explicitly specifiy the after-tax total for this entry, it will be used to calculate the total of the whole transaction directly." = "你可以手动声明该条目的税后总额，它将被直接用来被直接计算整个交易的总额。";
+"You can explicitly specifiy the after-tax total for this entry, it will be used to calculate the total of the whole transaction directly." = "你可以手动声明该条目的税后总额，它将被直接用来计算整个交易的总额。";
 
 /* No comment provided by engineer. */
 "You cannot undo this action." = "你将无法撤销此操作。";

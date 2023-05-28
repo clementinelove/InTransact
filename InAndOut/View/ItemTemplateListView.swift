@@ -145,6 +145,7 @@ struct ItemTemplateDetailView: View {
         
         LabeledContent("Total Before Tax") {
           VStack(alignment: .trailing, spacing: 4) {
+            // No need to round
             Text(verbatim: itemTemplate.priceInfo.totalBeforeTax.formatted(.currency(code: document.currencyCode)))
               .font(.body)
               .textSelection(.enabled)
@@ -158,11 +159,10 @@ struct ItemTemplateDetailView: View {
         
         LabeledContent("Total After Tax") {
           VStack(alignment: .trailing, spacing: 4) {
-            Text(itemTemplate
+            Text(verbatim: document.formattedItemTotal(itemTemplate
               .priceInfo
               .totalAfterTax(taxItemRounding: document.roundingRules.taxItemRule,
-                             totalRounding: document.roundingRules.transactionTotalRule)
-                .formatted(.currency(code: document.currencyCode)))
+                             itemTotalRounding: document.roundingRules.transactionTotalRule)))
             .font(.body)
             .textSelection(.enabled)
           }
@@ -229,8 +229,7 @@ struct ItemTemplateDetailView: View {
           Text("Compound Tax")
             .font(.caption2)
           LabeledContent {
-            Text(verbatim: taxItem.taxCost(of: itemTemplate.priceInfo.totalAfterRegularTax(roundedWith: document.roundingRules.taxItemRule))
-              .formatted(.currency(code: document.currencyCode)))
+            Text(verbatim: document.formattedTaxItem(taxItem.taxCost(of: itemTemplate.priceInfo.totalAfterRegularTax(roundedWith: document.roundingRules.taxItemRule))))
           } label: {
             Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent)))")
           }

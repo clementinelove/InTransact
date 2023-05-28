@@ -19,7 +19,7 @@ struct InAndOutApp: App {
   var body: some Scene {
     DocumentGroup(newDocument: { InTransactDocument() } ) { configuration  in
       //            ContentView(document: file.$document)
-      TransactionListView(fileURL: fileURL)
+      DocumentMainView(fileURL: fileURL)
         .task(id: configuration.fileURL) {
           fileURL = configuration.fileURL
         }

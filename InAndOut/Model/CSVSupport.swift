@@ -96,7 +96,7 @@ enum INTExportColumn: Identifiable {
   static func itemTaxTotal(settings: Setting) -> INTExportColumn {
     .itemTransaction(.init(columnName: .init(localized: "Item Tax Total"),
                            columnDataExtractor: {
-      $0.priceInfo.allTaxSum()
+      $0.priceInfo.allTaxSum(roundedWith: settings.roundingRules.taxItemRule)
         .formatted(.currency(code: settings.currencyIdentifier))
     }))
   }
@@ -106,7 +106,7 @@ enum INTExportColumn: Identifiable {
       $0
         .priceInfo
         .totalAfterTax(taxItemRounding: settings.roundingRules.taxItemRule,
-                       totalRounding: settings.roundingRules.itemTotalRule)
+                       itemTotalRounding: settings.roundingRules.itemTotalRule)
         .formatted(.currency(code: settings.currencyIdentifier))
       
     })

@@ -1,5 +1,5 @@
 //
-//  TransactionListView.swift
+//  DocumentMainView.swift
 //  InAndOut
 //
 //  Created by Yuhao Zhang on 2023-05-11.
@@ -26,7 +26,7 @@ import OrderedCollections
 
 
 // MARK: - View
-struct TransactionListView: View {
+struct DocumentMainView: View {
   
   private static let localizationTable = "TransactionList"
   
@@ -35,7 +35,7 @@ struct TransactionListView: View {
       hasher.combine(showInspector)
       hasher.combine(transactionIndex)
     }
-    static func == (lhs: TransactionListView.TransactionInspectorState, rhs: TransactionListView.TransactionInspectorState) -> Bool {
+    static func == (lhs: DocumentMainView.TransactionInspectorState, rhs: DocumentMainView.TransactionInspectorState) -> Bool {
       lhs.showInspector == rhs.showInspector && lhs.transactionIndex == rhs.transactionIndex
     }
     
@@ -160,13 +160,20 @@ struct TransactionListView: View {
       }
     }
     // MARK: Document Settings
-    .sheet(isPresented: $isPresentingDocumentSettings) {
+    .sheet(isPresented: $isPresentingDocumentSettings) { // on dimiss
       Task { @MainActor in
-       isPresentingDocumentSettings = false
+        isPresentingDocumentSettings = false
       }
     } content: {
       NavigationStack {
-        DocumentSettingsView()
+        DocumentSettingsView(document: document)
+          .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+              Button("Done") {
+                isPresentingDocumentSettings = false
+              }
+            }
+          }
           #if os(iOS)
           .toolbarRole(.navigationStack)
           #endif
@@ -269,6 +276,13 @@ struct TransactionListView: View {
 //        if let fileURL {
 //          ShareLink(item: fileURL)
 //        }
+        
+        Button("Settings") {
+          Task { @MainActor in
+           try await dismissInspectorSheet()
+            isPresentingDocumentSettings = true
+          }
+        }
         
         Button {
           Task { @MainActor in
@@ -658,7 +672,7 @@ struct TransactionSearchResultView: View {
   @EnvironmentObject private var document: InTransactDocument
   @Environment(\.isSearching) private var isSearching
   @Binding var searchText: String
-  @ObservedObject var transactionInspectorState: TransactionListView.TransactionInspectorState
+  @ObservedObject var transactionInspectorState: DocumentMainView.TransactionInspectorState
   @Binding var inspectorDetent: PresentationDetent
   
   var filteredTransactions: [Int] {
@@ -714,22 +728,22 @@ struct TransactionSearchResultView: View {
   }
 }
 
-struct TransactionListView_Previews: PreviewProvider {
+struct DocumentMainView_Previews: PreviewProvider {
     static var previews: some View {
       
       NavigationStack {
-        TransactionListView()
+        DocumentMainView()
           .environmentObject(InTransactDocument(mock: false))
       }
       .previewDisplayName("No Data (iOS)")
       
       NavigationStack {
-        TransactionListView()
+        DocumentMainView()
           .environmentObject(InTransactDocument(mock: true))
       }
       .previewDisplayName("With Mock Data (iOS)")
       
-      TransactionListView()
+      DocumentMainView()
         .environmentObject(InTransactDocument(mock: true))
         .previewDisplayName("With Mock Data (macOS)")
       

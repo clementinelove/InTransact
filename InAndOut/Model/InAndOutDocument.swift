@@ -56,8 +56,9 @@ final class InTransactDocument: ReferenceFileDocument {
   
 }
 
+// MARK: - Shortcuts
 extension InTransactDocument {
-  // MARK: Shortcuts
+  
   var currencyCode: String {
     content.settings.currencyIdentifier
   }
@@ -66,9 +67,40 @@ extension InTransactDocument {
     content.settings.roundingRules
   }
   
+  func formattedTaxItem(_ price: Price) -> String {
+    formattedPrice(price, scale: roundingRules.taxItemRule.scale)
+  }
+  
+  func formattedItemTotal(_ price: Price) -> String {
+    formattedPrice(price, scale: roundingRules.itemTotalRule.scale)
+  }
+  
+  func formattedTransactionTotal(_ price: Price) -> String {
+    formattedPrice(price, scale: roundingRules.transactionTotalRule.scale)
+  }
+  
+  private func formattedPrice(_ price: Price, scale: Int) -> String {
+    price.formatted(.currency(code: currencyCode)
+      .precision(.fractionLength(scale)))
+  }
 }
 
+
+// MARK: - Undo Actions
 extension InTransactDocument {
+  
+  func updateSettings(_ newSettings: Setting, undoManager: UndoManager? = nil) {
+    let oldSettings = content.settings
+    content.settings = newSettings
+    logger.debug("Update from \(oldSettings.debugDescription) to \(newSettings.debugDescription)")
+    
+    undoManager?.registerUndo(withTarget: self) { doc in
+      // Because it calls itself, this is redoable, as well.
+      doc.updateSettings(oldSettings, undoManager: undoManager)
+    }
+    
+    undoManager?.setActionName("Update Settings")
+  }
   
   // TODO: localize action names
   func updateCurrency(_ currencyIdentifier: String, undoManager: UndoManager? = nil) {

@@ -6,14 +6,23 @@
 //
 import Foundation
 
-struct Setting: Codable {
-  var forceItemID: Bool = false
-  var currencyIdentifier: String = Global.currentCurrencyCode
-  var alwaysGenerateTransactionID: Bool = true
-  /// Also know as: number of digits after decimal delimiter.
-  var roundingPrecision: UInt16 = 0
-  var roundingMethod: RoundingMode = .bankers
-  
+struct Setting: Codable, CustomDebugStringConvertible {
+  var currencyIdentifier: String = Global.systemCurrentCurrencyCode
   // Rounding Rule Settings for each rounding level
-  var roundingRules: RoundingRuleSet = RoundingRuleSet()
+  var roundingRules: RoundingRuleSet = RoundingRuleSet(defaultFor: Global.systemCurrentCurrencyCode)
+  var defaultKeeperName: String? = nil
+//  func transactionTemplate() -> Transaction {
+//    
+//  }
+//  var itemTransactionTemplate() -> ItemTransaction {
+//    var fresh = ItemTransaction.fresh()
+//  }
+  
+  mutating func resetRoundingToCurrencyDefault() {
+    roundingRules = RoundingRuleSet(defaultFor: currencyIdentifier)
+  }
+  
+  var debugDescription: String {
+    "(Settings – \(currencyIdentifier), taxRounding: \(roundingRules.taxItemRule), itemTotalRounding: \(roundingRules.itemTotalRule), transactionTotalRounding: \(roundingRules.transactionTotalRule))"
+  }
 }

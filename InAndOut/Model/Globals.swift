@@ -12,7 +12,7 @@ struct Global {
   static let subsystem = "cc.clems.InTransact"
   static let timesSymbol = "×"
   static let transactionIDHighlightColor: SwiftUI.Color = .accentColor.opacity(0.8)
-  static var currentCurrencyCode: String {
+  static var systemCurrentCurrencyCode: String {
     Locale.current.currency?.identifier ?? Locale.Currency(stringLiteral: "USD").identifier
   }
 }

@@ -33,7 +33,7 @@ class ItemTransactionViewModel: ObservableObject {
   private var cancellables = Set<AnyCancellable>()
   fileprivate var transaction: ItemTransaction
   
-  init(edit transaction: ItemTransaction = ItemTransaction.fresh()) {
+  init(edit transaction: ItemTransaction) {
     self.transaction = transaction
     
     // Copy data from transaction to viwe model
@@ -174,7 +174,7 @@ struct ItemTransactionEditView: View {
   
   init(onSave: @escaping (ItemTransaction) -> Void) {
     self.editMode = .new
-    self._viewModel = StateObject(wrappedValue: ItemTransactionViewModel())
+    self._viewModel = StateObject(wrappedValue: ItemTransactionViewModel(edit: ItemTransaction.fresh()))
     self.onCommit = onSave
   }
   
@@ -468,8 +468,7 @@ struct ItemTransactionEditView: View {
         }
       } label: {
         Label { Text("Add New Regular Tax", comment: "Button title that adds a new regular tax entry") } icon: {
-          Image(systemName: "plus.circle.fill")
-            .foregroundStyle(.white, .green)
+          AddNewItemImage()
         }
       }
       .alignmentGuide(.listRowSeparatorLeading) {

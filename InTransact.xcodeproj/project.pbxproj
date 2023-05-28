@@ -43,7 +43,7 @@
 		587F24532A18CC3600C3AF61 /* ItemTemplateRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F24522A18CC3600C3AF61 /* ItemTemplateRow.swift */; };
 		589E20232A0C5645008A5BDA /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20222A0C5645008A5BDA /* DisclaimerView.swift */; };
 		589E203A2A0EC9D5008A5BDA /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20392A0EC9D5008A5BDA /* DocumentViewModel.swift */; };
-		589E208F2A10CE6A008A5BDA /* TransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20242A0CFB39008A5BDA /* TransactionListView.swift */; };
+		589E208F2A10CE6A008A5BDA /* DocumentMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20242A0CFB39008A5BDA /* DocumentMainView.swift */; };
 		589E20902A10CE6A008A5BDA /* ItemTemplateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20372A0E6E7D008A5BDA /* ItemTemplateListView.swift */; };
 		589E20912A10CE6A008A5BDA /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB462A07D191005FAAA6 /* TransactionRowView.swift */; };
 		589E20922A10CE6A008A5BDA /* ItemTransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB562A07D5D4005FAAA6 /* ItemTransactionRow.swift */; };
@@ -54,6 +54,7 @@
 		589E20992A10CE6A008A5BDA /* LocationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20332A0E3DC7008A5BDA /* LocationPicker.swift */; };
 		589E209A2A10CE6A008A5BDA /* ItemTransactionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB4A2A07D191005FAAA6 /* ItemTransactionEditView.swift */; };
 		589E209C2A110B19008A5BDA /* Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E209B2A110B19008A5BDA /* Copyable.swift */; };
+		58D5EC1A2A235E7C001BFDB4 /* AddNewItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5EC192A235E7C001BFDB4 /* AddNewItemImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,7 +119,7 @@
 		587F244F2A17C2BD00C3AF61 /* ItemTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTransaction.swift; sourceTree = "<group>"; };
 		587F24522A18CC3600C3AF61 /* ItemTemplateRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTemplateRow.swift; sourceTree = "<group>"; };
 		589E20222A0C5645008A5BDA /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
-		589E20242A0CFB39008A5BDA /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
+		589E20242A0CFB39008A5BDA /* DocumentMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentMainView.swift; sourceTree = "<group>"; };
 		589E202B2A0D3608008A5BDA /* ItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
 		589E202D2A0D55C3008A5BDA /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		589E20312A0E3CC1008A5BDA /* ItemTemplateEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTemplateEditView.swift; sourceTree = "<group>"; };
@@ -126,6 +127,7 @@
 		589E20372A0E6E7D008A5BDA /* ItemTemplateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTemplateListView.swift; sourceTree = "<group>"; };
 		589E20392A0EC9D5008A5BDA /* DocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewModel.swift; sourceTree = "<group>"; };
 		589E209B2A110B19008A5BDA /* Copyable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Copyable.swift; sourceTree = "<group>"; };
+		58D5EC192A235E7C001BFDB4 /* AddNewItemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewItemImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,7 +267,8 @@
 				582758BD2A1B6687004F0B91 /* DocumentExportView.swift */,
 				589E20282A0D33C7008A5BDA /* Controls */,
 				5858FB182A07D17F005FAAA6 /* App.swift */,
-				589E20242A0CFB39008A5BDA /* TransactionListView.swift */,
+				589E20242A0CFB39008A5BDA /* DocumentMainView.swift */,
+				5843B9D22A12EA530048C0CA /* DocumentSettingsView.swift */,
 				585E82922A118FD300B79AD2 /* TransactionMainView.swift */,
 				5858FB492A07D191005FAAA6 /* TransactionDetailView.swift */,
 				5858FB462A07D191005FAAA6 /* TransactionRowView.swift */,
@@ -277,7 +280,6 @@
 				587F24522A18CC3600C3AF61 /* ItemTemplateRow.swift */,
 				589E20372A0E6E7D008A5BDA /* ItemTemplateListView.swift */,
 				589E20312A0E3CC1008A5BDA /* ItemTemplateEditView.swift */,
-				5843B9D22A12EA530048C0CA /* DocumentSettingsView.swift */,
 				5843B9D62A13893C0048C0CA /* TransactionFilterBadge.swift */,
 				5843B9D82A138ED10048C0CA /* EmptyListPlaceholder.swift */,
 				5843B9DA2A13D1F50048C0CA /* DocumentPreviewView.swift */,
@@ -288,6 +290,7 @@
 		589E20282A0D33C7008A5BDA /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				58D5EC192A235E7C001BFDB4 /* AddNewItemImage.swift */,
 				589E20332A0E3DC7008A5BDA /* LocationPicker.swift */,
 				5843B9D42A137C050048C0CA /* CurrencyPickerContent.swift */,
 				5843B9E72A151F610048C0CA /* CurrencyTextField.swift */,
@@ -473,13 +476,14 @@
 				5858FB192A07D17F005FAAA6 /* App.swift in Sources */,
 				589E209A2A10CE6A008A5BDA /* ItemTransactionEditView.swift in Sources */,
 				587F244E2A17C25200C3AF61 /* RoundingRules.swift in Sources */,
+				58D5EC1A2A235E7C001BFDB4 /* AddNewItemImage.swift in Sources */,
 				587F24502A17C2BD00C3AF61 /* ItemTransaction.swift in Sources */,
 				585E82932A118FD300B79AD2 /* TransactionMainView.swift in Sources */,
 				589E20902A10CE6A008A5BDA /* ItemTemplateListView.swift in Sources */,
 				5858FB4D2A07D191005FAAA6 /* Mock.swift in Sources */,
 				5843B9E22A14CD000048C0CA /* Transaction.swift in Sources */,
 				5843B9DB2A13D1F50048C0CA /* DocumentPreviewView.swift in Sources */,
-				589E208F2A10CE6A008A5BDA /* TransactionListView.swift in Sources */,
+				589E208F2A10CE6A008A5BDA /* DocumentMainView.swift in Sources */,
 				589E209C2A110B19008A5BDA /* Copyable.swift in Sources */,
 				5843B9DF2A14CC600048C0CA /* Setting.swift in Sources */,
 				5843B9E82A151F610048C0CA /* CurrencyTextField.swift in Sources */,

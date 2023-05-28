@@ -103,7 +103,7 @@ struct TransactionDetailView: View {
               Text("Total", comment: "Labels the total amount of a transaction")
                 .textCase(.uppercase)
               Spacer()
-              Text(transaction.total(roundingRules: document.roundingRules).formatted(.currency(code: document.currencyCode)))
+              Text(verbatim: document.formattedTransactionTotal(transaction.total(roundingRules: document.roundingRules)))
             }
             .font(.body.bold())
             Divider()

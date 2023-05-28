@@ -15,7 +15,6 @@ struct TransactionRowView: View {
   @EnvironmentObject var document: InTransactDocument
   var transaction: Transaction
   let currencyIdentifier: String
-  @Environment(\.locale) private var locale
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   
   var body: some View {
@@ -42,7 +41,7 @@ struct TransactionRowView: View {
           .lineLimit(1)
         Spacer()
         
-        Text(transaction.total(roundingRules: document.roundingRules).formatted(.currency(code: currencyIdentifier)))
+        Text(document.formattedTransactionTotal(transaction.total(roundingRules: document.roundingRules)))
           .lineLimit(1)
           .layoutPriority(1)
           .font(.subheadline)
@@ -128,7 +127,7 @@ struct TransactionRowView_Previews: PreviewProvider {
     NavigationStack {
       List {
         ForEach(0..<100) { _  in
-          TransactionRowView(transaction: .mock(), currencyIdentifier: Global.currentCurrencyCode)
+          TransactionRowView(transaction: .mock(), currencyIdentifier: Global.systemCurrentCurrencyCode)
           
         }
       }

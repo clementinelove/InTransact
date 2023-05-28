@@ -205,14 +205,17 @@ struct TransactionEditView: View {
           Label {
             Text("Add Item", comment: "Button title that adds a new item to a transaction")
           } icon: {
-            Image(systemName: "plus")
-              .imageScale(.large)
+            AddNewItemImage()
           }
         }
         
       } header: {
         Text("Items", comment: "Section title, in which lists items that contained in a transaction")
       }
+      
+//      Section {
+//        
+//      }
       
       Section {
         TextField("Notes & Comments", text: $viewModel.comment, axis: .vertical)
@@ -257,7 +260,6 @@ struct TransactionEditView: View {
     }
     // MARK: Toolbar
     .toolbar {
-      
       ToolbarItem(placement: .confirmationAction) {
         confirmationButton
       }
@@ -265,7 +267,6 @@ struct TransactionEditView: View {
       ToolbarItem(placement: .cancellationAction) {
         cancelButton
       }
-      
     }
     .navigationTitle(title)
 #if os(iOS)

@@ -54,7 +54,7 @@ struct ItemTransactionRow: View {
         .allowsHitTesting(true)
       
       VStack(alignment: .trailing, spacing: 3) {
-        Text(itemTransaction.priceInfo.totalAfterTax().formatted(.currency(code: document.currencyCode)))
+        Text(verbatim:  document.formattedItemTotal(itemTransaction.priceInfo.totalAfterTax(taxItemRounding: document.roundingRules.taxItemRule, itemTotalRounding: document.roundingRules.itemTotalRule)))
           .multilineTextAlignment(.trailing)
 
         // MARK: Tax Details
@@ -63,12 +63,12 @@ struct ItemTransactionRow: View {
           Text("\(itemTransaction.priceInfo.quantity) \(Global.timesSymbol) \(pricePerUnitBeforeTaxString)")
           if showTaxDetails {
             ForEach(itemTransaction.priceInfo.regularTaxItems) { taxItem in
-              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(taxItem.taxCost(of: itemTransaction.priceInfo.totalBeforeTax).rounded(using: document.roundingRules.taxItemRule).formatted(.currency(code: document.currencyCode)))")
+              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(document.formattedTaxItem(taxItem.taxCost(of: itemTransaction.priceInfo.totalBeforeTax).rounded(using: document.roundingRules.taxItemRule)))")
                 .foregroundStyle(.secondary)
             }
             
             ForEach(itemTransaction.priceInfo.compoundTaxItems) { taxItem in
-              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(taxItem.taxCost(of: itemTransaction.priceInfo.totalAfterRegularTax(roundedWith: document.roundingRules.taxItemRule)).rounded(using: document.roundingRules.taxItemRule).formatted(.currency(code: document.currencyCode)))")
+              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(document.formattedTaxItem(taxItem.taxCost(of: itemTransaction.priceInfo.totalAfterRegularTax(roundedWith: document.roundingRules.taxItemRule)).rounded(using: document.roundingRules.taxItemRule)))")
                 .foregroundStyle(.secondary)
             }
             
@@ -85,6 +85,7 @@ struct ItemTransactionRow: View {
   }
   
   var pricePerUnitBeforeTaxString: String {
+    // No need to round, use currency's default rounding precision and rounding rule.
     let pricePerUnitString = itemTransaction.priceInfo.pricePerUnitBeforeTax.formatted(.currency(code: document.currencyCode))
     
     if itemTransaction.priceInfo.canOnlyCalculateAveragePrice {
