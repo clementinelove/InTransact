@@ -68,6 +68,7 @@ extension Transaction {
     Transaction(transactionType: TransactionType.allCases.randomElement()!,
                 transactionID: UUID().uuidString,
                 subtransactions: (0...(1...20).randomElement()!).map { _ in .mock() },
+                fixedCosts: [.init(name: "Delivery", amount: 12.56)],
                 comment: Bool.random() ? "" : Self.comments.randomElement()!,
                 keeperName: Bool.random() ? sampleKeeperNames.randomElement()! : nil,
                 date: Date.now.addingTimeInterval(Double(((-60 * 60 * 24 * 180)...0).randomElement()!)))
@@ -132,7 +133,9 @@ extension PriceInfo {
     let d = Decimal((0...300).randomElement()!)
     return PriceInfo(price: d, priceType: .perUnitBeforeTax,
                      quantity: (1...3000).randomElement()!,
-                     regularTaxItems: [.init(name: "GST", rate: 0.05)], compoundTaxItems: [.init(name: "PST", rate: 0.1)])
+                     regularTaxItems: [.init(name: "GST", rate: 0.05)],
+                     compoundTaxItems: [.init(name: "PST", rate: 0.1)],
+                     fixedAmountTaxItems: [.init(name: "Packaging", amount: 10.5)])
   }
 }
 

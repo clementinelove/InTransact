@@ -10,6 +10,7 @@ import NTPlatformKit
 
 struct ItemTransactionRow: View {
   @EnvironmentObject private var document: InTransactDocument
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @Binding var itemTransaction: ItemTransaction
   
   var showTaxDetails = false
@@ -36,8 +37,14 @@ struct ItemTransactionRow: View {
   }
   
   var body: some View {
-    HStack(alignment: .firstTextBaseline) {
-      VStack(alignment: .leading, spacing: 10) {
+    
+    let mainLayout = dynamicTypeSize >= .accessibility1 ? AnyLayout(VStackLayout(alignment: .leading)) : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
+    
+    let priceLayout = dynamicTypeSize >= .accessibility1 ? AnyLayout(VStackLayout(alignment: .leading)) : AnyLayout(VStackLayout(alignment: .trailing))
+    
+    VStack(alignment: .leading, spacing: 10) {
+      mainLayout {
+        
         VStack(alignment: .leading) {
           Text(displayItemName)
             .foregroundStyle(.primary)
@@ -47,39 +54,51 @@ struct ItemTransactionRow: View {
               .font(.subheadline)
           }
         }
-      }
-      .multilineTextAlignment(.leading)
-      
-      Spacer()
-        .allowsHitTesting(true)
-      
-      VStack(alignment: .trailing, spacing: 3) {
+        
+        .multilineTextAlignment(.leading)
+        .frame(minWidth: 100, alignment: .topLeading)
+        
+        
+        Spacer()
+          .allowsHitTesting(true)
         Text(verbatim:  document.formattedItemTotal(itemTransaction.priceInfo.totalAfterTax(taxItemRounding: document.roundingRules.taxItemRule, itemTotalRounding: document.roundingRules.itemTotalRule)))
           .multilineTextAlignment(.trailing)
-
-        // MARK: Tax Details
-        VStack(alignment: .trailing) {
+      }
+      
+      // MARK: Tax Details
+      VStack(alignment: .leading, spacing: 4) {
+        
+        Text("\(itemTransaction.priceInfo.quantity) \(Global.timesSymbol) \(pricePerUnitBeforeTaxString)")
+        if showTaxDetails {
+          ForEach(itemTransaction.priceInfo.regularTaxItems) { taxItem in
+            LabeledContent {
+              Text(verbatim: "\(document.formattedTaxItem(taxItem.taxCost(of: itemTransaction.priceInfo.totalBeforeTax, rounding: document.roundingRules.taxItemRule)))")
+                .foregroundStyle(.secondary)
+            } label: {
+              Text("\(taxItem.name) (\(taxItem.rate.formatted(.percent)))")
+            }
+          }
           
-          Text("\(itemTransaction.priceInfo.quantity) \(Global.timesSymbol) \(pricePerUnitBeforeTaxString)")
-          if showTaxDetails {
-            ForEach(itemTransaction.priceInfo.regularTaxItems) { taxItem in
-              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(document.formattedTaxItem(taxItem.taxCost(of: itemTransaction.priceInfo.totalBeforeTax, rounding: document.roundingRules.taxItemRule)))")
+          ForEach(itemTransaction.priceInfo.compoundTaxItems) { taxItem in
+            LabeledContent {
+              Text(verbatim: "\(document.formattedTaxItem(taxItem.taxCost(of: itemTransaction.priceInfo.totalAfterRegularTax(taxItemRounding: document.roundingRules.taxItemRule), rounding: document.roundingRules.taxItemRule)))")
                 .foregroundStyle(.secondary)
+            } label: {
+              Text("\(taxItem.name) (Compound, \(taxItem.rate.formatted(.percent)))")
             }
-            
-            ForEach(itemTransaction.priceInfo.compoundTaxItems) { taxItem in
-              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(document.formattedTaxItem(taxItem.taxCost(of: itemTransaction.priceInfo.totalAfterRegularTax(taxItemRounding: document.roundingRules.taxItemRule), rounding: document.roundingRules.taxItemRule)))")
+          }
+          
+          ForEach(itemTransaction.priceInfo.fixedAmountTaxItems) { taxItem in
+            LabeledContent {
+              Text(verbatim: "\(taxItem.amount.formatted(.currency(code: document.currencyCode)))")
                 .foregroundStyle(.secondary)
-            }
-            
-            ForEach(itemTransaction.priceInfo.fixedAmountTaxItems) { taxItem in
-              Text(verbatim: "\(taxItem.name) \(taxItem.amount.formatted(.currency(code: document.currencyCode)))")
-                .foregroundStyle(.secondary)
+            } label: {
+              Text("\(taxItem.name) (Fixed)")
             }
           }
         }
-        .font(.footnote)
       }
+      .font(.footnote)
       .layoutPriority(1)
     }
   }
@@ -87,7 +106,7 @@ struct ItemTransactionRow: View {
   var pricePerUnitBeforeTaxString: String {
     // No need to round, use currency's default rounding precision and rounding rule.
     let pricePerUnitString = itemTransaction.priceInfo.pricePerUnitBeforeTax.formatted(.currency(code: document.currencyCode))
-    
+
     if itemTransaction.priceInfo.canOnlyCalculateAveragePrice {
       return "Avg. \(pricePerUnitString)"
     } else {

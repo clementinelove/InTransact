@@ -193,7 +193,7 @@ struct TransactionEditView: View {
           Button {
             editingItem = item
           } label: {
-            ItemTransactionRow(itemTransaction: item)
+            ItemTransactionRow(itemTransaction: item, showTaxDetails: true)
           }
           .foregroundStyle(.primary)
 //          .draggable(item.wrappedValue) {

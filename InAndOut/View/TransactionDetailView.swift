@@ -24,13 +24,14 @@ struct TransactionDetailView: View {
   @State private var showDeleteConfirmationAlert = false
   
   @State private var transactionImage: Image = Image(systemName: "photo")
-  
+  @State private var sharedTaxInfo: (regular: [RateTaxItem: Decimal],
+                                     compound: [RateTaxItem: Decimal],
+                                     fixed: [FixedAmountItem: Decimal])? = nil
   
   var body: some View {
     ScrollView {
       VStack(alignment: .leading) {
         VStack(alignment: .leading) {
-          
           Text("Transaction", comment: "Navigation title of a transaction")
             .font(.caption.smallCaps())
             .fontWeight(.medium)
@@ -98,12 +99,14 @@ struct TransactionDetailView: View {
         // MARK: Items
         VStack(spacing: 10) {
           ForEach($transaction.subtransactions) { t in
-            ItemTransactionRow(itemTransaction: t, showTaxDetails: false)
+            ItemTransactionRow(itemTransaction: t, showTaxDetails: (sharedTaxInfo == nil ? true : false))
               .id(t.wrappedValue.itemName)
           }
         }
         
-        sharedTaxInfo
+        Divider()
+        sharedTaxInfoView
+        fixedTransactionCostView
       }
       .padding()
     }
@@ -149,6 +152,9 @@ struct TransactionDetailView: View {
     } message: {
       Text("You cannot undo this action.")
     }
+    .task(id: transaction) {
+      sharedTaxInfo = transaction.sharedTaxInfo(taxRoundingRule: document.roundingRules.taxItemRule)
+    }
 
   }
   
@@ -184,16 +190,16 @@ struct TransactionDetailView: View {
   @State private var isShowingTotalDetails = false
   
   @ViewBuilder
-  var sharedTaxInfo: some View {
+  var sharedTaxInfoView: some View {
     
-    if let (regular, compound, fixed) = transaction.sharedTaxInfo(taxRoundingRule: document.roundingRules.taxItemRule) {
-      Divider()
+    if let (regular, compound, fixed) = sharedTaxInfo {
       
       LabeledContent {
         Text(verbatim: transaction.subtotal().formatted(.currency(code: document.currencyCode)))
           .foregroundStyle(.primary)
       } label: {
         Text("Subtotal")
+          .fontWeight(.medium)
       }
       
       Section {
@@ -203,6 +209,7 @@ struct TransactionDetailView: View {
               .foregroundStyle(.primary)
           } label: {
             Text("\(taxEntry.key.name)")
+              .fontWeight(.medium)
             Text("Regular Tax at \(taxEntry.key.rate.formatted(.percent))")
           }
         }
@@ -213,15 +220,19 @@ struct TransactionDetailView: View {
               .foregroundStyle(.primary)
           } label: {
             Text("\(taxEntry.key.name)")
+              .fontWeight(.medium)
             Text("Compound Tax at \(taxEntry.key.rate.formatted(.percent))")
           }
         }
         ForEach(fixed.sorted(using: KeyPathComparator(\.key.name, order: .forward)), id: \.key) { taxEntry in
           LabeledContent {
             // FIXME: the number is being rounded here, doesn't really make sense to customer
-            Text(verbatim: "\(taxEntry.value.formatted(.currency(code: document.currencyCode).precision(.fractionLength(taxEntry.value.decimalPlacesCount))) )")
+            Text(verbatim: "\(taxEntry.value.formatted(.currency(code: document.currencyCode).precision(.fractionLength(taxEntry.value.decimalPlacesCount(for: document.currencyCode)))) )")
+              .foregroundStyle(.primary)
           } label: {
             Text("\(taxEntry.key.name)")
+              .fontWeight(.medium)
+            Text("Fixed Cost Per Item")
           }
         }
       }
@@ -230,6 +241,20 @@ struct TransactionDetailView: View {
 //      .foregroundStyle(.primary)
       
       
+    }
+  }
+  
+  var fixedTransactionCostView: some View {
+    ForEach(transaction.fixedCosts) { costItem in
+      LabeledContent {
+        // FIXME: the number is being rounded here, doesn't really make sense to customer
+        Text(verbatim: "\(costItem.amount .formatted(.currency(code: document.currencyCode).precision(.fractionLength(costItem.amount.decimalPlacesCount(for: document.currencyCode)))) )")
+          .foregroundStyle(.primary)
+      } label: {
+        Text("\(costItem.name)")
+          .fontWeight(.medium)
+        
+      }
     }
   }
 }
