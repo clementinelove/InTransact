@@ -39,6 +39,7 @@ class TransactionViewModel: ObservableObject {
     self.date = transaction.date
     self.keeperName = transaction.keeperName ?? ""
     self.subtransactions = transaction.subtransactions
+    self.fixedCosts = transaction.fixedCosts
     self.comment = transaction.comment
     commonInit()
   }
