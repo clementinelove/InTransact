@@ -63,12 +63,12 @@ struct ItemTransactionRow: View {
           Text("\(itemTransaction.priceInfo.quantity) \(Global.timesSymbol) \(pricePerUnitBeforeTaxString)")
           if showTaxDetails {
             ForEach(itemTransaction.priceInfo.regularTaxItems) { taxItem in
-              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(document.formattedTaxItem(taxItem.taxCost(of: itemTransaction.priceInfo.totalBeforeTax).rounded(using: document.roundingRules.taxItemRule)))")
+              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(document.formattedTaxItem(taxItem.taxCost(of: itemTransaction.priceInfo.totalBeforeTax, rounding: document.roundingRules.taxItemRule)))")
                 .foregroundStyle(.secondary)
             }
             
             ForEach(itemTransaction.priceInfo.compoundTaxItems) { taxItem in
-              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(document.formattedTaxItem(taxItem.taxCost(of: itemTransaction.priceInfo.totalAfterRegularTax(roundedWith: document.roundingRules.taxItemRule)).rounded(using: document.roundingRules.taxItemRule)))")
+              Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent))) \(document.formattedTaxItem(taxItem.taxCost(of: itemTransaction.priceInfo.totalAfterRegularTax(taxItemRounding: document.roundingRules.taxItemRule), rounding: document.roundingRules.taxItemRule)))")
                 .foregroundStyle(.secondary)
             }
             

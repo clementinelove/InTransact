@@ -29,10 +29,9 @@ class ItemTransactionViewModel: ObservableObject {
   
   @Published var isValid: Bool = false
   
-  
   private var cancellables = Set<AnyCancellable>()
   fileprivate var transaction: ItemTransaction
-  
+
   init(edit transaction: ItemTransaction) {
     self.transaction = transaction
     
@@ -162,7 +161,7 @@ struct ItemTransactionEditView: View {
   @State private var attemptToDiscardChanges = false
   @State private var isShowingTemplates = false
   @EnvironmentObject private var document: InTransactDocument
-  
+  @State private var isShowingRepeatedTaxItemNameAlert = false
   private let editMode: EditMode
   private let onCommit: ((ItemTransaction) -> Void)
   
@@ -316,6 +315,12 @@ struct ItemTransactionEditView: View {
 #endif
       }
     }
+    .alert("Tax Items Cannot Share the Same Name", isPresented: $isShowingRepeatedTaxItemNameAlert) {
+      
+    } message: {
+      Text("Please rename repeated tax items.")
+    }
+    
     .navigationTitle(title)
     #if os(iOS)
     .navigationBarTitleDisplayMode(.inline)
@@ -553,16 +558,24 @@ struct ItemTransactionEditView: View {
       }
     }
   }
+  
   @ViewBuilder
   var confirmationButton: some View {
     Button(editMode == .new ? "Add" : "Done") {
-      let resultItemTransaction = viewModel.updatedItemTransaction
-      if viewModel.saveAsItemTemplate {
-        document.content.saveAsTemplate(resultItemTransaction)
-      }
       
-      onCommit(resultItemTransaction)
-      dismiss()
+      // check tax items to see if they share names
+      if viewModel.priceInfo.containsTaxItemsWithSameName {
+        isShowingRepeatedTaxItemNameAlert = true
+      } else {
+        
+        let resultItemTransaction = viewModel.updatedItemTransaction
+        if viewModel.saveAsItemTemplate {
+          document.content.saveAsTemplate(resultItemTransaction)
+        }
+        
+        onCommit(resultItemTransaction)
+        dismiss()
+      }
     }
     .disabled(!viewModel.isValid)
   }

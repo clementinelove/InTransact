@@ -116,20 +116,35 @@ public struct PriceInfo: Codable, Equatable {
     }
   }
   
-  func totalAfterRegularTax(roundedWith taxItemRounding: RoundingRule) -> Price {
-    totalBeforeTax + regularTaxSum(roundedWith: taxItemRounding)
+  /// Assuming each name only appears once in a price info, then, it should have no problem with anything.
+  func taxItemCosts(taxRoundingRule: RoundingRule) -> [String: Price] {
+    var taxItemToCost: [String: Price] = [:]
+    for taxItem in regularTaxItems {
+      taxItemToCost[taxItem.name] = taxItem.taxCost(of: self.totalBeforeTax, rounding: taxRoundingRule)
+    }
+    for taxItem in compoundTaxItems {
+      taxItemToCost[taxItem.name] = taxItem.taxCost(of: self.totalAfterRegularTax(taxItemRounding: taxRoundingRule), rounding: taxRoundingRule)
+    }
+    for taxItem in fixedAmountTaxItems {
+      taxItemToCost[taxItem.name] = taxItem.amount
+    }
+    return taxItemToCost
   }
   
-  public func regularTaxSum(roundedWith taxItemRounding: RoundingRule) -> Price {
+  func totalAfterRegularTax(taxItemRounding: RoundingRule) -> Price {
+    totalBeforeTax + regularTaxSum(taxItemRounding: taxItemRounding)
+  }
+  
+  public func regularTaxSum(taxItemRounding: RoundingRule) -> Price {
     return regularTaxItems
       .reduce(0) {
-        $0 + $1.taxCost(of: totalBeforeTax).rounded(using: taxItemRounding)
+        $0 + $1.taxCost(of: totalBeforeTax, rounding: taxItemRounding)
       }
   }
   
-  public func compoundTaxSum(roundedWith taxItemRounding: RoundingRule) -> Price {
-    let cachedTotalAfterRegularTax = totalAfterRegularTax(roundedWith: taxItemRounding)
-    return compoundTaxItems.reduce(0, { $0 + $1.taxCost(of: cachedTotalAfterRegularTax).rounded(using: taxItemRounding) })
+  public func compoundTaxSum(taxItemRounding: RoundingRule) -> Price {
+    let cachedTotalAfterRegularTax = totalAfterRegularTax(taxItemRounding: taxItemRounding)
+    return compoundTaxItems.reduce(0, { $0 + $1.taxCost(of: cachedTotalAfterRegularTax, rounding: taxItemRounding) })
   }
   
   /// The sum of all fixed tax items.
@@ -140,8 +155,8 @@ public struct PriceInfo: Codable, Equatable {
   }
   
   public func allTaxSum(roundedWith taxItemRounding: RoundingRule) -> Price {
-    regularTaxSum(roundedWith: taxItemRounding)
-    + compoundTaxSum(roundedWith: taxItemRounding)
+    regularTaxSum(taxItemRounding: taxItemRounding)
+    + compoundTaxSum(taxItemRounding: taxItemRounding)
     + fixedTaxSum
   }
     
@@ -213,26 +228,75 @@ extension PriceInfo {
     }
     return copied
   }
+  
+  var containsTaxItemsWithSameName: Bool {
+    var names = Set<String>()
+    for taxItem in regularTaxItems {
+      let name = taxItem.name
+      if names.contains(name) {
+        return true
+      } else {
+        names.insert(name)
+      }
+    }
+    
+    for taxItem in compoundTaxItems {
+      let name = taxItem.name
+      if names.contains(name) {
+        return true
+      } else {
+        names.insert(name)
+      }
+    }
+    
+    for taxItem in fixedAmountTaxItems {
+      let name = taxItem.name
+      if names.contains(name) {
+        return true
+      } else {
+        names.insert(name)
+      }
+    }
+    return false
+  }
 }
 
-public struct RateTaxItem: Codable, Identifiable, Equatable {
+public struct RateTaxItem: Identifiable, Codable, Equatable, Hashable {
   public var id = UUID()
   public var name: String
   public var rate: Decimal
+  
+  public static func ==(lhs: RateTaxItem, rhs: RateTaxItem) -> Bool {
+    lhs.name == rhs.name && lhs.rate == rhs.rate
+  }
+  
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(name)
+    hasher.combine(rate)
+  }
   
   public static func fresh() -> RateTaxItem {
     RateTaxItem(name: "", rate: 0.0)
   }
   
-  public func taxCost(of price: Price) -> Price {
-    price * rate
+  public func taxCost(of price: Price, rounding taxItemRounding: RoundingRule) -> Price {
+    (price * rate).rounded(using: taxItemRounding)
   }
 }
 
-public struct FixedAmountItem: Codable, Identifiable, Equatable {
+public struct FixedAmountItem: Codable, Identifiable, Equatable, Hashable {
   public var id = UUID()
   public var name: String
   public var amount: Price
+  
+  public static func ==(lhs:FixedAmountItem, rhs: FixedAmountItem) -> Bool {
+    lhs.name == rhs.name && lhs.amount == rhs.amount
+  }
+  
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(name)
+    hasher.combine(amount)
+  }
   
   static func fresh() -> FixedAmountItem {
     FixedAmountItem(name: "", amount: 0.0)

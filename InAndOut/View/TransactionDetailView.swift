@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NTPlatformKit
 
 struct TransactionDetailView: View {
   
@@ -26,103 +27,91 @@ struct TransactionDetailView: View {
   
   
   var body: some View {
+    ScrollView {
+      VStack(alignment: .leading) {
         VStack(alignment: .leading) {
-          VStack(alignment: .leading) {
-            
-            Text("Transaction", comment: "Navigation title of a transaction")
-              .font(.caption.smallCaps())
-              .fontWeight(.medium)
-            
-            HStack {
-              if let transactionID = transaction.transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
-                  Text(transactionID)
-                  .font(.title3.monospaced().bold())
+          
+          Text("Transaction", comment: "Navigation title of a transaction")
+            .font(.caption.smallCaps())
+            .fontWeight(.medium)
+          
+          HStack {
+            if let transactionID = transaction.transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+              Text(transactionID)
+                .font(.title3.monospaced().bold())
                 .foregroundColor(Global.transactionIDHighlightColor)
-              } else {
-                Text("No ID Specified")
-                  .font(.title3.monospaced().bold())
-                  .foregroundColor(.gray)
-              }
-              
-              Spacer()
+            } else {
+              Text("No ID Specified")
+                .font(.title3.monospaced().bold())
+                .foregroundColor(.gray)
             }
-            .padding(.bottom, 2)
             
-            // MARK: Date
-            Text(transaction.date.formatted(date: .long, time: .shortened))
-              .font(.subheadline)
-              .padding(.bottom)
-            
-            VStack(alignment: .leading, spacing: 6) {
-              HStack {
-                Label {
-                  switch transaction.transactionType {
-                    case .itemsIn:
-                      Text("Items In")
-                    case .itemsOut:
-                      Text("Items Out")
-                  }
-                } icon: {
-                  Image(systemName: transaction.transactionType == .itemsIn ? "arrow.down.circle" : "arrow.up.circle")
-                    .fontWeight(.medium)
-                }
-              }
-              
-              // MARK: Keeper
-              if let keeper = transaction.keeperName?.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
-                Label {
-                  Text(verbatim: keeper)
-                } icon: {
-                  Image(systemName: "pencil.circle")
-                }
-              }
-            }
-            .font(.callout)
-            .padding(.bottom, 4)
-            
-
-            
-            
-
-            
-            
-            // MARK: Comments
-            if !transaction.comment.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-              Text(transaction.comment)
-                .textSelection(.enabled)
-                .font(.callout)
-                .foregroundStyle(.secondary)
-              
-            }
+            Spacer()
           }
-          .listRowSeparator(.hidden, edges: .top)
+          .padding(.bottom, 2)
           
-          VStack(spacing: 10) {
-            Divider()
+          // MARK: Date
+          Text(transaction.date.formatted(date: .long, time: .shortened))
+            .font(.subheadline)
+            .padding(.bottom)
+          
+          VStack(alignment: .leading, spacing: 6) {
             HStack {
-              Text("Total", comment: "Labels the total amount of a transaction")
-                .textCase(.uppercase)
-              Spacer()
-              Text(verbatim: document.formattedTransactionTotal(transaction.total(roundingRules: document.roundingRules)))
+              Label {
+                switch transaction.transactionType {
+                  case .itemsIn:
+                    Text("Items In")
+                  case .itemsOut:
+                    Text("Items Out")
+                }
+              } icon: {
+                Image(systemName: transaction.transactionType == .itemsIn ? "arrow.down.circle" : "arrow.up.circle")
+                  .fontWeight(.medium)
+              }
             }
-            .font(.body.bold())
-            Divider()
+            
+            // MARK: Keeper
+            if let keeper = transaction.keeperName?.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+              Label {
+                Text(verbatim: keeper)
+              } icon: {
+                Image(systemName: "pencil.circle")
+              }
+            }
           }
+          .font(.callout)
+          .padding(.bottom, 4)
           
-          VStack(spacing: 10) {
-            // MARK: Items
-            ForEach($transaction.subtransactions) { t in
-              ItemTransactionRow(itemTransaction: t, showTaxDetails: false)
-              .id(t.wrappedValue.itemName)
-            }
+          // MARK: Comments
+          if !transaction.comment.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            Text(transaction.comment)
+              .textSelection(.enabled)
+              .font(.callout)
+              .foregroundStyle(.secondary)
+            
           }
         }
+        .listRowSeparator(.hidden, edges: .top)
+        
+        Divider()
+        
+        // MARK: Items
+        VStack(spacing: 10) {
+          ForEach($transaction.subtransactions) { t in
+            ItemTransactionRow(itemTransaction: t, showTaxDetails: false)
+              .id(t.wrappedValue.itemName)
+          }
+        }
+        
+        sharedTaxInfo
+      }
+      .padding()
+    }
     .navigationTitle("")
     #if os(iOS)
     .navigationBarTitleDisplayMode(.inline)
     #endif
     .listStyle(.plain)
-    .onAppear { render() }
     .sheet(isPresented: $showTransactionEditView) {
       Task {
         await MainActor.run {
@@ -137,6 +126,18 @@ struct TransactionDetailView: View {
         #if os(iOS)
 .toolbarRole(.navigationStack)
 #endif
+      }
+    }
+    .toolbar {
+      ToolbarItemGroup(placement: .bottomBar) {
+        LabeledContent {
+          Text(verbatim: document.formattedTransactionTotal(transaction.total(roundingRules: document.roundingRules)))
+        } label: {
+          Text("Total")
+            .textCase(.uppercase)
+        }
+        .font(.body.bold())
+        .foregroundStyle(.primary)
       }
     }
     .alert("Delete Transaction \"\(transaction.transactionID)\"?", isPresented: $showDeleteConfirmationAlert) {
@@ -180,16 +181,56 @@ struct TransactionDetailView: View {
     }
   }
   
-  @MainActor func render() {
-//    let renderer = ImageRenderer(content: TransactionSnapShotView(transaction: transaction))
+  @State private var isShowingTotalDetails = false
+  
+  @ViewBuilder
+  var sharedTaxInfo: some View {
     
-    // make sure and use the correct display scale for this device
-//    renderer.scale = displayScale
-//    
-//    if let uiImage = renderer.uiImage {
-//      transactionImage = Image(uiImage: uiImage)
-//      
-//    }
+    if let (regular, compound, fixed) = transaction.sharedTaxInfo(taxRoundingRule: document.roundingRules.taxItemRule) {
+      Divider()
+      
+      LabeledContent {
+        Text(verbatim: transaction.subtotal().formatted(.currency(code: document.currencyCode)))
+          .foregroundStyle(.primary)
+      } label: {
+        Text("Subtotal")
+      }
+      
+      Section {
+        ForEach(regular.sorted(using: KeyPathComparator(\.key.name, order: .forward)), id: \.key) { taxEntry in
+          LabeledContent {
+            Text(verbatim: "\(document.formattedTaxItem(taxEntry.value))")
+              .foregroundStyle(.primary)
+          } label: {
+            Text("\(taxEntry.key.name)")
+            Text("Regular Tax at \(taxEntry.key.rate.formatted(.percent))")
+          }
+        }
+        
+        ForEach(compound.sorted(using: KeyPathComparator(\.key.name, order: .forward)), id: \.key) { taxEntry in
+          LabeledContent {
+            Text(verbatim: "\(document.formattedTaxItem(taxEntry.value))")
+              .foregroundStyle(.primary)
+          } label: {
+            Text("\(taxEntry.key.name)")
+            Text("Compound Tax at \(taxEntry.key.rate.formatted(.percent))")
+          }
+        }
+        ForEach(fixed.sorted(using: KeyPathComparator(\.key.name, order: .forward)), id: \.key) { taxEntry in
+          LabeledContent {
+            // FIXME: the number is being rounded here, doesn't really make sense to customer
+            Text(verbatim: "\(taxEntry.value.formatted(.currency(code: document.currencyCode).precision(.fractionLength(taxEntry.value.decimalPlacesCount))) )")
+          } label: {
+            Text("\(taxEntry.key.name)")
+          }
+        }
+      }
+      
+
+//      .foregroundStyle(.primary)
+      
+      
+    }
   }
 }
 
@@ -269,12 +310,21 @@ struct TransactionSnapShotView: View {
 struct TransactionDetailView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationStack {
-      ScrollView(.vertical) {
+      
         TransactionDetailView(transaction: .constant(.mock()), onDelete: { })
-          .padding()
-      }
         .environmentObject(InTransactDocument.mock())
     }
+    Rectangle().sheet(isPresented: .constant(true)) {
+      NavigationStack {
+        
+          TransactionDetailView(transaction: .constant(.mock()), onDelete: { })
+        
+        .environmentObject(InTransactDocument.mock())
+      }
+    }
+    .previewDisplayName("In a Sheet")
+    
+    
 //    TransactionSnapShotView(transaction: .mock())
   }
 }

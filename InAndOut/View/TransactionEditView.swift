@@ -19,13 +19,15 @@ class TransactionViewModel: ObservableObject {
   @Published var date: Date = Date.now
   @Published var keeperName: String = ""
   @Published var subtransactions: [ItemTransaction] = []
+  @Published var fixedCosts: [FixedAmountItem] = []
   @Published var comment: String = ""
+  
   var isValid: Bool {
     !subtransactions.isEmpty
   }
   // TODO: addable verification
   
-  var transaction: Transaction
+  private var transaction: Transaction
   var editMode: EditMode
   
   init(edit transaction: Transaction) {
@@ -49,6 +51,7 @@ class TransactionViewModel: ObservableObject {
     self.date = transaction.date
     self.keeperName = transaction.keeperName ?? ""
     self.subtransactions = transaction.subtransactions
+    self.fixedCosts = transaction.fixedCosts
     self.comment = transaction.comment
     
     self.editMode = .new
@@ -73,6 +76,7 @@ class TransactionViewModel: ObservableObject {
     self.date != transaction.date ||
     self.keeperName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) != transaction.keeperName?.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ||
     self.subtransactions != transaction.subtransactions ||
+    self.fixedCosts != transaction.fixedCosts ||
     self.comment.trimmingCharacters(in: .whitespacesAndNewlines) != transaction.comment.trimmingCharacters(in: .whitespacesAndNewlines)
   }
   
@@ -83,13 +87,24 @@ class TransactionViewModel: ObservableObject {
                 transactionType: transactionType,
                 transactionID: transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? UUID().uuidString, // generate random ID if empty
                 subtransactions: subtransactions,
+                // Remove redundant items
+                fixedCosts: fixedCosts.filter { item in
+      !item.amount.isZero || !item.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    },
                 comment: comment.trimmingCharacters(in: .whitespacesAndNewlines),
                 keeperName: keeperName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines),
                 date: date)
   }
 }
 
+// MARK: - View
 struct TransactionEditView: View {
+  
+  enum Field: Hashable {
+    case keeperName
+    case fixedCost(_ id: FixedAmountItem.ID)
+    case notes
+  }
   
   @Environment(\.dismiss) private var dismiss
   
@@ -98,9 +113,11 @@ struct TransactionEditView: View {
   @State private var editingItem: Binding<ItemTransaction>? = nil
   @State private var showAddItemTransactionView = false
   @State private var attemptToDiscardChanges: Bool = false
+  @FocusState private var focusField: Field?
   private var onCommit: (Transaction) -> Void
   private var onCompletion: (() -> Void)? = nil
   private var dismissAfterCompletion: Bool
+  
   init(edit transaction: Transaction, dismissAfterCompletion: Bool = false, onCommit: @escaping (Transaction) -> Void, onCompletion: (() -> Void)? = nil) {
     self._viewModel = StateObject(wrappedValue: TransactionViewModel(edit: transaction))
     self.dismissAfterCompletion = dismissAfterCompletion
@@ -148,6 +165,7 @@ struct TransactionEditView: View {
         }
         
         TextField("Keeper Name", text: $viewModel.keeperName)
+          .focused($focusField, equals: .keeperName)
         // TODO: add contact picker for keeper info
         DatePicker("Date", selection: $viewModel.date, displayedComponents: [.date, .hourAndMinute])
       } footer: {
@@ -191,14 +209,6 @@ struct TransactionEditView: View {
           viewModel.subtransactions.move(fromOffsets: indexSet, toOffset: destination)
         }
         
-        // TODO: quickly add from template
-        //        Button {
-        //
-        //        } label: {
-        //          Label("Add Item From Template", systemImage: "plus.square.on.square")
-        //            .imageScale(.large)
-        //        }
-        
         Button {
           showAddItemTransactionView = true
         } label: {
@@ -213,12 +223,15 @@ struct TransactionEditView: View {
         Text("Items", comment: "Section title, in which lists items that contained in a transaction")
       }
       
-//      Section {
-//        
-//      }
+      Section {
+        fixedCostItems()
+      } header: {
+        Text("Other Costs", comment: "Section title of other fixed costs in a transaction")
+      }
       
       Section {
         TextField("Notes & Comments", text: $viewModel.comment, axis: .vertical)
+          .focused($focusField, equals: .notes)
           .frame(minHeight: 120, alignment: .top)
       }
     }
@@ -311,6 +324,46 @@ struct TransactionEditView: View {
     }
     .animationDisabled()
   }
+  
+  func fixedCostItems() -> some View {
+    Group {
+      ForEach($viewModel.fixedCosts) { $item in
+        VStack(alignment: .leading) {
+          HStack {
+            TextField("Cost Name", text: $item.name)
+            CurrencyTextField(amount: $item.amount,
+                              focusedBinding: $focusField,
+                              value: .fixedCost($item.wrappedValue.id),
+                              alignment: .trailing)
+            .labelsHidden()
+#if os(iOS)
+            .keyboardType(.decimalPad)
+#endif
+          }
+        }
+        .alignmentGuide(.listRowSeparatorLeading) { $0[.leading] }
+      }
+      .onDelete { indexSet in
+        viewModel.fixedCosts.remove(atOffsets: indexSet)
+      }
+      
+      Button {
+        withAnimation {
+          viewModel.fixedCosts.append(FixedAmountItem.fresh())
+        }
+      } label: {
+        Label {
+          Text("Add New Fixed Cost", comment: "Button to add a new fixed cost item to a transaction")
+        } icon: {
+          AddNewItemImage()
+        }
+      }
+      .alignmentGuide(.listRowSeparatorLeading) {
+        $0[.leading]
+      }
+    }
+  }
+  
 }
 
 struct TransactionEditView_Previews: PreviewProvider {

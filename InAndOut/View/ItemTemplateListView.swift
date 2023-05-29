@@ -210,8 +210,7 @@ struct ItemTemplateDetailView: View {
             .font(.caption2)
           
           LabeledContent {
-            Text(verbatim: taxItem.taxCost(of: itemTemplate.priceInfo.totalBeforeTax)
-              .formatted(.currency(code: document.currencyCode)))
+            Text(verbatim: document.formattedTaxItem(taxItem.taxCost(of: itemTemplate.priceInfo.totalBeforeTax, rounding: document.roundingRules.taxItemRule)))
           } label: {
             Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent)))")
           }
@@ -229,7 +228,7 @@ struct ItemTemplateDetailView: View {
           Text("Compound Tax")
             .font(.caption2)
           LabeledContent {
-            Text(verbatim: document.formattedTaxItem(taxItem.taxCost(of: itemTemplate.priceInfo.totalAfterRegularTax(roundedWith: document.roundingRules.taxItemRule))))
+            Text(verbatim: document.formattedTaxItem(taxItem.taxCost(of: itemTemplate.priceInfo.totalAfterRegularTax(taxItemRounding: document.roundingRules.taxItemRule), rounding: document.roundingRules.taxItemRule)))
           } label: {
             Text(verbatim: "\(taxItem.name) (\(taxItem.rate.formatted(.percent)))")
           }

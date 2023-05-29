@@ -123,11 +123,8 @@ struct DocumentMainView: View {
           transactionList
           .navigationSplitViewColumnWidth(min: 300, ideal: 400, max: 500)
         } detail: {
-          ScrollView(.vertical) {
-            TransactionDetailView(transaction: $document.content.transactions[transactionInspectorState.transactionIndex]) {
-              // on delete
-            }
-            .padding()
+          TransactionDetailView(transaction: $document.content.transactions[transactionInspectorState.transactionIndex]) {
+            // on delete
           }
         }
         #endif
@@ -497,13 +494,10 @@ struct DocumentMainView: View {
         let index = transactionInspectorState.transactionIndex
         if document.content.transactions.indices.contains(index) {
           if !isEditing {
-            ScrollView(.vertical) {
+            
               TransactionDetailView(transaction: $document.content.transactions[index]) {
                 // ... on deletion is not needed here
               }
-              .padding()
-              
-            }
             .scrollDismissesKeyboard(.immediately)
             .toolbar {
               ToolbarItem(placement: .primaryAction) {

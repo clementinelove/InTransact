@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This view is mainly for experiment and not in use in the moment.
 struct TransactionMainView: View {
   @EnvironmentObject private var document: InTransactDocument
   @Environment(\.undoManager) var undoManager
