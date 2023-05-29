@@ -17,6 +17,20 @@ struct CurrencyPickerContent: View {
   var body: some View {
     List {
       Section {
+        if let currentLocaleCurrencyIdentifier = Locale.autoupdatingCurrent.currency?.identifier {
+          Picker(selection: currencyCodeAutoDismissBinding) {
+            currencyRow(currentLocaleCurrencyIdentifier)
+          } label: {
+            Text("Current System Locale")
+          }
+          .pickerStyle(.inline)
+        }
+      } header: {
+        Text("System", comment: "Section heading of the system's default currency")
+      }
+
+      
+      Section {
         Picker(selection: currencyCodeAutoDismissBinding) {
           ForEach(Locale.commonISOCurrencyCodes, id: \.self) { currencyCode in
             currencyRow(currencyCode)

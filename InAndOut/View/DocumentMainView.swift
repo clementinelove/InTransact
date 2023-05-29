@@ -163,7 +163,11 @@ struct DocumentMainView: View {
       }
     } content: {
       NavigationStack {
-        DocumentSettingsView(document: document)
+        DocumentSettingsView(settings: Binding(get: {
+          document.content.settings
+        }, set: { newSetting in
+          document.updateSettings(newSetting, undoManager: undoManager)
+        }))
           .toolbar {
             ToolbarItem(placement: .confirmationAction) {
               Button("Done") {

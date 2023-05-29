@@ -92,7 +92,7 @@ extension InTransactDocument {
   func updateSettings(_ newSettings: Setting, undoManager: UndoManager? = nil) {
     let oldSettings = content.settings
     content.settings = newSettings
-    logger.debug("Update from \(oldSettings.debugDescription) to \(newSettings.debugDescription)")
+    logger.debug("Update from \n\(oldSettings.debugDescription)\n to \n\(newSettings.debugDescription)")
     
     undoManager?.registerUndo(withTarget: self) { doc in
       // Because it calls itself, this is redoable, as well.

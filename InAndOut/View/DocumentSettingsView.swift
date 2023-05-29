@@ -15,12 +15,7 @@ struct DocumentSettingsView: View {
   @State private var isExpandingTaxItemRoundingSettings = false
   @State private var isExpandingItemTotalRoundingSettings = false
   @State private var isExpandingTransactionTotalRoundingSettings = false
-  @State private var settings: Setting = Setting()
-  
-  init(document: InTransactDocument) {
-    // copy settings
-    _settings = State(wrappedValue: document.content.settings)
-  }
+  @Binding var settings: Setting
   
   var body: some View {
     Form {
@@ -70,11 +65,6 @@ struct DocumentSettingsView: View {
 #if os(iOS)
     .navigationBarTitleDisplayMode(.inline)
 #endif
-    .onDisappear {
-      withAnimation {
-        document.updateSettings(settings, undoManager: undoManager)
-      }
-    }
   }
   
   func collapseAllFirst(_ bd: Binding<Bool>) -> Binding<Bool> {
@@ -135,7 +125,7 @@ struct DocumentSettingsView_Previews: PreviewProvider {
   static var previews: some View {
     Rectangle().sheet(isPresented: .constant(true)) {
       NavigationStack {
-        DocumentSettingsView(document: .mock())
+        DocumentSettingsView(settings: .constant(Setting()))
           .environmentObject(InTransactDocument.mock())
       }
     }

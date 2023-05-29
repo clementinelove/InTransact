@@ -43,6 +43,10 @@ public struct PriceInfo: Codable, Equatable {
   
   public var regularTaxItems: [RateTaxItem] = []
   public var compoundTaxItems: [RateTaxItem] = []
+  
+  /** The reason why this is called as a 'tax' rather than a 'fixed cost' is because,
+   a 'fixed cost' is confusing when people tries to understand whether it's part of the 'total before tax'.
+   */
   public var fixedAmountTaxItems: [FixedAmountItem] = []
   // TODO: discount? after tax or before tax?
   
