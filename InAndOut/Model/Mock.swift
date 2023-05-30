@@ -68,12 +68,36 @@ extension Transaction {
     Transaction(transactionType: TransactionType.allCases.randomElement()!,
                 transactionID: UUID().uuidString,
                 subtransactions: (0...(1...20).randomElement()!).map { _ in .mock() },
-                fixedCosts: [.init(name: "Delivery", amount: 12.56)],
+                fixedCosts: [.init(name: "包装费", amount: 12.56)],
                 comment: Bool.random() ? "" : Self.comments.randomElement()!,
                 keeperName: Bool.random() ? sampleKeeperNames.randomElement()! : nil,
                 date: Date.now.addingTimeInterval(Double(((-60 * 60 * 24 * 180)...0).randomElement()!)))
   }
 }
+
+fileprivate let sampleItemNames_zh_sc: [(String, String)] = [
+  ("经典美式堡", ""),
+  ("香浓奶酪堡", ""),
+  ("烤鸡肉堡", ""),
+  ("牛肉芝士堡", "加1份肉饼"),
+  ("火腿菠萝堡", ""),
+  ("墨西哥辣味堡", ""),
+  ("意大利香肠堡", ""),
+  ("三明治堡", "不加芝士"),
+  ("健康蔬菜堡", ""),
+  ("豪华双层堡", ""),
+  ("烟熏培根堡", ""),
+  ("香辣鱼肉堡", ""),
+  ("田园鸡蛋堡", ""),
+  ("贵族蓝奶酪堡", "少放奶酪"),
+  ("黑椒牛肉堡", ""),
+  ("烧烤堡", ""),
+  ("夏威夷风情堡", ""),
+  ("奥尔良鸡肉堡", ""),
+  ("咖喱鸡肉堡", ""),
+  ("鳕鱼堡", ""),
+]
+
 fileprivate let sampleItemNames: [(String, String)] = [
   ("Stainless Steel Water Bottle", "H2O-PRO 500"),
   ("Bluetooth Wireless Earbuds", "SonicBuds S7"),
@@ -107,6 +131,68 @@ fileprivate let sampleItemNames: [(String, String)] = [
   ("Foam Roller for Deep Tissue Massage", "FlexiRoller X")
 ]
 
+fileprivate let sampleKeeperNames_zh_sc: [String] = [
+  "张伟",
+  "李娜",
+  "王强",
+  "刘芳",
+  "陈敏",
+  "杨辉",
+  "黄明",
+  "赵琳",
+  "吴晨",
+  "周燕",
+  "郑丽",
+  "朱辉",
+  "马鹏",
+  "孙红",
+  "何欣",
+  "罗峰",
+  "高婷",
+  "林华",
+  "谢瑜",
+  "雷阳",
+  "苏熙",
+  "乐荷",
+  "雨翔",
+  "冬雪",
+  "柳春",
+  "云曦",
+  "夏阳",
+  "岚清",
+  "风铃",
+  "溪月",
+  "竹影",
+  "海琴",
+  "山韵",
+  "诗瑶",
+  "晓梦",
+  "曜石",
+  "静云",
+  "星辰",
+  "紫萱",
+  "慕晴",
+  "杨春华",
+  "刘雨萌",
+  "陈若瑶",
+  "孙博文",
+  "赵晨阳",
+  "张晓莉",
+  "王静怡",
+  "郑海宁",
+  "韩紫萍",
+  "周星辰",
+  "李铭宇",
+  "姚语嫣",
+  "高雅琳",
+  "唐志豪",
+  "许思雨",
+  "魏晴燕",
+  "曾浩然",
+  "叶婷婷",
+  "蔡秋枫",
+  "康明洋",
+]
 fileprivate let sampleKeeperNames: [String] = [
   "Evelyn Hartman",
   "Benjamin Wolfe",
@@ -125,7 +211,6 @@ extension ItemTransaction {
     let randomItem = sampleItemNames.randomElement()!
     return ItemTransaction(itemID: nil, itemName: randomItem.0, variant: randomItem.1, priceInfo: .mock())
   }
-  
 }
 
 extension PriceInfo {
@@ -135,7 +220,7 @@ extension PriceInfo {
                      quantity: (1...3000).randomElement()!,
                      regularTaxItems: [.init(name: "GST", rate: 0.05)],
                      compoundTaxItems: [.init(name: "PST", rate: 0.1)],
-                     fixedAmountTaxItems: [.init(name: "Packaging", amount: 10.5)])
+                     fixedAmountTaxItems: [.init(name: "Tariff", amount: 10.5)])
   }
 }
 

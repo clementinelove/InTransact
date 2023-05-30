@@ -6,24 +6,33 @@
 //
 
 import SwiftUI
+import NTPlatformKit
 
+// FIXME: Move currency settings to here!!!
 struct DocumentSettingsView: View {
   
   @EnvironmentObject private var document: InTransactDocument
   @Environment(\.undoManager) private var undoManager
   @Environment(\.dismiss) private var dismiss
   @State private var isExpandingTaxItemRoundingSettings = false
-  @State private var isExpandingItemTotalRoundingSettings = false
+  @State private var isExpandingItemSubtotalRoundingSettings = false
   @State private var isExpandingTransactionTotalRoundingSettings = false
   @Binding var settings: Setting
   
   var body: some View {
     Form {
       
-//      Section("Defaults") {
-//        TextField("Keeper Name", text: .constant(""))
-//        TextField("Regular Tax", text: .constant(""))
-//      }
+      Section {
+        NavigationLink {
+          CurrencyPickerContent(currencyIdentifier: $settings.currencyIdentifier)
+        } label: {
+          LabeledContent {
+          } label: {
+            Text("Document Currency")
+            Text("\(document.currencyCode)")
+          }
+        }
+      }
       
       Section {
         roundingRuleSettings(isExpandng: collapseAllFirst($isExpandingTaxItemRoundingSettings),
@@ -31,10 +40,10 @@ struct DocumentSettingsView: View {
                              rule: $settings.roundingRules.taxItemRule)
         .accessibilityLabel(Text("Tax Item Rounding"))
         
-        roundingRuleSettings(isExpandng: collapseAllFirst($isExpandingItemTotalRoundingSettings),
-                             name: "Item Total",
-                             rule: $settings.roundingRules.itemTotalRule)
-        .accessibilityLabel(Text("Item Total Rounding"))
+        roundingRuleSettings(isExpandng: collapseAllFirst($isExpandingItemSubtotalRoundingSettings),
+                             name: "Item Subtotal",
+                             rule: $settings.roundingRules.itemSubtotalRule)
+        .accessibilityLabel(Text("Item Subtotal Rounding"))
         
         roundingRuleSettings(isExpandng: collapseAllFirst( $isExpandingTransactionTotalRoundingSettings),
                              name: "Transaction Total",
@@ -53,7 +62,7 @@ struct DocumentSettingsView: View {
         }
         .buttonStyle(.borderless)
       } header: {
-        Text("Rounding")
+        Text("Roundings", comment: "Section title of document rounding settings")
       }
     footer: {
       // Tell users that item unit price are not rounded at all. But they are displayed as if they are rounded.
@@ -72,7 +81,7 @@ struct DocumentSettingsView: View {
       bd.wrappedValue
     } set: { newValue in
       isExpandingTaxItemRoundingSettings = false
-      isExpandingItemTotalRoundingSettings = false
+      isExpandingItemSubtotalRoundingSettings = false
       isExpandingTransactionTotalRoundingSettings = false
       bd.wrappedValue = newValue
     }
@@ -116,7 +125,7 @@ struct DocumentSettingsView: View {
         Text("10")
       }
       // 1232.5463
-      Text("Preview: \(Decimal(string: "1.065")!.rounded(using: ruleBinding.wrappedValue).formatted(.currency(code: settings.currencyIdentifier ).precision(.fractionLength(ruleBinding.wrappedValue.scale))))")
+      Text("Preview: \(Decimal(string: "365.065")!.rounded(using: ruleBinding.wrappedValue).formatted(.currency(code: settings.currencyIdentifier ).precision(.fractionLength(ruleBinding.wrappedValue.scale))))")
     }
   }
 }

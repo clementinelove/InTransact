@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		582758BE2A1B6687004F0B91 /* DocumentExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582758BD2A1B6687004F0B91 /* DocumentExportView.swift */; };
-		582820352A196D310001CCA0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 582820332A196D310001CCA0 /* Localizable.strings */; };
 		582820382A1A39740001CCA0 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 5828203A2A1A39740001CCA0 /* Localizable.stringsdict */; };
 		5843B9D32A12EA530048C0CA /* DocumentSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9D22A12EA530048C0CA /* DocumentSettingsView.swift */; };
 		5843B9D52A137C050048C0CA /* CurrencyPickerContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9D42A137C050048C0CA /* CurrencyPickerContent.swift */; };
@@ -54,6 +53,8 @@
 		589E209A2A10CE6A008A5BDA /* ItemTransactionEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB4A2A07D191005FAAA6 /* ItemTransactionEditView.swift */; };
 		589E209C2A110B19008A5BDA /* Copyable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E209B2A110B19008A5BDA /* Copyable.swift */; };
 		58D5EC1A2A235E7C001BFDB4 /* AddNewItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5EC192A235E7C001BFDB4 /* AddNewItemImage.swift */; };
+		58D5EC1D2A2603A6001BFDB4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58D5EC1B2A2603A6001BFDB4 /* InfoPlist.strings */; };
+		58D5EC202A2603A6001BFDB4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58D5EC1E2A2603A6001BFDB4 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +128,8 @@
 		589E20392A0EC9D5008A5BDA /* DocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewModel.swift; sourceTree = "<group>"; };
 		589E209B2A110B19008A5BDA /* Copyable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Copyable.swift; sourceTree = "<group>"; };
 		58D5EC192A235E7C001BFDB4 /* AddNewItemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewItemImage.swift; sourceTree = "<group>"; };
+		58D5EC1C2A2603A6001BFDB4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		58D5EC1F2A2603A6001BFDB4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,7 +165,6 @@
 			isa = PBXGroup;
 			children = (
 				582820332A196D310001CCA0 /* Localizable.strings */,
-				5828203A2A1A39740001CCA0 /* Localizable.stringsdict */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -210,6 +212,9 @@
 				5858FB6F2A0B79B4005FAAA6 /* README.md */,
 				5858FB1E2A07D180005FAAA6 /* Assets.xcassets */,
 				5858FB202A07D180005FAAA6 /* Info.plist */,
+				58D5EC1E2A2603A6001BFDB4 /* Localizable.strings */,
+				5828203A2A1A39740001CCA0 /* Localizable.stringsdict */,
+				58D5EC1B2A2603A6001BFDB4 /* InfoPlist.strings */,
 				5858FB212A07D180005FAAA6 /* InAndOut.entitlements */,
 				5858FB222A07D180005FAAA6 /* Preview Content */,
 				589E202F2A0E2733008A5BDA /* Model */,
@@ -427,9 +432,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5858FB242A07D180005FAAA6 /* Preview Assets.xcassets in Resources */,
+				58D5EC202A2603A6001BFDB4 /* Localizable.strings in Resources */,
 				582820382A1A39740001CCA0 /* Localizable.stringsdict in Resources */,
-				582820352A196D310001CCA0 /* Localizable.strings in Resources */,
 				5858FB1F2A07D180005FAAA6 /* Assets.xcassets in Resources */,
+				58D5EC1D2A2603A6001BFDB4 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +547,22 @@
 				5828203B2A1A39760001CCA0 /* zh-Hans */,
 			);
 			name = Localizable.stringsdict;
+			sourceTree = "<group>";
+		};
+		58D5EC1B2A2603A6001BFDB4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				58D5EC1C2A2603A6001BFDB4 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		58D5EC1E2A2603A6001BFDB4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				58D5EC1F2A2603A6001BFDB4 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

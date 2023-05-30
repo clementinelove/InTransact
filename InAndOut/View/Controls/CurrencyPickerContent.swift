@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import NTPlatformKit
 
 struct CurrencyPickerContent: View {
   
@@ -16,17 +17,19 @@ struct CurrencyPickerContent: View {
   
   var body: some View {
     List {
-      Section {
-        if let currentLocaleCurrencyIdentifier = Locale.autoupdatingCurrent.currency?.identifier {
+      if let currentLocaleCurrencyIdentifier = Locale.autoupdatingCurrent.currency?.identifier {
+        Section {
+          
           Picker(selection: currencyCodeAutoDismissBinding) {
             currencyRow(currentLocaleCurrencyIdentifier)
           } label: {
-            Text("Current System Locale")
           }
           .pickerStyle(.inline)
+          .labelsHidden()
+          
+        } header: {
+          Text("System", comment: "Section heading of the system's default currency")
         }
-      } header: {
-        Text("System", comment: "Section heading of the system's default currency")
       }
 
       
@@ -49,7 +52,7 @@ struct CurrencyPickerContent: View {
               code.localizedStandardContains(code)
             }), id: \.self) { currencyCode in
               if currencyCode.description.localizedStandardContains(searchText) ||
-                  localizedCurrenyCode(currencyCode).localizedStandardContains(searchText) {
+                  (Locale.localizedCurrenyCode(currencyCode)?.localizedStandardContains(searchText) ?? false) {
                 currencyRow(currencyCode)
               }
             }
@@ -72,7 +75,7 @@ struct CurrencyPickerContent: View {
   func currencyRow(_ currencyCode: String) -> some View {
     VStack(alignment: .leading) {
       Text(currencyCode)
-      Text(localizedCurrenyCode(currencyCode))
+      Text(verbatim: (Locale.localizedCurrenyCode(currencyCode) ?? String(localized: "Unknown Currency", comment: "Unknown currency placeholder")))
         .font(.caption)
     }
     .tag(currencyCode)
@@ -86,7 +89,5 @@ struct CurrencyPickerContent: View {
     })
   }
   
-  func localizedCurrenyCode(_ currencyCode: String) -> String {
-    Locale.autoupdatingCurrent.localizedString(forCurrencyCode: currencyCode) ?? "Unknown"
-  }
+
 }

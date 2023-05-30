@@ -102,7 +102,7 @@ struct Transaction: Identifiable, Codable, Hashable {
     var total: Decimal = 0
     for subtransaction in subtransactions {
       let subtotal = subtransaction.priceInfo.totalAfterTax(taxItemRounding: roundingRules.taxItemRule,
-                                                            itemTotalRounding: roundingRules.itemTotalRule)
+                                                            itemSubtotalRounding: roundingRules.itemSubtotalRule)
       total += subtotal
     }
     total += fixedCosts.reduce(0) { $0 + $1.amount }

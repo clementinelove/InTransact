@@ -95,7 +95,7 @@ struct DocumentMainView: View {
   var processedTransactions: [(offset: Int, element: Transaction)] {
     let filter: ((Int, Transaction) -> Bool) =
     !itemNameFilter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?
-    { (o, t) -> Bool in  t.itemNames.description.localizedCaseInsensitiveContains(itemNameFilter) } :
+    { (o, t) -> Bool in  t.itemNames.description.localizedStandardContains(itemNameFilter) } :
     { (o, t) -> Bool in true }
     
     return document.content.transactions.enumerated()
@@ -193,31 +193,6 @@ struct DocumentMainView: View {
 #endif
       }
     }
-    // MARK: Currency Picker
-    .sheet(isPresented: $isShowingCurrencyPicker, onDismiss: {
-      Task { @MainActor in
-        isShowingCurrencyPicker = false
-      }
-    }) {
-      NavigationStack {
-        CurrencyPickerContent(currencyIdentifier: Binding(get: {
-          document.currencyCode
-        }, set: { newIdentifier in
-          document.updateCurrency(newIdentifier, undoManager: undoManager)
-        }))
-        .navigationTitle(Text("Update Document Currency", comment: "Navigation title of view that changes current document currency"))
-        .toolbar(content: {
-          ToolbarItem(placement: .confirmationAction) {
-            Button("Done") {
-              isShowingCurrencyPicker = false
-            }
-          }
-        })
-#if os(iOS)
-        .toolbarRole(.navigationStack)
-#endif
-      }
-    }
     // MARK: Transaction Detail Sheet
     .sheet(isPresented: $transactionInspectorState.showInspector, onDismiss: {
       isEditing = false
@@ -270,7 +245,7 @@ struct DocumentMainView: View {
         sortMethodMenu
       }
       
-      // MARK: Ellipsis Menu
+      // MARK: 􀍡 - Ellipsis Menu
       ToolbarItemGroup(placement: .secondaryAction) {
         
         // Very unstable
@@ -278,10 +253,16 @@ struct DocumentMainView: View {
 //          ShareLink(item: fileURL)
 //        }
         
-        Button("Settings") {
+        Button {
           Task { @MainActor in
            try await dismissInspectorSheet()
             isPresentingDocumentSettings = true
+          }
+        } label: {
+          Label {
+            Text("Settings", comment: "Button of Document Settings")
+          } icon: {
+            Image(systemName: "gear")
           }
         }
         
@@ -296,23 +277,6 @@ struct DocumentMainView: View {
           } icon: {
             Image(systemName: "tablecells")
           }
-        }
-        
-        Button {
-          
-          Task { @MainActor in
-            try await dismissInspectorSheet()
-            isShowingCurrencyPicker = true
-          }
-        } label: {
-          
-          Label {
-            Text("Change Currency", comment: "Button title that taps to change the current document currency")
-          } icon: {
-            Image(systemName: "banknote")
-          }
-          
-          Text(verbatim: document.currencyCode)
         }
       }
     }
@@ -450,12 +414,15 @@ struct DocumentMainView: View {
         } icon: {
           Image(systemName: "calendar")
         }
+        .labelStyle(.titleOnly)
         .tag(TransactionSortKey.date)
+        
         Label {
           Text("Sort By Total", comment: "Button title to sort transactions by transaction total")
         } icon: {
-          Image(systemName: "calendar")
+          Image(systemName: "banknote")
         }
+        .labelStyle(.titleOnly)
         .tag(TransactionSortKey.total)
       } label: {
         // ..
@@ -677,11 +644,12 @@ struct TransactionSearchResultView: View {
     let trimmedSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
       .lowercased()
     return document.content.transactions.enumerated().filter { (i, t) in
-      t.transactionID.localizedCaseInsensitiveContains(searchText) ||
-      t.itemAndVariantNames.contains { $0.localizedCaseInsensitiveContains(trimmedSearchText) } ||
-      t.date.formatted(date: .long, time: .complete).localizedCaseInsensitiveContains(trimmedSearchText) ||
-      t.date.formatted(.relative(presentation: .named)).localizedCaseInsensitiveContains(trimmedSearchText) ||
-      t.total(roundingRules: document.roundingRules).formatted().contains(trimmedSearchText)
+      t.transactionID.localizedStandardContains(searchText) ||
+      t.itemAndVariantNames.contains { $0.localizedStandardContains(trimmedSearchText) } ||
+      (t.keeperName?.localizedStandardContains(trimmedSearchText) ?? false) ||
+      t.date.formatted(date: .long, time: .complete).localizedStandardContains(trimmedSearchText) ||
+      t.date.formatted(.relative(presentation: .named)).localizedStandardContains(trimmedSearchText) ||
+      t.total(roundingRules: document.roundingRules).formatted().localizedStandardContains(trimmedSearchText)
     }.map { $0.offset }
     // TODO: sort the result
   }
@@ -715,9 +683,9 @@ struct TransactionSearchResultView: View {
         #endif
       }
     }
-    .task(id: searchText) {
-      print("Is searching: \(isSearching), Search Text: \(searchText)")
-    }
+//    .task(id: searchText) {
+//      logger.debug("Is searching: \(isSearching), Search Text: \(searchText)")
+//    }
     .task(id: isSearching) {
       withAnimation {
         transactionInspectorState.showInspector = false

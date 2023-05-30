@@ -159,10 +159,10 @@ struct ItemTemplateDetailView: View {
         
         LabeledContent("Total After Tax") {
           VStack(alignment: .trailing, spacing: 4) {
-            Text(verbatim: document.formattedItemTotal(itemTemplate
+            Text(verbatim: document.formattedItemSubtotal(itemTemplate
               .priceInfo
               .totalAfterTax(taxItemRounding: document.roundingRules.taxItemRule,
-                             itemTotalRounding: document.roundingRules.transactionTotalRule)))
+                             itemSubtotalRounding: document.roundingRules.transactionTotalRule)))
             .font(.body)
             .textSelection(.enabled)
           }

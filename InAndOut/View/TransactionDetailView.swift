@@ -131,7 +131,9 @@ struct TransactionDetailView: View {
 #endif
       }
     }
+#if os(iOS)
     .toolbar {
+      
       ToolbarItemGroup(placement: .bottomBar) {
         LabeledContent {
           Text(verbatim: document.formattedTransactionTotal(transaction.total(roundingRules: document.roundingRules)))
@@ -142,7 +144,9 @@ struct TransactionDetailView: View {
         .font(.body.bold())
         .foregroundStyle(.primary)
       }
+      
     }
+#endif
     .alert("Delete Transaction \"\(transaction.transactionID)\"?", isPresented: $showDeleteConfirmationAlert) {
       Button("Delete", role: .destructive) {
         // Handle delete
@@ -227,12 +231,12 @@ struct TransactionDetailView: View {
         ForEach(fixed.sorted(using: KeyPathComparator(\.key.name, order: .forward)), id: \.key) { taxEntry in
           LabeledContent {
             // FIXME: the number is being rounded here, doesn't really make sense to customer
-            Text(verbatim: "\(taxEntry.value.formatted(.currency(code: document.currencyCode).precision(.fractionLength(taxEntry.value.decimalPlacesCount(for: document.currencyCode)))) )")
+            Text(verbatim: "\(taxEntry.value.formatted(.currency(code: document.currencyCode).precision(.fractionLength(taxEntry.value.decimalPlacesCount(for: document.currencyCode)))))")
               .foregroundStyle(.primary)
           } label: {
             Text("\(taxEntry.key.name)")
               .fontWeight(.medium)
-            Text("Fixed Cost Per Item")
+            Text("Fixed Tax Per Item")
           }
         }
       }

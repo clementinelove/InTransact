@@ -10,7 +10,7 @@ struct Setting: Codable, CustomDebugStringConvertible {
   var currencyIdentifier: String = Global.systemCurrentCurrencyCode
   // Rounding Rule Settings for each rounding level
   var roundingRules: RoundingRuleSet = RoundingRuleSet(defaultFor: Global.systemCurrentCurrencyCode)
-  var defaultKeeperName: String? = nil
+//  var defaultKeeperName: String? = nil
 //  func transactionTemplate() -> Transaction {
 //    
 //  }
@@ -23,6 +23,6 @@ struct Setting: Codable, CustomDebugStringConvertible {
   }
   
   var debugDescription: String {
-    "(Settings – \(currencyIdentifier), taxRounding: \(roundingRules.taxItemRule), itemTotalRounding: \(roundingRules.itemTotalRule), transactionTotalRounding: \(roundingRules.transactionTotalRule))"
+    "(Settings – \(currencyIdentifier), taxRounding: \(roundingRules.taxItemRule), itemSubtotalRounding: \(roundingRules.itemSubtotalRule), transactionTotalRounding: \(roundingRules.transactionTotalRule))"
   }
 }

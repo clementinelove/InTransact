@@ -88,7 +88,7 @@ enum INTExportColumn: Identifiable {
                            columnDataExtractor: {
       
       $0.priceInfo.pricePerUnitAfterTax(taxItemRounding: settings.roundingRules.taxItemRule,
-                                        totalRounding: settings.roundingRules.itemTotalRule)
+                                        totalRounding: settings.roundingRules.itemSubtotalRule)
         .formatted(.currency(code: settings.currencyIdentifier))
     }))
   }
@@ -101,12 +101,12 @@ enum INTExportColumn: Identifiable {
     }))
   }
   
-  static func itemTotalAfterTax(settings: Setting) -> INTExportColumn {
-    .itemTransaction(.init(columnName: .init(localized: "Item Total After Tax")) {
+  static func itemSubtotalAfterTax(settings: Setting) -> INTExportColumn {
+    .itemTransaction(.init(columnName: .init(localized: "Item Subtotal After Tax")) {
       $0
         .priceInfo
         .totalAfterTax(taxItemRounding: settings.roundingRules.taxItemRule,
-                       itemTotalRounding: settings.roundingRules.itemTotalRule)
+                       itemSubtotalRounding: settings.roundingRules.itemSubtotalRule)
         .formatted(.currency(code: settings.currencyIdentifier))
       
     })

@@ -124,7 +124,7 @@
 "Items In: records items moving in\nItems Out: records items moving out" = "进货：记录进货条目\n出货：记录出货条目";
 
 /* No comment provided by engineer. */
-"Item Total After Tax" = "条目税后总额";
+"Item Subtotal After Tax" = "条目税后总额";
 
 "Item Tax Total" = "条目税务总额";
 

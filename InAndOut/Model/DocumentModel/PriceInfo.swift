@@ -85,7 +85,7 @@ public struct PriceInfo: Codable, Equatable {
   /** The total price after tax.
    */
   public func totalAfterTax(taxItemRounding: RoundingRule,
-                            itemTotalRounding: RoundingRule) -> Price {
+                            itemSubtotalRounding: RoundingRule) -> Price {
     if let explicitAfterTaxTotal {
       return explicitAfterTaxTotal
     }
@@ -100,7 +100,7 @@ public struct PriceInfo: Codable, Equatable {
       case .sumAfterTax:
         total = price
     }
-    return total.rounded(using: itemTotalRounding)
+    return total.rounded(using: itemSubtotalRounding)
   }
   
   /** Calculates the un-taxed total.
@@ -209,7 +209,7 @@ public struct PriceInfo: Codable, Equatable {
                                   totalRounding: RoundingRule) -> Price {
     if priceType == .perUnitAfterTax { return price } else {
       if !itemQuantity.isZero {
-        return totalAfterTax(taxItemRounding: taxItemRounding, itemTotalRounding: totalRounding) / itemQuantity
+        return totalAfterTax(taxItemRounding: taxItemRounding, itemSubtotalRounding: totalRounding) / itemQuantity
       } else {
         return 0
       }

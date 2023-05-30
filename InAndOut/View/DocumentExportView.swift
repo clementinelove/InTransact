@@ -28,7 +28,7 @@ class DocumentExporter: ObservableObject {
       .transactionType, .transactionDate, .transactionTime, .transactionID, .itemName, .variantName, .itemQuantity, 
       .pricePerUnitBeforeTax(settings: document.content.settings),
       .itemTaxTotal(settings: document.content.settings),
-      .itemTotalAfterTax(settings: document.content.settings),
+      .itemSubtotalAfterTax(settings: document.content.settings),
       .transactionTotalAfterTax(settings: document.content.settings),
       .transactionNotes
     ]
@@ -86,11 +86,8 @@ struct DocumentExportView: View {
         
         Section("Columns") {
           ForEach($exporter.exportColumnRows) { $column in
-            HStack {
+            Toggle(isOn: $column.isEnabled) {
               Text($column.wrappedValue.exportColumn.columnName)
-              Toggle(isOn: $column.isEnabled) {
-                
-              }
             }
           }
           .onMove { offsets, destination in

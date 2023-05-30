@@ -1,0 +1,411 @@
+/* No comment provided by engineer. */
+"%@ (%@)" = "%@（%@）";
+
+/* No comment provided by engineer. */
+"%@ (Compound, %@)" = "%@（复率税，%@）";
+
+/* No comment provided by engineer. */
+"%@ (Fixed Amount Tax)" = "%@（定额税）";
+
+/* No comment provided by engineer. */
+"%@, %@ Decimal Places" = "%@，精确到小数后%@位";
+
+/* No comment provided by engineer. */
+"%@, %lld Decimal Places" = "%@，精确到小数后%lld位";
+
+/* No comment provided by engineer. */
+"%lld Transaction(s)" = "";
+
+/* Explains the meaning of regular tax and compound tax */
+"A regular tax is calculated based on its price before tax; a compound tax is calculated after all regular tax were applied." = "常规税基于税前价格计算；复率税基于应用了常规税的价格计算。";
+
+/* No comment provided by engineer. */
+"A variant name can be used to refer to a different version or option of an item." = "变体名称可以用来表示某一产品的不同型号、版本或样式。";
+
+/* No comment provided by engineer. */
+"Add" = "添加";
+
+/* Button title that adds a new item to a transaction */
+"Add Item" = "添加产品条目";
+
+/* Button title that adds a new compound tax entry */
+"Add New Compound Tax" = "添加新复率税";
+
+/* Button title that adds a new fixed amount tax entry */
+"Add New Fixed Amount Tax" = "添加新定额税";
+
+/* Button to add a new fixed cost item to a transaction */
+"Add New Fixed Cost" = "添加新定额开支";
+
+/* Button title that adds a new regular tax entry */
+"Add New Regular Tax" = "添加新常规税";
+
+/* Label of after tax total text field */
+"After Tax Total (%@)" = "税后总额（%@）";
+
+/* No comment provided by engineer. */
+"Apply This Template" = "应用该模版";
+
+/* Abbreviated title of the Banker's Rounding method */
+"Banker's" = "奇进偶舍";
+
+/* No comment provided by engineer. */
+"Cancel" = "取消";
+
+/* No comment provided by engineer. */
+"Columns" = "表列";
+
+/* No comment provided by engineer. */
+"Compound Tax" = "复率税";
+
+/* No comment provided by engineer. */
+"Compound Tax at %@" = "%@的复率税";
+
+/* No comment provided by engineer. */
+"Copy Info from Item Template" = "从产品模版复制信息";
+
+/* No comment provided by engineer. */
+"Cost Name" = "开支名称";
+
+/* No comment provided by engineer. */
+"Date" = "日期";
+
+/* No comment provided by engineer. */
+"Date & Time" = "日期与时间";
+
+/* No comment provided by engineer. */
+"Decimals:  %lld" = "精确到小数后%lld位";
+
+/* No comment provided by engineer. */
+"Delete" = "删除";
+
+/* No comment provided by engineer. */
+"Delete Transaction" = "删除交易";
+
+/* No comment provided by engineer. */
+"Delete Transaction \"%@\"?" = "确定删除交易“%@”吗？";
+
+/* No comment provided by engineer. */
+"Discard Changes" = "放弃更改";
+
+/* No comment provided by engineer. */
+"Do you wish to discard all changes?" = "确定放弃所有更改吗？";
+
+/* No comment provided by engineer. */
+"Document Currency" = "文档货币单位";
+
+/* No comment provided by engineer. */
+"Document Settings" = "文档设置";
+
+/* No comment provided by engineer. */
+"Done" = "完成";
+
+/* Abbreviated title of the Down Rounding method */
+"Down" = "向下舍入";
+
+/* No comment provided by engineer. */
+"Each item's unit price and subtotal before tax are not rounded during calculations, so does the fixed amount tax items. They are displayed according to currency's default decimal places." = "在该应用的用户界面中，每个产品条目的单价和税前小记按照货币的默认小数精确位舍入；在进行价格计算时他们是不被舍入的。";
+
+/* Button title that sort transactions by earliest date first */
+"Earliest First" = "最早的排最前";
+
+/* No comment provided by engineer. */
+"Edit" = "编辑";
+
+/* No comment provided by engineer. */
+"Edit Item" = "编辑产品条目";
+
+/* No comment provided by engineer. */
+"Edit Transaction" = "编辑交易";
+
+/* No comment provided by engineer. */
+"Empty List" = "空列表";
+
+/* Footer text that explains a random ID is needed for every transaction and a random ID will be generated for user if they leave this field to be empty */
+"Every transaction needs be identified by a transaction ID. A random ID will be generated for you if you leave this field to be empty." = "每笔交易都需要一个交易ID。当此字段留空时，将生成一个随机ID。";
+
+/* Toggle title that switches explicit after tax total input */
+"Explicit After Tax Total" = "覆写税后总额";
+
+/* Button title that exports the document in the csv format */
+"Export To CSV" = "导出到CSV";
+
+/* No comment provided by engineer. */
+"Filtering" = "筛选";
+
+/* No comment provided by engineer. */
+"Fixed Tax" = "定额税";
+
+/* No comment provided by engineer. */
+"Fixed Tax Per Item" = "产品定额税";
+
+/* Button title to generate random ID for transaction */
+"Generate Random ID" = "生成随机ID";
+
+/* Abbreviated title of the half-up rounding method */
+"Half-Up" = "四舍五入";
+
+/* No comment provided by engineer. */
+"Hello, World!" = "你好，世界！";
+
+/* Transaction type 'items in' shorthand */
+"In" = "进货";
+
+/* No comment provided by engineer. */
+"Item ID" = "产品ID";
+
+/* No comment provided by engineer. */
+"Item Name" = "品名";
+
+/* No comment provided by engineer. */
+"Item Quantity" = "数量";
+
+/* No comment provided by engineer. */
+"Item Subtotal" = "产品条目小计";
+
+/* No comment provided by engineer. */
+"Item Subtotal After Tax" = "产品条目税后小计";
+
+/* No comment provided by engineer. */
+"Item Subtotal Rounding" = "产品条目小计舍入规则";
+
+/* No comment provided by engineer. */
+"Item Tax Total" = "产品条目税务总额";
+
+/* No comment provided by engineer. */
+"Item Unit Price After Tax" = "产品税后单价";
+
+/* No comment provided by engineer. */
+"Item Unit Price Before Tax" = "产品税前单价";
+
+/* Section title, in which lists items that contained in a transaction */
+"Items" = "明细";
+
+/* No comment provided by engineer. */
+"Items Count" = "产品数量";
+
+/* No comment provided by engineer. */
+"Items In" = "进货";
+
+/* Footer text that explains the meaning of each transaction type */
+"Items In: records items moving in\nItems Out: records items moving out" = "进货：记录进货条目\\n出货：记录出货条目";
+
+/* No comment provided by engineer. */
+"Items Out" = "出货";
+
+/* No comment provided by engineer. */
+"Keeper Name" = "管理人姓名";
+
+/* Button title that sort transactions by largest total first */
+"Largest First" = "最大额的排最前";
+
+/* Button title that sort transactions by latest date first */
+"Latest First" = "最新的排最前";
+
+/* No comment provided by engineer. */
+"New Item" = "新产品条目";
+
+/* Button title that adds a new transaction */
+"New Transaction" = "新交易";
+
+/* Transaction ID placeholder when its value is not available */
+"No ID Specified" = "未设置交易ID";
+
+/* Item ID Placeholder in template row */
+"No Item ID" = "未设置条目ID";
+
+/* Transaction item details placeholder when there is no item presented in the transaction */
+"No Items" = "无条目";
+
+/* No comment provided by engineer. */
+"No Transaction Selected" = "未选择交易";
+
+/* No comment provided by engineer. */
+"No Transactions" = "无交易";
+
+/* No comment provided by engineer. */
+"Notes & Comments" = "备注与评论";
+
+/* Section title of other fixed costs in a transaction */
+"Other Costs" = "其他支出";
+
+/* Transaction type 'items out' shorthand */
+"Out" = "出货";
+
+/* No comment provided by engineer. */
+"Please rename repeated tax items." = "请重命名重复使用的税项名称";
+
+/* No comment provided by engineer. */
+"Precision" = "小数位精度";
+
+/* No comment provided by engineer. */
+"Preview: %@" = "预览：%@";
+
+/* No comment provided by engineer. */
+"Price Per Unit (After Tax)" = "产品单价（税后）";
+
+/* No comment provided by engineer. */
+"Price Per Unit (Before Tax)" = "产品单价（税前）";
+
+/* No comment provided by engineer. */
+"Price Type" = "价格类型";
+
+/* Label that specifies quantity of a item in a transaction */
+"Quantity" = "数量";
+
+/* No comment provided by engineer. */
+"Regular Tax" = "常规税";
+
+/* No comment provided by engineer. */
+"Regular Tax at %@" = "%@的常规税";
+
+/* No comment provided by engineer. */
+"Reset Rounding to Currency Default" = "重设为货币默认值";
+
+/* No comment provided by engineer. */
+"Rounding Method" = "舍入方式";
+
+/* Section title of document rounding settings */
+"Roundings" = "舍入";
+
+/* No comment provided by engineer. */
+"Save Item Info as Template" = "将产品信息保存为模版";
+
+/* Section footer text that explains the use when user choose to save item information they entered in a form as a template */
+"Save these information as template when the transaction is saved. This will override exising template for the same item name and variant." = "在保存交易时将这些信息保存为模版。这将覆盖有同样产品名和变体名的现有模版。";
+
+/* No comment provided by engineer. */
+"Search Location..." = "搜索位置……";
+
+/* Button of Document Settings */
+"Settings" = "设置";
+
+/* No comment provided by engineer. */
+"Share" = "共享";
+
+/* Button title that sort transactions by smallest total first */
+"Smallest First" = "最小额的排最前";
+
+/* Button title to sort transactions by date */
+"Sort By Date" = "按日期排序";
+
+/* Button title to sort transactions by transaction total */
+"Sort By Total" = "按总额排序";
+
+/* Button title that selects sort method and sort order */
+"Sort Method" = "排序方式";
+
+/* No comment provided by engineer. */
+"Subtotal" = "小计";
+
+/* No comment provided by engineer. */
+"Sum After Tax" = "条目税后总额";
+
+/* No comment provided by engineer. */
+"Sum Before Tax" = "条目税前总额";
+
+/* No comment provided by engineer. */
+"Sum, After Tax" = "条目税后总额";
+
+/* No comment provided by engineer. */
+"Sum, Before Tax" = "条目税前总额";
+
+/* Section heading of the system's default currency */
+"System" = "系统";
+
+/* No comment provided by engineer. */
+"Tax Info" = "税务信息";
+
+/* No comment provided by engineer. */
+"Tax Item" = "税名";
+
+/* No comment provided by engineer. */
+"Tax Item Rounding" = "税项舍入方式";
+
+/* No comment provided by engineer. */
+"Tax Items Cannot Share the Same Name" = "税项名不能重复使用";
+
+/* No comment provided by engineer. */
+"Tax Name" = "税名";
+
+/* No comment provided by engineer. */
+"Templates" = "模版";
+
+/* No comment provided by engineer. */
+"Total" = "总额";
+
+/* No comment provided by engineer. */
+"Total After Tax" = "税后总额";
+
+/* No comment provided by engineer. */
+"Total Before Tax" = "税前总额";
+
+/* Navigation title of a transaction */
+"Transaction" = "交易";
+
+/* No comment provided by engineer. */
+"Transaction %@" = "交易%@";
+
+/* No comment provided by engineer. */
+"Transaction Date" = "交易日期";
+
+/* No comment provided by engineer. */
+"Transaction ID" = "交易ID";
+
+/* No comment provided by engineer. */
+"Transaction Time" = "交易时间";
+
+/* No comment provided by engineer. */
+"Transaction Total" = "交易总额";
+
+/* No comment provided by engineer. */
+"Transaction Total After Tax" = "交易税后总额";
+
+/* No comment provided by engineer. */
+"Transaction Total Rounding" = "交易总额舍入方式";
+
+/* No comment provided by engineer. */
+"Transaction Type" = "交易类型";
+
+/* No comment provided by engineer. */
+"Transactions" = "交易";
+
+/* No comment provided by engineer. */
+"Unit Price After Tax" = "税后单价";
+
+/* No comment provided by engineer. */
+"Unit Price Before Tax" = "税前单价";
+
+/* No comment provided by engineer. */
+"Unit Price, After Tax" = "税后单价";
+
+/* No comment provided by engineer. */
+"Unit Price, Before Tax" = "税前单价";
+
+/* Unknown currency placeholder */
+"Unknown Currency" = "未知货币单位";
+
+/* Placeholder for empty item name */
+"Unknown Item Name" = "未知产品名称";
+
+/* File name without extension for exported file when the document doesn't have a title */
+"Untitled" = "未命名";
+
+/* Abbreviated title of the Up Rounding method */
+"Up" = "向上舍入";
+
+/* The undoable action name of updating settings */
+"Update Settings" = "更新设置";
+
+/* No comment provided by engineer. */
+"Variant Name" = "变体名称";
+
+/* No comment provided by engineer. */
+"When the price type used in the template is not an after tax unit price, the price per unit (after tax) is calculated using the after tax item total divides the quantity." = "当模版所用的价格类型不是税后单价时，产品条目的税后单价是将条目税后总额除以数量计算得出。";
+
+/* Section footer text that explains the use of explicit after tax total */
+"You can explicitly specifiy the after-tax total for this entry, it will be used to calculate the total of the whole transaction directly." = "你可以手动声明该产品条目的税后总额，它将被直接用来计算整个交易的总额。";
+
+/* No comment provided by engineer. */
+"You cannot undo this action." = "你将无法撤销此操作。";
+

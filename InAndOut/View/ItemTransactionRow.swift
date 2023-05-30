@@ -61,7 +61,7 @@ struct ItemTransactionRow: View {
         
         Spacer()
           .allowsHitTesting(true)
-        Text(verbatim:  document.formattedItemTotal(itemTransaction.priceInfo.totalAfterTax(taxItemRounding: document.roundingRules.taxItemRule, itemTotalRounding: document.roundingRules.itemTotalRule)))
+        Text(verbatim:  document.formattedItemSubtotal(itemTransaction.priceInfo.totalAfterTax(taxItemRounding: document.roundingRules.taxItemRule, itemSubtotalRounding: document.roundingRules.itemSubtotalRule)))
           .multilineTextAlignment(.trailing)
       }
       
@@ -93,7 +93,7 @@ struct ItemTransactionRow: View {
               Text(verbatim: "\(taxItem.amount.formatted(.currency(code: document.currencyCode)))")
                 .foregroundStyle(.secondary)
             } label: {
-              Text("\(taxItem.name) (Fixed)")
+              Text("\(taxItem.name) (Fixed Amount Tax)")
             }
           }
         }

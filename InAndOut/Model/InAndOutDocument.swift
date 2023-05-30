@@ -29,7 +29,7 @@ final class InTransactDocument: ReferenceFileDocument {
     content // Make a copy
   }
   
-  init(mock: Bool = true) {
+  init(mock: Bool = false) {
     if mock {
       self.content = .mock()
     } else {
@@ -43,8 +43,8 @@ final class InTransactDocument: ReferenceFileDocument {
       throw CocoaError(.fileReadCorruptFile)
     }
     // TODO: decode
-//    self.content = try JSONDecoder().decode(INTDocument.self, from: data)
-    self.content = INTDocument.mock() // for testing
+    self.content = try JSONDecoder().decode(INTDocument.self, from: data)
+//    self.content = INTDocument.mock() // for testing
   }
   
   func fileWrapper(snapshot: INTDocument, configuration: WriteConfiguration) throws -> FileWrapper {
@@ -71,8 +71,8 @@ extension InTransactDocument {
     formattedPrice(price, scale: roundingRules.taxItemRule.scale)
   }
   
-  func formattedItemTotal(_ price: Price) -> String {
-    formattedPrice(price, scale: roundingRules.itemTotalRule.scale)
+  func formattedItemSubtotal(_ price: Price) -> String {
+    formattedPrice(price, scale: roundingRules.itemSubtotalRule.scale)
   }
   
   func formattedTransactionTotal(_ price: Price) -> String {
@@ -99,20 +99,8 @@ extension InTransactDocument {
       doc.updateSettings(oldSettings, undoManager: undoManager)
     }
     
-    undoManager?.setActionName("Update Settings")
-  }
-  
-  // TODO: localize action names
-  func updateCurrency(_ currencyIdentifier: String, undoManager: UndoManager? = nil) {
-    let oldIdentifier = content.settings.currencyIdentifier
-    content.settings.currencyIdentifier = currencyIdentifier
-    logger.debug("Update from \(oldIdentifier) to \(currencyIdentifier)")
-    
-    undoManager?.registerUndo(withTarget: self) { doc in
-      // Because it calls itself, this is redoable, as well.
-      doc.updateCurrency(oldIdentifier, undoManager: undoManager)
-    }
-    undoManager?.setActionName("Update Currency")
+    undoManager?.setActionName(String(localized: "Update Settings",
+                                      comment: "The undoable action name of updating settings"))
   }
   
   func addNewTransaction(_ transaction: Transaction, undoManager: UndoManager? = nil) {
