@@ -10,12 +10,13 @@ import NTPlatformKit
 
 struct ContactEditView: View {
   
+  @Environment(\.dismiss) private var dismiss
   @EnvironmentObject private var document: InTransactDocument
   @Binding var contact: Contact
+  @State private var magicHappens: Bool = false
   
   var body: some View {
     Form {
-      
       // TODO: Future - copy from templates
 //      Section {
 //
@@ -23,17 +24,16 @@ struct ContactEditView: View {
       Section {
         
         Picker(selection: $contact.isCompany.animated) {
-          Text("Individual")
+          Text("Individual", comment: "Individual Contact Type")
             .tag(false)
-          Text("Company")
+          Text("Company", comment: "Company Contact Type")
             .tag(true)
         } label: {
           Text("Contact Type")
         }
         
-        
         if !contact.isCompany {
-          TextField("Name", text: $contact.name)
+          TextField(String(localized: "Name", comment: "Name of the counterparty contact"), text: $contact.name)
           #if os(iOS)
             .keyboardType(.namePhonePad)
           #endif
@@ -58,7 +58,9 @@ struct ContactEditView: View {
       
       Section("Address") { // Postal Address
         TextEditor(text: $contact.address)
+        #if os(iOS)
           .textContentType(.location)
+        #endif
           .frame(minHeight: 100, alignment: .topLeading)
       }
       
@@ -73,6 +75,10 @@ struct ContactEditView: View {
 //      } footer: {
 //        Text("This will override existing contact template with the same name.")
 //      }
+    }
+    .onAppear {
+      // This is so stupid: SwiftUI won't behave properly when nothing happens in a view, it just needs something to happen to the binding to be able to animate properly, really annoying. If you remove this line, the animation triggered by 'Done' button would be stutter again
+      contact = contact
     }
 #if os(iOS)
     .navigationBarTitleDisplayMode(.inline)
@@ -120,6 +126,14 @@ struct Contact: Codable, Hashable {
   var address: String
   
   var notes: String
+  
+  var mainName: String {
+    if isCompany {
+      return name
+    } else {
+      return companyName
+    }
+  }
   
   static func fresh() -> Contact {
     Contact(isCompany: false, name: "", companyName: "", email: "", phoneNumber: "", account: "", taxID: "", address: "", notes: "")

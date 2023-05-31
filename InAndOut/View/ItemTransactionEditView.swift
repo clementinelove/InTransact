@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+
 import NTPlatformKit
 
 // TODO: make toggles animatable
@@ -442,7 +443,7 @@ struct ItemTransactionEditView: View {
         VerticalField("Regular Tax") {
           HStack {
             TextField("Tax Name", text: item.name)
-            TextField("", value: item.rate, format: .percent)
+            TextField("", value: item.rate, format: .percent.sign(strategy: .never))
               .labelsHidden()
               .multilineTextAlignment(.trailing)
               .focused($focusField, equals: .taxRate(item.id))
@@ -450,6 +451,9 @@ struct ItemTransactionEditView: View {
               .keyboardType(.decimalPad)
 #endif
           }
+        }
+        .onSubmit(of: .text) {
+          item.wrappedValue.rate = item.wrappedValue.rate.clamped(to: 0...1)
         }
       }
       .onDelete { indexSet in
@@ -477,7 +481,7 @@ struct ItemTransactionEditView: View {
         VerticalField("Compound Tax") {
           HStack {
             TextField("Tax Name", text: item.name)
-            TextField("", value: item.rate, format: .percent)
+            TextField("", value: item.rate, format: .percent.sign(strategy: .never))
               .labelsHidden()
               .multilineTextAlignment(.trailing)
               .focused($focusField, equals: .taxRate(item.id))

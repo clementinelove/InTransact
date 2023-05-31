@@ -27,7 +27,6 @@ struct CurrencyTextField<FocusValue: Hashable>: View {
           .opacity(focusedBinding.wrappedValue == value ? 1 : 0)
           .multilineTextAlignment(alignment)
         
-        
         Text(Decimal.FormatStyle.Currency.currency(code: document.currencyCode).format(amount))
           .opacity(focusedBinding.wrappedValue == value ? 0 : 1)
           .multilineTextAlignment(alignment)

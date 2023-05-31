@@ -10,7 +10,7 @@ import Foundation
 class MockData {
 
   /// Change this to set the mock data language
-  static let shared: MockData = english
+  static let shared: MockData = chinese
   
   // load lazily
   static let chinese: MockData = { MockData(language: .chinese) }()

@@ -70,12 +70,12 @@ struct TransactionRowView: View {
             .lineLimit(1)
         }
         
-        if let keeper = transaction.keeperName?.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+        if let counterpartyName = transaction.counterpartyContact?.mainName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
           Text("·").fontWeight(.bold)
           
           HStack(alignment: .firstTextBaseline, spacing: 4) {
             
-            Text(keeper)
+            Text(counterpartyName)
               .lineLimit(1)
           }
         }

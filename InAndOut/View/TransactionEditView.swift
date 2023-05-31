@@ -264,13 +264,15 @@ struct TransactionEditView: View {
           .toolbar {
             ToolbarItem(placement: .confirmationAction) {
               Button("Done") {
-                isEditingContact = false
+                withAnimation {
+                  isEditingContact = false
+                }
               }
             }
           }
-        #if os(iOS)
+#if os(iOS)
           .toolbarRole(.navigationStack)
-        #endif
+#endif
       }
     }
     // MARK: Edit Item

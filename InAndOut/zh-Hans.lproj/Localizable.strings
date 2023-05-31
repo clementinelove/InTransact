@@ -4,7 +4,7 @@
 /* Item Name Placeholder in template row */
 "(Unnamed Variant)" = "（未命名变体）";
 
-/* No comment provided by engineer. */
+/* PriceTypeLabel[space]CurrencyCode */
 "%@ (%@)" = "%@（%@）";
 
 /* No comment provided by engineer. */
@@ -19,9 +19,6 @@
 /* No comment provided by engineer. */
 "%@, %lld Decimal Places" = "%@，精确到小数后%lld位";
 
-/* No comment provided by engineer. */
-"%lld Transaction(s)" = "";
-
 /* Explains the meaning of regular tax and compound tax */
 "A regular tax is calculated based on its price before tax; a compound tax is calculated after all regular tax were applied." = "常规税基于税前价格计算；复率税基于应用了常规税的价格计算。";
 
@@ -29,7 +26,16 @@
 "A variant name can be used to refer to a different version or option of an item." = "变体名称可以用来表示某一产品的不同型号、版本或样式。";
 
 /* No comment provided by engineer. */
+"Account" = "账号";
+
+/* No comment provided by engineer. */
+"Account: %@" = "账号：%@";
+
+/* No comment provided by engineer. */
 "Add" = "添加";
+
+/* No comment provided by engineer. */
+"Add Counterparty Contact" = "添加交易对象信息";
 
 /* Button title that adds a new item to a transaction */
 "Add Item" = "添加产品条目";
@@ -46,6 +52,9 @@
 /* Button title that adds a new regular tax entry */
 "Add New Regular Tax" = "添加新常规税";
 
+/* No comment provided by engineer. */
+"Address" = "地址";
+
 /* Label of after tax total text field */
 "After Tax Total (%@)" = "税后总额（%@）";
 
@@ -61,6 +70,12 @@
 /* No comment provided by engineer. */
 "Columns" = "表列";
 
+/* Company Contact Type */
+"Company" = "公司";
+
+/* No comment provided by engineer. */
+"Company Name" = "公司";
+
 /* No comment provided by engineer. */
 "Compound Tax" = "复率税";
 
@@ -68,10 +83,16 @@
 "Compound Tax at %@" = "%@的复率税";
 
 /* No comment provided by engineer. */
+"Contact Type" = "类型";
+
+/* No comment provided by engineer. */
 "Copy Info from Item Template" = "从产品模版复制信息";
 
 /* No comment provided by engineer. */
 "Cost Name" = "开支名称";
+
+/* No comment provided by engineer. */
+"Counterparty" = "交易对象";
 
 /* No comment provided by engineer. */
 "Date" = "日期";
@@ -119,10 +140,16 @@
 "Edit" = "编辑";
 
 /* No comment provided by engineer. */
+"Edit Contact" = "编辑联系人";
+
+/* No comment provided by engineer. */
 "Edit Item" = "编辑产品条目";
 
 /* No comment provided by engineer. */
 "Edit Transaction" = "编辑交易";
+
+/* No comment provided by engineer. */
+"Email" = "电子邮件";
 
 /* No comment provided by engineer. */
 "Empty List" = "空列表";
@@ -145,9 +172,6 @@
 /* No comment provided by engineer. */
 "Fixed Tax Per Item" = "产品定额税";
 
-/* Button title to generate random ID for transaction */
-"Generate Random ID" = "生成随机ID";
-
 /* Abbreviated title of the half-up rounding method */
 "Half-Up" = "四舍五入";
 
@@ -156,6 +180,15 @@
 
 /* Transaction type 'items in' shorthand */
 "In" = "进货";
+
+/* Individual Contact Type */
+"Individual" = "个人";
+
+/* No comment provided by engineer. */
+"Invoice ID" = "发票号";
+
+/* No comment provided by engineer. */
+"Invoice ID: %@" = "发票号：%@";
 
 /* No comment provided by engineer. */
 "Item ID" = "产品ID";
@@ -208,11 +241,17 @@
 /* Button title that sort transactions by latest date first */
 "Latest First" = "最新的排最前";
 
+/* Name of the counterparty contact */
+"Name" = "姓名";
+
 /* No comment provided by engineer. */
 "New Item" = "新产品条目";
 
 /* Button title that adds a new transaction */
 "New Transaction" = "新交易";
+
+/* No comment provided by engineer. */
+"No Contact Info" = "无相关信息";
 
 /* Transaction ID placeholder when its value is not available */
 "No ID Specified" = "未设置交易ID";
@@ -230,6 +269,9 @@
 "No Transactions" = "无交易";
 
 /* No comment provided by engineer. */
+"Notes" = "备注";
+
+/* No comment provided by engineer. */
 "Notes & Comments" = "备注与评论";
 
 /* Section title of other fixed costs in a transaction */
@@ -237,6 +279,9 @@
 
 /* Transaction type 'items out' shorthand */
 "Out" = "出货";
+
+/* No comment provided by engineer. */
+"Phone Number" = "电话号码";
 
 /* No comment provided by engineer. */
 "Please rename repeated tax items." = "请重命名重复使用的税项名称";
@@ -259,11 +304,17 @@
 /* Label that specifies quantity of a item in a transaction */
 "Quantity" = "数量";
 
+/* Button title to generate random ID for transaction */
+"Random UUID" = "随机UUID";
+
 /* No comment provided by engineer. */
 "Regular Tax" = "常规税";
 
 /* No comment provided by engineer. */
 "Regular Tax at %@" = "%@的常规税";
+
+/* No comment provided by engineer. */
+"Remove Contact" = "移除信息";
 
 /* No comment provided by engineer. */
 "Reset Rounding to Currency Default" = "重设为货币默认值";
@@ -281,6 +332,9 @@
 "Save these information as template when the transaction is saved. This will override exising template for the same item name and variant." = "在保存交易时将这些信息保存为模版。这将覆盖有同样产品名和变体名的现有模版。";
 
 /* No comment provided by engineer. */
+"Saved Contacts" = "已保存的联系人";
+
+/* No comment provided by engineer. */
 "Search Location..." = "搜索位置……";
 
 /* Button of Document Settings */
@@ -288,6 +342,9 @@
 
 /* No comment provided by engineer. */
 "Share" = "共享";
+
+/* Expand details of a transaction counterparty */
+"Show Details" = "显示更多";
 
 /* Button title that sort transactions by smallest total first */
 "Smallest First" = "最小额的排最前";
@@ -320,6 +377,12 @@
 "System" = "系统";
 
 /* No comment provided by engineer. */
+"Tax ID" = "税务识别号";
+
+/* No comment provided by engineer. */
+"Tax ID: %@" = "税务识别号：%@";
+
+/* No comment provided by engineer. */
 "Tax Info" = "税务信息";
 
 /* No comment provided by engineer. */
@@ -336,6 +399,12 @@
 
 /* No comment provided by engineer. */
 "Templates" = "模版";
+
+/* No comment provided by engineer. */
+"This is nice" = "这很棒";
+
+/* No comment provided by engineer. */
+"Title" = "标题";
 
 /* No comment provided by engineer. */
 "Total" = "总额";
@@ -360,6 +429,9 @@
 
 /* No comment provided by engineer. */
 "Transaction Time" = "交易时间";
+
+/* Button to generate ID from the current transaction timestamp */
+"Transaction Timestamp" = "交易时间戳";
 
 /* No comment provided by engineer. */
 "Transaction Total" = "交易总额";
@@ -402,6 +474,9 @@
 
 /* The undoable action name of updating settings */
 "Update Settings" = "更新设置";
+
+/* No comment provided by engineer. */
+"Use" = "使用";
 
 /* No comment provided by engineer. */
 "Variant Name" = "变体名称";
