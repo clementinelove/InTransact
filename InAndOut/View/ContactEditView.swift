@@ -52,31 +52,24 @@ struct ContactEditView: View {
           .keyboardType(.emailAddress)
 #endif
         
+        TextField("Account", text: $contact.account)
         TextField("Tax ID", text: $contact.taxID)
-        
       }
       
-      #if os(iOS)
-      Section { // Postal Address
-        TextField("Address", text: $contact.address, axis: .vertical)
-          .frame(minHeight: 80, alignment: .topLeading)
+      Section("Address") { // Postal Address
+        TextEditor(text: $contact.address)
           .textContentType(.location)
-          .submitLabel(.return)
-        
-        TextField("Postcode", text: $contact.postalCode)
+          .frame(minHeight: 100, alignment: .topLeading)
       }
       
-      Section {
-        TextField("Notes", text: $contact.notes, axis: .vertical)
+      Section("Notes") {
+        TextEditor(text: $contact.notes)
           .frame(minHeight: 120, alignment: .topLeading)
       }
-      #else
-      // TODO: macOS TextEditors here
-      #endif
       
       // TODO: future - save as template
 //      Section {
-//        Toggle("Save as Template", isOn: .constant(true))
+//        Toggle("Save Contact For Future Use", isOn: .constant(true))
 //      } footer: {
 //        Text("This will override existing contact template with the same name.")
 //      }
@@ -87,7 +80,7 @@ struct ContactEditView: View {
   }
 }
 
-struct ContactTemplate: Codable, Hashable  {
+struct ContactTemplate: Identifiable, Codable, Hashable {
   
   static func ==(lhs: ContactTemplate, rhs: ContactTemplate) -> Bool {
     lhs.name == rhs.name
@@ -97,6 +90,9 @@ struct ContactTemplate: Codable, Hashable  {
     hasher.combine(name)
   }
   
+  var id: Int {
+    hashValue
+  }
   var name: String
   var contact: Contact
   
@@ -117,15 +113,16 @@ struct Contact: Codable, Hashable {
   var companyName: String
   var email: String
   var phoneNumber: String
+  
+  var account: String
   var taxID: String
   
   var address: String
-  var postalCode: String
   
   var notes: String
   
   static func fresh() -> Contact {
-    Contact(isCompany: false, name: "", companyName: "", email: "", phoneNumber: "", taxID: "", address: "", postalCode: "", notes: "")
+    Contact(isCompany: false, name: "", companyName: "", email: "", phoneNumber: "", account: "", taxID: "", address: "", notes: "")
   }
   
   var isAllEmpty: Bool {
@@ -137,10 +134,20 @@ struct Contact: Codable, Hashable {
   }
   
   var hasDetails: Bool {
+    !account.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
     !taxID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
     !address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
-    !postalCode.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
     !notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+  }
+  
+  func textContains(_ searchText: String) -> Bool {
+    return self.name.localizedStandardContains(searchText) ||
+    self.companyName.localizedStandardContains(searchText) ||
+    self.taxID.localizedStandardContains(searchText) ||
+    self.notes.localizedStandardContains(searchText) ||
+    self.phoneNumber.localizedStandardContains(searchText) ||
+    self.email.localizedStandardContains(searchText) ||
+    self.address.localizedStandardContains(searchText)
   }
 }
 

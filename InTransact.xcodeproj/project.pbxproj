@@ -21,11 +21,12 @@
 		5843B9E82A151F610048C0CA /* CurrencyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9E72A151F610048C0CA /* CurrencyTextField.swift */; };
 		5843B9EA2A168AC00048C0CA /* SeparatedValueBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9E92A168AC00048C0CA /* SeparatedValueBuilder.swift */; };
 		5843B9EC2A177B1A0048C0CA /* CurrencyCalculatationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9EB2A177B1A0048C0CA /* CurrencyCalculatationTest.swift */; };
-		585505182A273F7E005482CF /* ContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505172A273F7E005482CF /* ContactList.swift */; };
+		585505182A273F7E005482CF /* ContactTemplateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505172A273F7E005482CF /* ContactTemplateList.swift */; };
 		5855051A2A2740E2005482CF /* ContactEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505192A2740E2005482CF /* ContactEditView.swift */; };
 		5855051C2A278BDC005482CF /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5855051B2A278BDC005482CF /* ContactView.swift */; };
 		5855051E2A27B339005482CF /* TransactionSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5855051D2A27B339005482CF /* TransactionSearchResultView.swift */; };
 		585505202A27BACB005482CF /* VerticalField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5855051F2A27BACA005482CF /* VerticalField.swift */; };
+		585505222A27C3E5005482CF /* MockSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505212A27C3E5005482CF /* MockSampleData.swift */; };
 		5858FB192A07D17F005FAAA6 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB182A07D17F005FAAA6 /* App.swift */; };
 		5858FB1B2A07D17F005FAAA6 /* InAndOutDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB1A2A07D17F005FAAA6 /* InAndOutDocument.swift */; };
 		5858FB1F2A07D180005FAAA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5858FB1E2A07D180005FAAA6 /* Assets.xcassets */; };
@@ -95,11 +96,12 @@
 		5843B9E72A151F610048C0CA /* CurrencyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTextField.swift; sourceTree = "<group>"; };
 		5843B9E92A168AC00048C0CA /* SeparatedValueBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatedValueBuilder.swift; sourceTree = "<group>"; };
 		5843B9EB2A177B1A0048C0CA /* CurrencyCalculatationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCalculatationTest.swift; sourceTree = "<group>"; };
-		585505172A273F7E005482CF /* ContactList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactList.swift; sourceTree = "<group>"; };
+		585505172A273F7E005482CF /* ContactTemplateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTemplateList.swift; sourceTree = "<group>"; };
 		585505192A2740E2005482CF /* ContactEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEditView.swift; sourceTree = "<group>"; };
 		5855051B2A278BDC005482CF /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		5855051D2A27B339005482CF /* TransactionSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSearchResultView.swift; sourceTree = "<group>"; };
 		5855051F2A27BACA005482CF /* VerticalField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalField.swift; sourceTree = "<group>"; };
+		585505212A27C3E5005482CF /* MockSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSampleData.swift; sourceTree = "<group>"; };
 		5858FB152A07D17F005FAAA6 /* InTransact.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InTransact.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5858FB182A07D17F005FAAA6 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		5858FB1A2A07D17F005FAAA6 /* InAndOutDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAndOutDocument.swift; sourceTree = "<group>"; };
@@ -297,7 +299,7 @@
 				5843B9D62A13893C0048C0CA /* TransactionFilterBadge.swift */,
 				5843B9D82A138ED10048C0CA /* EmptyListPlaceholder.swift */,
 				5843B9DA2A13D1F50048C0CA /* DocumentPreviewView.swift */,
-				585505172A273F7E005482CF /* ContactList.swift */,
+				585505172A273F7E005482CF /* ContactTemplateList.swift */,
 				585505192A2740E2005482CF /* ContactEditView.swift */,
 				5855051B2A278BDC005482CF /* ContactView.swift */,
 			);
@@ -324,6 +326,7 @@
 				5858FB682A0A2FFF005FAAA6 /* Globals.swift */,
 				5858FB1A2A07D17F005FAAA6 /* InAndOutDocument.swift */,
 				5858FB482A07D191005FAAA6 /* Mock.swift */,
+				585505212A27C3E5005482CF /* MockSampleData.swift */,
 				589E20392A0EC9D5008A5BDA /* DocumentViewModel.swift */,
 				589E209B2A110B19008A5BDA /* Copyable.swift */,
 				5843B9DC2A143E260048C0CA /* CSVSupport.swift */,
@@ -478,7 +481,7 @@
 				589E20982A10CE6A008A5BDA /* ItemTemplateEditView.swift in Sources */,
 				5858FB672A0A2FCA005FAAA6 /* Formatters.swift in Sources */,
 				5843B9D52A137C050048C0CA /* CurrencyPickerContent.swift in Sources */,
-				585505182A273F7E005482CF /* ContactList.swift in Sources */,
+				585505182A273F7E005482CF /* ContactTemplateList.swift in Sources */,
 				5843B9D72A13893C0048C0CA /* TransactionFilterBadge.swift in Sources */,
 				582758BE2A1B6687004F0B91 /* DocumentExportView.swift in Sources */,
 				5843B9DD2A143E260048C0CA /* CSVSupport.swift in Sources */,
@@ -495,6 +498,7 @@
 				589E20922A10CE6A008A5BDA /* ItemTransactionRow.swift in Sources */,
 				5858FB192A07D17F005FAAA6 /* App.swift in Sources */,
 				589E209A2A10CE6A008A5BDA /* ItemTransactionEditView.swift in Sources */,
+				585505222A27C3E5005482CF /* MockSampleData.swift in Sources */,
 				587F244E2A17C25200C3AF61 /* RoundingRules.swift in Sources */,
 				58D5EC1A2A235E7C001BFDB4 /* AddNewItemImage.swift in Sources */,
 				587F24502A17C2BD00C3AF61 /* ItemTransaction.swift in Sources */,

@@ -279,5 +279,7 @@ struct ItemTemplateListView_Previews: PreviewProvider {
       
       ItemTemplateDetailView(itemTemplate: .mock())
         .environmentObject(InTransactDocument.mock())
+      ItemTransactionEditView(edit: .mock(), onCommit: { _ in })
+        .environmentObject(InTransactDocument.mock())
     }
 }

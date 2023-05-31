@@ -166,12 +166,17 @@ struct Transaction: Identifiable, Codable, Hashable {
             compound: compoundTaxTotals,
             fixed: fixedTaxTotals)
   }
+  
 }
 
-struct ContactInfo: Codable {
-  var name: String?
-  var phone: String?
-  var emailAddress: String?
-  var location: String?
+// transaction ID generation
+extension Transaction {
+  static func timestampID(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyyMMddHHmmss" // Set the desired format
+    return dateFormatter.string(from: date)
+  }
+  static func uuidID() -> String {
+    UUID().uuidString
+  }
 }
-

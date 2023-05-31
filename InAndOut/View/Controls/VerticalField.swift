@@ -14,8 +14,9 @@ struct VerticalField<LabelView: View, ContentView: View>: View {
   var body: some View {
       VStack(alignment: .leading, spacing: 3) {
         label()
-          .font(.caption)
+          .font(.subheadline)
           .multilineTextAlignment(.leading)
+          .animationDisabled()
         content()
       }
     }
@@ -41,5 +42,6 @@ struct VerticalField_Previews: PreviewProvider {
           Text("This is nice")
         }
       }
+      .padding()
     }
 }

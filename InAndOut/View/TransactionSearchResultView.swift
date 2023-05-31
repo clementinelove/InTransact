@@ -33,14 +33,7 @@ struct TransactionSearchResultView: View {
   
   func counterpartyMatched(_ transaction: Transaction) -> Bool {
     guard let counterpartyContact = transaction.counterpartyContact else { return false }
-    return counterpartyContact.name.localizedStandardContains(searchText) ||
-    counterpartyContact.companyName.localizedStandardContains(searchText) ||
-    counterpartyContact.taxID.localizedStandardContains(searchText) ||
-    counterpartyContact.notes.localizedStandardContains(searchText) ||
-    counterpartyContact.phoneNumber.localizedStandardContains(searchText) ||
-    counterpartyContact.email.localizedStandardContains(searchText) ||
-    counterpartyContact.address.localizedStandardContains(searchText) ||
-    counterpartyContact.postalCode.localizedStandardContains(searchText)
+    return counterpartyContact.textContains(searchText)
     
   }
   

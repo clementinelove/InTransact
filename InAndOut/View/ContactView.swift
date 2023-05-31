@@ -94,19 +94,27 @@ struct ContactView: View {
         }
         
         if !hideDetailsByDefault || showDetails {
-          VStack(alignment: .leading) {
-            if let taxID = contact.taxID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
-              Text("Tax ID: \(taxID)")
-                .multilineTextAlignment(.leading)
-            }
-            if let address = contact.address.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
-              Text(verbatim: address)
-                .multilineTextAlignment(.leading)
+          VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading) {
+              if let account = contact.account.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+                Text("Account: \(account)")
+                  .multilineTextAlignment(.leading)
+              }
+              if let taxID = contact.taxID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+                Text("Tax ID: \(taxID)")
+                  .multilineTextAlignment(.leading)
+              }
+              if let address = contact.address.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+                Text(verbatim: address)
+                  .multilineTextAlignment(.leading)
+              }
             }
             
-            if let postalCode = contact.postalCode.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
-              Text(verbatim: postalCode)
+            if let notes = contact.notes.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+              Text(verbatim: notes)
                 .multilineTextAlignment(.leading)
+                .foregroundStyle(.secondary)
+                .font(.subheadline)
             }
           }
           .transition(.asymmetric(insertion: .push(from: .bottom), removal: .opacity))
@@ -157,7 +165,7 @@ struct ContactView_Previews: PreviewProvider {
     
     
     List {
-      ContactView(contact: Contact(isCompany: false, name: "", companyName: "猪王", email: "", phoneNumber: "", taxID: "", address: "", postalCode: "s", notes: ""), hideDetailsByDefault: false)
+      ContactView(contact: Contact(isCompany: false, name: "", companyName: "猪王", email: "", phoneNumber: "", account: "", taxID: "", address: "", notes: ""), hideDetailsByDefault: false)
       ContactView(contact: .fresh(), hideDetailsByDefault: false)
     }
     .previewDisplayName("Hide Details (Scattered Info)")

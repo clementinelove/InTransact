@@ -73,6 +73,7 @@ struct INTDocument: Identifiable, Codable {
   var settings: Setting = Setting()
 //  var entityTemplates: [Entity]
   var itemTemplates: OrderedSet<ItemTemplate> = []
+  var contactTemplates: OrderedSet<ContactTemplate> = []
   var transactions: [Transaction] = []
   
   mutating func saveAsTemplate(_ itemTransaction: ItemTransaction) {

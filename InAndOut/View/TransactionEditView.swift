@@ -140,23 +140,24 @@ struct TransactionEditView: View {
         
         VerticalField("Transaction ID") {
           HStack(alignment: .firstTextBaseline) {
-            #if os(iOS)
-            TextField("", text: $viewModel.transactionID, axis: .vertical)
-              .lineLimit(nil)
-            #elseif os(macOS)
             TextField("", text: $viewModel.transactionID)
-            #endif
+              .minimumScaleFactor(0.8)
+            
             Menu {
               // ...
               Button {
-                viewModel.transactionID = UUID().uuidString
+                viewModel.transactionID = Transaction.uuidID()
               } label: {
-                Label {
-                  Text("Generate Random ID", comment: "Button title to generate random ID for transaction")
-                } icon: {
-                  Image(systemName: "number.circle")
-                }
+                Text("Random UUID", comment: "Button title to generate random ID for transaction")
               }
+              
+              Button {
+                viewModel.transactionID = Transaction.timestampID(viewModel.date)
+              } label: {
+                  Text("Transaction Timestamp", comment: "Button to generate ID from the current transaction timestamp")
+              }
+              
+              
             } label: {
               Image(systemName: "dice")
             }
@@ -243,10 +244,10 @@ struct TransactionEditView: View {
         Text("Other Costs", comment: "Section title of other fixed costs in a transaction")
       }
       
-      Section {
-        TextField("Notes & Comments", text: $viewModel.comment, axis: .vertical)
+      Section("Notes & Comments") {
+        TextEditor(text: $viewModel.comment)
           .focused($focusField, equals: .notes)
-          .frame(minHeight: 120, alignment: .top)
+          .frame(minHeight: 120, alignment: .topLeading)
       }
     }
     .scrollDismissesKeyboard(.interactively)
