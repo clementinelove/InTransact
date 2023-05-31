@@ -67,15 +67,18 @@ extension Transaction {
   static func mock() -> Transaction {
     Transaction(transactionType: TransactionType.allCases.randomElement()!,
                 transactionID: UUID().uuidString,
+                invoiceID: "123142312",
+                counterpartyContact: .mock(),
                 subtransactions: (0...(1...20).randomElement()!).map { _ in .mock() },
-                fixedCosts: [.init(name: "包装费", amount: 12.56)],
+                fixedCosts: [.init(name: "Delivery", amount: 12.56)],
                 comment: Bool.random() ? "" : Self.comments.randomElement()!,
                 keeperName: Bool.random() ? sampleKeeperNames.randomElement()! : nil,
                 date: Date.now.addingTimeInterval(Double(((-60 * 60 * 24 * 180)...0).randomElement()!)))
   }
 }
 
-fileprivate let sampleItemNames_zh_sc: [(String, String)] = [
+// MARK: zh-sc
+fileprivate let sampleItemNames: [(String, String)] = [
   ("经典美式堡", ""),
   ("香浓奶酪堡", ""),
   ("烤鸡肉堡", ""),
@@ -97,41 +100,7 @@ fileprivate let sampleItemNames_zh_sc: [(String, String)] = [
   ("咖喱鸡肉堡", ""),
   ("鳕鱼堡", ""),
 ]
-
-fileprivate let sampleItemNames: [(String, String)] = [
-  ("Stainless Steel Water Bottle", "H2O-PRO 500"),
-  ("Bluetooth Wireless Earbuds", "SonicBuds S7"),
-  ("4K Ultra HD Smart TV", "VisionMax 8000"),
-  ("Yoga Mat with Strap", "FlexiMat X"),
-  ("Electric Toothbrush", "SonicClean 3000"),
-  ("Portable Power Bank", "PowerBoost 20000"),
-  ("Non-Stick Frying Pan", "ProCook Plus"),
-  ("Noise Cancelling Headphones", "AudioShield Pro"),
-  ("Digital Kitchen Scale", "AccuWeigh 5000"),
-  ("Resistance Bands Set", "FlexiFit Pro"),
-  ("Wireless Charging Pad", "ChargeMate 3.0"),
-  ("Air Fryer with Digital Display", "CrispCook Elite"),
-  ("Polarized Sunglasses", "SunGuard 300"),
-  ("Smart Thermostat for Home", "ClimateControl 9000"),
-  ("High-Speed Blender with Pitcher", "NutriBlend X"),
-  ("Memory Foam Mattress Topper", "DreamCloud Elite"),
-  ("Fitness Tracker Watch", "PulseMax 500"),
-  ("USB-C Hub Adapter for MacBook", "ThunderLink Pro"),
-  ("Handheld Vacuum Cleaner", "DustBuster 2000"),
-  ("Reusable Silicone Food Bags", "FreshSeal"),
-  ("Electric Kettle with Temperature Control", "KettleMax"),
-  ("Smart Lock for Front Door", "SecureMax Pro"),
-  ("Compact Air Purifier", "AirPure 100"),
-  ("Automatic Soap Dispenser", "CleanFoam"),
-  ("Foldable Laptop Stand", "LapMate 500"),
-  ("Stainless Steel Travel Mug", "TravelerPro 20"),
-  ("Multi-Port USB Wall Charger", "PowerMate 8"),
-  ("Wireless Gaming Mouse", "EliteGamer Pro"),
-  ("Ceramic Space Heater with Remote", "WarmZone 3000"),
-  ("Foam Roller for Deep Tissue Massage", "FlexiRoller X")
-]
-
-fileprivate let sampleKeeperNames_zh_sc: [String] = [
+fileprivate let sampleKeeperNames: [String] = [
   "张伟",
   "李娜",
   "王强",
@@ -193,6 +162,40 @@ fileprivate let sampleKeeperNames_zh_sc: [String] = [
   "蔡秋枫",
   "康明洋",
 ]
+
+/*
+fileprivate let sampleItemNames: [(String, String)] = [
+  ("Stainless Steel Water Bottle", "H2O-PRO 500"),
+  ("Bluetooth Wireless Earbuds", "SonicBuds S7"),
+  ("4K Ultra HD Smart TV", "VisionMax 8000"),
+  ("Yoga Mat with Strap", "FlexiMat X"),
+  ("Electric Toothbrush", "SonicClean 3000"),
+  ("Portable Power Bank", "PowerBoost 20000"),
+  ("Non-Stick Frying Pan", "ProCook Plus"),
+  ("Noise Cancelling Headphones", "AudioShield Pro"),
+  ("Digital Kitchen Scale", "AccuWeigh 5000"),
+  ("Resistance Bands Set", "FlexiFit Pro"),
+  ("Wireless Charging Pad", "ChargeMate 3.0"),
+  ("Air Fryer with Digital Display", "CrispCook Elite"),
+  ("Polarized Sunglasses", "SunGuard 300"),
+  ("Smart Thermostat for Home", "ClimateControl 9000"),
+  ("High-Speed Blender with Pitcher", "NutriBlend X"),
+  ("Memory Foam Mattress Topper", "DreamCloud Elite"),
+  ("Fitness Tracker Watch", "PulseMax 500"),
+  ("USB-C Hub Adapter for MacBook", "ThunderLink Pro"),
+  ("Handheld Vacuum Cleaner", "DustBuster 2000"),
+  ("Reusable Silicone Food Bags", "FreshSeal"),
+  ("Electric Kettle with Temperature Control", "KettleMax"),
+  ("Smart Lock for Front Door", "SecureMax Pro"),
+  ("Compact Air Purifier", "AirPure 100"),
+  ("Automatic Soap Dispenser", "CleanFoam"),
+  ("Foldable Laptop Stand", "LapMate 500"),
+  ("Stainless Steel Travel Mug", "TravelerPro 20"),
+  ("Multi-Port USB Wall Charger", "PowerMate 8"),
+  ("Wireless Gaming Mouse", "EliteGamer Pro"),
+  ("Ceramic Space Heater with Remote", "WarmZone 3000"),
+  ("Foam Roller for Deep Tissue Massage", "FlexiRoller X")
+]
 fileprivate let sampleKeeperNames: [String] = [
   "Evelyn Hartman",
   "Benjamin Wolfe",
@@ -205,6 +208,7 @@ fileprivate let sampleKeeperNames: [String] = [
   "Amelia Fitzgerald",
   "Gabriel Harrison",
 ]
+ */
 extension ItemTransaction {
   
   static func mock() -> ItemTransaction {
@@ -217,7 +221,7 @@ extension PriceInfo {
   static func mock() -> Self {
     let d = Decimal((0...300).randomElement()!)
     return PriceInfo(price: d, priceType: .perUnitBeforeTax,
-                     quantity: (1...3000).randomElement()!,
+                     quantity: (1...5).randomElement()!,
                      regularTaxItems: [.init(name: "GST", rate: 0.05)],
                      compoundTaxItems: [.init(name: "PST", rate: 0.1)],
                      fixedAmountTaxItems: [.init(name: "Tariff", amount: 10.5)])
@@ -230,5 +234,19 @@ extension ItemTemplate {
     return ItemTemplate(itemName: item.0,
                  variantName: item.1,
                  priceInfo: .mock())
+  }
+}
+
+extension Contact {
+  static func mock() -> Self {
+    return Contact(isCompany: .random(),
+                   name: sampleKeeperNames.randomElement()!,
+                   companyName: "Smart Kitchen",
+                   email: "johndoe@example.com",
+                   phoneNumber: "+00 1234567890",
+                   taxID: "082314123",
+                   address: "James Awkward Street\nRoom 131\nEdinburgh\nScotland",
+                   postalCode: "EH1 XXX",
+                   notes: "Nothing to say")
   }
 }

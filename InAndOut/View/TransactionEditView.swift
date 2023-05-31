@@ -8,7 +8,7 @@
 import SwiftUI
 import NTPlatformKit
 
-enum EditMode {
+enum FormEditMode {
   case new
   case edit
 }
@@ -16,8 +16,10 @@ enum EditMode {
 class TransactionViewModel: ObservableObject {
   @Published var transactionType: TransactionType = .itemsIn
   @Published var transactionID: String = ""
+  @Published var invoiceID: String = ""
   @Published var date: Date = Date.now
   @Published var keeperName: String = ""
+  @Published var counterparty: Contact = Contact.fresh()
   @Published var subtransactions: [ItemTransaction] = []
   @Published var fixedCosts: [FixedAmountItem] = []
   @Published var comment: String = ""
@@ -28,34 +30,21 @@ class TransactionViewModel: ObservableObject {
   // TODO: addable verification
   
   private var transaction: Transaction
-  var editMode: EditMode
   
-  init(edit transaction: Transaction) {
+  init(edit transaction: Transaction? = nil) {
+    let transaction = transaction ?? .fresh(type: .itemsIn)
     self.transaction = transaction
-    self.editMode = .edit
-    
-    self.transactionType = transaction.transactionType
-    self.transactionID = transaction.transactionID.trimmingCharacters(in: .whitespacesAndNewlines)
-    self.date = transaction.date
-    self.keeperName = transaction.keeperName ?? ""
-    self.subtransactions = transaction.subtransactions
-    self.fixedCosts = transaction.fixedCosts
-    self.comment = transaction.comment
-    commonInit()
-  }
   
-  init(new type: TransactionType, transactionID: String = "") {
-    transaction = .fresh(type: type)
-    transaction.transactionID = transactionID
-    self.transactionType = transaction.transactionType
     self.transactionID = transaction.transactionID.trimmingCharacters(in: .whitespacesAndNewlines)
+    self.invoiceID = transaction.invoiceID.trimmingCharacters(in: .whitespacesAndNewlines)
+    self.counterparty = transaction.counterpartyContact ?? .fresh()
+    
+    self.transactionType = transaction.transactionType
     self.date = transaction.date
     self.keeperName = transaction.keeperName ?? ""
     self.subtransactions = transaction.subtransactions
     self.fixedCosts = transaction.fixedCosts
     self.comment = transaction.comment
-    
-    self.editMode = .new
     commonInit()
   }
   
@@ -71,9 +60,12 @@ class TransactionViewModel: ObservableObject {
     self.subtransactions.append(subtransaction)
   }
   
+  // TODO: Compare directly use updated transaction
   var hasChanges: Bool {
     return self.transactionType != transaction.transactionType ||
     self.transactionID.trimmingCharacters(in: .whitespacesAndNewlines) != transaction.transactionID ||
+    self.counterparty != transaction.counterpartyContact ||
+    self.invoiceID.trimmingCharacters(in: .whitespacesAndNewlines) != transaction.invoiceID ||
     self.date != transaction.date ||
     self.keeperName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) != transaction.keeperName?.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ||
     self.subtransactions != transaction.subtransactions ||
@@ -81,12 +73,12 @@ class TransactionViewModel: ObservableObject {
     self.comment.trimmingCharacters(in: .whitespacesAndNewlines) != transaction.comment.trimmingCharacters(in: .whitespacesAndNewlines)
   }
   
-  
-  
   var updatedTransaction: Transaction {
     Transaction(id: transaction.id,
                 transactionType: transactionType,
-                transactionID: transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? UUID().uuidString, // generate random ID if empty
+                transactionID: transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? UUID().uuidString,
+                invoiceID: invoiceID.trimmingCharacters(in: .whitespacesAndNewlines),
+                counterpartyContact: counterparty.isAllEmpty ? nil : counterparty,
                 subtransactions: subtransactions,
                 // Remove redundant items
                 fixedCosts: fixedCosts.filter { item in
@@ -114,21 +106,19 @@ struct TransactionEditView: View {
   @State private var editingItem: Binding<ItemTransaction>? = nil
   @State private var showAddItemTransactionView = false
   @State private var attemptToDiscardChanges: Bool = false
+  @State private var isEditingContact: Bool = false
   @FocusState private var focusField: Field?
+  private let dismissAfterCompletion: Bool
+  private let editMode: FormEditMode
   private var onCommit: (Transaction) -> Void
   private var onCompletion: (() -> Void)? = nil
-  private var dismissAfterCompletion: Bool
   
-  init(edit transaction: Transaction, dismissAfterCompletion: Bool = false, onCommit: @escaping (Transaction) -> Void, onCompletion: (() -> Void)? = nil) {
+  /// - parameters:
+  ///   - dismissAfterCompletion: Dismiss the edit view after editing completes. This is useful user do not want to dismiss the transaction inspector when finishing editing.
+  init(edit transaction: Transaction? = nil, dismissAfterCompletion: Bool = false, onCommit: @escaping (Transaction) -> Void, onCompletion: (() -> Void)? = nil) {
     self._viewModel = StateObject(wrappedValue: TransactionViewModel(edit: transaction))
-    self.dismissAfterCompletion = dismissAfterCompletion
-    self.onCommit = onCommit
-    self.onCompletion = onCompletion
-  }
-  
-  init(new type: TransactionType, dismissAfterCompletion: Bool = true, onCommit: @escaping (Transaction) -> Void, onCompletion: (() -> Void)? = nil) {
-    _viewModel = StateObject(wrappedValue: TransactionViewModel(new: type, transactionID: ""))
-    self.dismissAfterCompletion = dismissAfterCompletion
+    self.editMode = (transaction == nil) ? .new : .edit
+    self.dismissAfterCompletion = (editMode == .new)
     self.onCommit = onCommit
     self.onCompletion = onCompletion
   }
@@ -147,46 +137,69 @@ struct TransactionEditView: View {
       }
       
       Section {
-        HStack {
-          TextField("Transaction ID", text: $viewModel.transactionID)
-          Menu {
-            // ...
-            Button {
-              viewModel.transactionID = UUID().uuidString
-            } label: {
-              Label {
-                Text("Generate Random ID", comment: "Button title to generate random ID for transaction")
-              } icon: {
-                Image(systemName: "number.circle")
+        
+        VerticalField("Transaction ID") {
+          HStack(alignment: .firstTextBaseline) {
+            #if os(iOS)
+            TextField("", text: $viewModel.transactionID, axis: .vertical)
+              .lineLimit(nil)
+            #elseif os(macOS)
+            TextField("", text: $viewModel.transactionID)
+            #endif
+            Menu {
+              // ...
+              Button {
+                viewModel.transactionID = UUID().uuidString
+              } label: {
+                Label {
+                  Text("Generate Random ID", comment: "Button title to generate random ID for transaction")
+                } icon: {
+                  Image(systemName: "number.circle")
+                }
               }
+            } label: {
+              Image(systemName: "dice")
             }
-          } label: {
-            Image(systemName: "dice")
           }
         }
         
-        TextField("Keeper Name", text: $viewModel.keeperName)
-          .focused($focusField, equals: .keeperName)
-        // TODO: add contact picker for keeper info
+        VerticalField("Invoice ID") {
+#if os(iOS)
+          TextField("", text: $viewModel.invoiceID, axis: .vertical)
+#elseif os(macOS)
+          TextField("", text: $viewModel.transactionID)
+            .submitLabel(.done)
+#endif
+        }
+        
+        VerticalField("Keeper Name") {
+          TextField("", text: $viewModel.keeperName)
+            .focused($focusField, equals: .keeperName)
+        }
+        
         DatePicker("Date", selection: $viewModel.date, displayedComponents: [.date, .hourAndMinute])
       } footer: {
         Text("Every transaction needs be identified by a transaction ID. A random ID will be generated for you if you leave this field to be empty.", comment: "Footer text that explains a random ID is needed for every transaction and a random ID will be generated for user if they leave this field to be empty")
       }
       
-      /*
-       Contact info of
-      Section("Contact Info") {
-        TextField("Name", text: .constant(""))
-          .keyboardType(.namePhonePad)
-        TextField("Phone Number", text: .constant(""))
-          .keyboardType(.namePhonePad)
-        TextField("Email", text: .constant(""))
-          .keyboardType(.emailAddress)
-        TextField("Address", text: .constant(""))
-        TextField("Phone Number", text: .constant(""))
-          .keyboardType(.namePhonePad)
+      Section("Counterparty") {
+        if !viewModel.counterparty.isAllEmpty {
+          ContactView(contact: viewModel.counterparty)
+            .disabled(true)
+          Button("Edit Contact") {
+            isEditingContact = true
+          }
+          Button("Remove Contact", role: .destructive) {
+            withAnimation {
+              viewModel.counterparty = .fresh()
+            }
+          }
+        } else {
+          Button("Add Counterparty Contact") {
+            isEditingContact = true
+          }
+        }
       }
-       */
       
       Section {
         
@@ -237,7 +250,29 @@ struct TransactionEditView: View {
       }
     }
     .scrollDismissesKeyboard(.interactively)
-    // MARK: Edit new item
+    
+    // MARK: Edit Counterparty Contact
+    .sheet(isPresented: $isEditingContact) {
+      Task { @MainActor in
+        isEditingContact = false
+      }
+    } content: {
+      NavigationStack {
+        ContactEditView(contact: $viewModel.counterparty)
+          .navigationTitle("Edit Contact")
+          .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+              Button("Done") {
+                isEditingContact = false
+              }
+            }
+          }
+        #if os(iOS)
+          .toolbarRole(.navigationStack)
+        #endif
+      }
+    }
+    // MARK: Edit Item
     .sheet(item: $editingItem, onDismiss: {
       Task {
         await MainActor.run {
@@ -296,12 +331,12 @@ struct TransactionEditView: View {
   }
   
   var title: LocalizedStringKey {
-    viewModel.editMode == .edit ? "Edit Transaction" : "New Transaction"
+    editMode == .edit ? "Edit Transaction" : "New Transaction"
   }
   
   @ViewBuilder
   var confirmationButton: some View {
-    Button(viewModel.editMode == .edit ? "Done" : "Add") {
+    Button(editMode == .edit ? "Done" : "Add") {
       onCommit(viewModel.updatedTransaction)
       onCompletion?()
       if dismissAfterCompletion {
@@ -376,7 +411,7 @@ struct TransactionEditView_Previews: PreviewProvider {
     .previewDisplayName("Edit")
     
     NavigationStack {
-      TransactionEditView(new: .itemsIn) { _ in
+      TransactionEditView { _ in
       }
       .environmentObject(InTransactDocument.mock())
     }

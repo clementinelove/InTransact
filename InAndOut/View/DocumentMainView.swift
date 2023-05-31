@@ -193,7 +193,7 @@ struct DocumentMainView: View {
 #endif
       }
     }
-    // MARK: Transaction Detail Sheet
+    // MARK: Transaction Detail Sheet (Inspector)
     .sheet(isPresented: $transactionInspectorState.showInspector, onDismiss: {
       isEditing = false
       transactionDetailDetent = .medium
@@ -213,7 +213,7 @@ struct DocumentMainView: View {
       }
     } content: {
       NavigationStack {
-        TransactionEditView(new: .itemsIn) { transaction in
+        TransactionEditView { transaction in
           withAnimation {
             document.addNewTransaction(transaction, undoManager: undoManager)
           }
@@ -497,6 +497,7 @@ struct DocumentMainView: View {
           } else {
             // During editing, transactionIndex can't be changed. otherwise it will cause serious problem
             TransactionEditView(edit: document.content.transactions[index]) { transaction in
+              print(transaction.invoiceID)
               document.replaceTransactionContent(with: transaction, undoManager: undoManager)
             } onCompletion: {
               withAnimation {
@@ -632,68 +633,6 @@ struct DocumentMainView: View {
   }
 }
 
-struct TransactionSearchResultView: View {
-  
-  @EnvironmentObject private var document: InTransactDocument
-  @Environment(\.isSearching) private var isSearching
-  @Binding var searchText: String
-  @ObservedObject var transactionInspectorState: DocumentMainView.TransactionInspectorState
-  @Binding var inspectorDetent: PresentationDetent
-  
-  var filteredTransactions: [Int] {
-    let trimmedSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-      .lowercased()
-    return document.content.transactions.enumerated().filter { (i, t) in
-      t.transactionID.localizedStandardContains(searchText) ||
-      t.itemAndVariantNames.contains { $0.localizedStandardContains(trimmedSearchText) } ||
-      (t.keeperName?.localizedStandardContains(trimmedSearchText) ?? false) ||
-      t.date.formatted(date: .long, time: .complete).localizedStandardContains(trimmedSearchText) ||
-      t.date.formatted(.relative(presentation: .named)).localizedStandardContains(trimmedSearchText) ||
-      t.total(roundingRules: document.roundingRules).formatted().localizedStandardContains(trimmedSearchText)
-    }.map { $0.offset }
-    // TODO: sort the result
-  }
-  
-  var body: some View {
-    Group {
-      if isSearching && !searchText.isEmpty {
-        List {
-          ForEach(filteredTransactions, id: \.self) { i in
-            Button {
-              // tap to inspect details
-              inspectorDetent = .large
-              Task { @MainActor in
-                withAnimation {
-                  transactionInspectorState.inspect(index: i)
-                }
-              }
-            } label: {
-              TransactionRowView(transaction: document.content.transactions[i],
-                                 currencyIdentifier: document.currencyCode)
-            }
-          }
-        }
-
-        .scrollDismissesKeyboard(.interactively)
-        .listStyle(.plain)
-        #if os(iOS)
-        .background(Color.system)
-        #else
-        .background { Color(nsColor: .controlBackgroundColor) }
-        #endif
-      }
-    }
-//    .task(id: searchText) {
-//      logger.debug("Is searching: \(isSearching), Search Text: \(searchText)")
-//    }
-    .task(id: isSearching) {
-      withAnimation {
-        transactionInspectorState.showInspector = false
-      }
-    }
-  }
-}
-
 struct DocumentMainView_Previews: PreviewProvider {
     static var previews: some View {
       
@@ -713,9 +652,5 @@ struct DocumentMainView_Previews: PreviewProvider {
         .environmentObject(InTransactDocument(mock: true))
         .previewDisplayName("With Mock Data (macOS)")
       
-      
-      TransactionSearchResultView(searchText: .constant("3"), transactionInspectorState: .init(), inspectorDetent: .constant(.large))
-        .environmentObject(InTransactDocument(mock: true))
-        .previewDisplayName("Search Results")
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DisclaimerView: View {
     var body: some View {
-        Text("x")
+        Text("Thank you")
     }
 }
 

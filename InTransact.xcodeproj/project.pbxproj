@@ -21,6 +21,11 @@
 		5843B9E82A151F610048C0CA /* CurrencyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9E72A151F610048C0CA /* CurrencyTextField.swift */; };
 		5843B9EA2A168AC00048C0CA /* SeparatedValueBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9E92A168AC00048C0CA /* SeparatedValueBuilder.swift */; };
 		5843B9EC2A177B1A0048C0CA /* CurrencyCalculatationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9EB2A177B1A0048C0CA /* CurrencyCalculatationTest.swift */; };
+		585505182A273F7E005482CF /* ContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505172A273F7E005482CF /* ContactList.swift */; };
+		5855051A2A2740E2005482CF /* ContactEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505192A2740E2005482CF /* ContactEditView.swift */; };
+		5855051C2A278BDC005482CF /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5855051B2A278BDC005482CF /* ContactView.swift */; };
+		5855051E2A27B339005482CF /* TransactionSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5855051D2A27B339005482CF /* TransactionSearchResultView.swift */; };
+		585505202A27BACB005482CF /* VerticalField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5855051F2A27BACA005482CF /* VerticalField.swift */; };
 		5858FB192A07D17F005FAAA6 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB182A07D17F005FAAA6 /* App.swift */; };
 		5858FB1B2A07D17F005FAAA6 /* InAndOutDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB1A2A07D17F005FAAA6 /* InAndOutDocument.swift */; };
 		5858FB1F2A07D180005FAAA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5858FB1E2A07D180005FAAA6 /* Assets.xcassets */; };
@@ -39,7 +44,6 @@
 		587F244E2A17C25200C3AF61 /* RoundingRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F244D2A17C25200C3AF61 /* RoundingRules.swift */; };
 		587F24502A17C2BD00C3AF61 /* ItemTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F244F2A17C2BD00C3AF61 /* ItemTransaction.swift */; };
 		587F24532A18CC3600C3AF61 /* ItemTemplateRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F24522A18CC3600C3AF61 /* ItemTemplateRow.swift */; };
-		589E20232A0C5645008A5BDA /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20222A0C5645008A5BDA /* DisclaimerView.swift */; };
 		589E203A2A0EC9D5008A5BDA /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20392A0EC9D5008A5BDA /* DocumentViewModel.swift */; };
 		589E208F2A10CE6A008A5BDA /* DocumentMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20242A0CFB39008A5BDA /* DocumentMainView.swift */; };
 		589E20902A10CE6A008A5BDA /* ItemTemplateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20372A0E6E7D008A5BDA /* ItemTemplateListView.swift */; };
@@ -91,6 +95,11 @@
 		5843B9E72A151F610048C0CA /* CurrencyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTextField.swift; sourceTree = "<group>"; };
 		5843B9E92A168AC00048C0CA /* SeparatedValueBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatedValueBuilder.swift; sourceTree = "<group>"; };
 		5843B9EB2A177B1A0048C0CA /* CurrencyCalculatationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCalculatationTest.swift; sourceTree = "<group>"; };
+		585505172A273F7E005482CF /* ContactList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactList.swift; sourceTree = "<group>"; };
+		585505192A2740E2005482CF /* ContactEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEditView.swift; sourceTree = "<group>"; };
+		5855051B2A278BDC005482CF /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
+		5855051D2A27B339005482CF /* TransactionSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSearchResultView.swift; sourceTree = "<group>"; };
+		5855051F2A27BACA005482CF /* VerticalField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalField.swift; sourceTree = "<group>"; };
 		5858FB152A07D17F005FAAA6 /* InTransact.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InTransact.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5858FB182A07D17F005FAAA6 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		5858FB1A2A07D17F005FAAA6 /* InAndOutDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAndOutDocument.swift; sourceTree = "<group>"; };
@@ -272,6 +281,7 @@
 				589E20282A0D33C7008A5BDA /* Controls */,
 				5858FB182A07D17F005FAAA6 /* App.swift */,
 				589E20242A0CFB39008A5BDA /* DocumentMainView.swift */,
+				5855051D2A27B339005482CF /* TransactionSearchResultView.swift */,
 				5843B9D22A12EA530048C0CA /* DocumentSettingsView.swift */,
 				585E82922A118FD300B79AD2 /* TransactionMainView.swift */,
 				5858FB492A07D191005FAAA6 /* TransactionDetailView.swift */,
@@ -287,6 +297,9 @@
 				5843B9D62A13893C0048C0CA /* TransactionFilterBadge.swift */,
 				5843B9D82A138ED10048C0CA /* EmptyListPlaceholder.swift */,
 				5843B9DA2A13D1F50048C0CA /* DocumentPreviewView.swift */,
+				585505172A273F7E005482CF /* ContactList.swift */,
+				585505192A2740E2005482CF /* ContactEditView.swift */,
+				5855051B2A278BDC005482CF /* ContactView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -298,6 +311,7 @@
 				589E20332A0E3DC7008A5BDA /* LocationPicker.swift */,
 				5843B9D42A137C050048C0CA /* CurrencyPickerContent.swift */,
 				5843B9E72A151F610048C0CA /* CurrencyTextField.swift */,
+				5855051F2A27BACA005482CF /* VerticalField.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -464,13 +478,14 @@
 				589E20982A10CE6A008A5BDA /* ItemTemplateEditView.swift in Sources */,
 				5858FB672A0A2FCA005FAAA6 /* Formatters.swift in Sources */,
 				5843B9D52A137C050048C0CA /* CurrencyPickerContent.swift in Sources */,
+				585505182A273F7E005482CF /* ContactList.swift in Sources */,
 				5843B9D72A13893C0048C0CA /* TransactionFilterBadge.swift in Sources */,
-				589E20232A0C5645008A5BDA /* DisclaimerView.swift in Sources */,
 				582758BE2A1B6687004F0B91 /* DocumentExportView.swift in Sources */,
 				5843B9DD2A143E260048C0CA /* CSVSupport.swift in Sources */,
 				587F24532A18CC3600C3AF61 /* ItemTemplateRow.swift in Sources */,
 				589E20912A10CE6A008A5BDA /* TransactionRowView.swift in Sources */,
 				5843B9EA2A168AC00048C0CA /* SeparatedValueBuilder.swift in Sources */,
+				5855051C2A278BDC005482CF /* ContactView.swift in Sources */,
 				589E20992A10CE6A008A5BDA /* LocationPicker.swift in Sources */,
 				5843B9E42A14CD8F0048C0CA /* PriceInfo.swift in Sources */,
 				5858FB1B2A07D17F005FAAA6 /* InAndOutDocument.swift in Sources */,
@@ -489,10 +504,13 @@
 				5843B9DB2A13D1F50048C0CA /* DocumentPreviewView.swift in Sources */,
 				589E208F2A10CE6A008A5BDA /* DocumentMainView.swift in Sources */,
 				589E209C2A110B19008A5BDA /* Copyable.swift in Sources */,
+				585505202A27BACB005482CF /* VerticalField.swift in Sources */,
 				5843B9DF2A14CC600048C0CA /* Setting.swift in Sources */,
 				5843B9E82A151F610048C0CA /* CurrencyTextField.swift in Sources */,
 				5858FB692A0A2FFF005FAAA6 /* Globals.swift in Sources */,
 				5858FB522A07D19A005FAAA6 /* DataModel.swift in Sources */,
+				5855051E2A27B339005482CF /* TransactionSearchResultView.swift in Sources */,
+				5855051A2A2740E2005482CF /* ContactEditView.swift in Sources */,
 				589E20952A10CE6A008A5BDA /* TransactionEditView.swift in Sources */,
 				5843B9D32A12EA530048C0CA /* DocumentSettingsView.swift in Sources */,
 			);

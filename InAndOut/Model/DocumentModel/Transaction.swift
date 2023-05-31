@@ -36,24 +36,35 @@ struct Transaction: Identifiable, Codable, Hashable {
   }
   
   static func == (lhs: Transaction, rhs: Transaction) -> Bool {
-    lhs.id == rhs.id
+    lhs.invoiceID == rhs.invoiceID &&
+    lhs.transactionType == rhs.transactionType &&
+    lhs.transactionID == rhs.transactionID &&
+    lhs.counterpartyContact == rhs.counterpartyContact &&
+    lhs.subtransactions == rhs.subtransactions &&
+    lhs.comment == rhs.comment &&
+    lhs.keeperName == rhs.keeperName &&
+    lhs.date == rhs.date &&
+    lhs.fixedCosts == rhs.fixedCosts
   }
   
   var id: ID = ID()
+  var invoiceID: String
   var transactionType: TransactionType
   var transactionID: String
+  var counterpartyContact: Contact?
   var subtransactions: [ItemTransaction]
   // the entity refers to supplier in a purchase transaction, customer in sales transaction,
   var comment: String
   // The name of the person responsible for bookkepping this transaction
   var keeperName: String?
-  var contact: ContactInfo?
   var date: Date
   var fixedCosts: [FixedAmountItem] = []
   
   init(id: ID = ID(),
        transactionType: TransactionType,
        transactionID: String,
+       invoiceID: String,
+       counterpartyContact: Contact? = nil,
        subtransactions: [ItemTransaction] = [],
        fixedCosts: [FixedAmountItem] = [],
        comment: String,
@@ -61,7 +72,9 @@ struct Transaction: Identifiable, Codable, Hashable {
        date: Date) {
     self.id = id
     self.transactionType = transactionType
+    self.invoiceID = invoiceID
     self.transactionID = transactionID
+    self.counterpartyContact = counterpartyContact
     self.subtransactions = subtransactions
     self.fixedCosts = fixedCosts
     self.comment = comment
@@ -70,7 +83,7 @@ struct Transaction: Identifiable, Codable, Hashable {
   }
   
   static func fresh(type: TransactionType) -> Transaction {
-    Transaction(transactionType: type, transactionID: "", subtransactions: [], comment: "", keeperName: "",
+    Transaction(transactionType: type, transactionID: "", invoiceID: "", counterpartyContact: nil, subtransactions: [], comment: "", keeperName: "",
                 date: Date.now)
   }
   

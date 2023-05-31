@@ -29,7 +29,7 @@ final class InTransactDocument: ReferenceFileDocument {
     content // Make a copy
   }
   
-  init(mock: Bool = false) {
+  init(mock: Bool = true) {
     if mock {
       self.content = .mock()
     } else {

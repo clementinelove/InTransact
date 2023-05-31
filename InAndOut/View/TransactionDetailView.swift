@@ -37,6 +37,7 @@ struct TransactionDetailView: View {
             .fontWeight(.medium)
           
           HStack {
+            // MARK: Transaction ID
             if let transactionID = transaction.transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
               Text(transactionID)
                 .font(.title3.monospaced().bold())
@@ -49,12 +50,12 @@ struct TransactionDetailView: View {
             
             Spacer()
           }
-          .padding(.bottom, 2)
           
           // MARK: Date
           Text(transaction.date.formatted(date: .long, time: .shortened))
             .font(.subheadline)
             .padding(.bottom)
+            .padding(.top, 1)
           
           VStack(alignment: .leading, spacing: 6) {
             HStack {
@@ -79,9 +80,33 @@ struct TransactionDetailView: View {
                 Image(systemName: "pencil.circle")
               }
             }
+            
+            // MARK: Invoice ID
+            if let invoiceID = transaction.invoiceID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+              Label {
+                Text("Invoice ID: \(invoiceID)")
+              } icon: {
+                Image(systemName: "doc.circle")
+                  .symbolVariant(.circle)
+              }
+            }
+            
+            // MARK: Counter Party
+            if let counterparty = transaction.counterpartyContact,
+               !counterparty.isAllEmpty {
+              Label {
+                ContactView(contact: counterparty, hideDetailsByDefault: true)
+                  .fontWeight(.regular)
+              } icon: { 
+                if counterparty.isCompany {
+                  Image(systemName: "building.2.crop.circle")
+                } else {
+                  Image(systemName: "person.circle")
+                }
+              }
+            }
           }
-          .font(.callout)
-          .padding(.bottom, 4)
+          .padding(.bottom, 3)
           
           // MARK: Comments
           if !transaction.comment.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {

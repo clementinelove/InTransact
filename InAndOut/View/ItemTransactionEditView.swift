@@ -140,8 +140,6 @@ class ItemTransactionViewModel: ObservableObject {
 // MARK: - View
 struct ItemTransactionEditView: View {
   
-  static let verticalLabelFont: Font = .caption
-  
   enum Field: Hashable {
     case itemID
     case itemName
@@ -162,7 +160,7 @@ struct ItemTransactionEditView: View {
   @State private var isShowingTemplates = false
   @EnvironmentObject private var document: InTransactDocument
   @State private var isShowingRepeatedTaxItemNameAlert = false
-  private let editMode: EditMode
+  private let editMode: FormEditMode
   private let onCommit: ((ItemTransaction) -> Void)
   
   init(edit item: ItemTransaction, onCommit: @escaping (ItemTransaction) -> Void) {
@@ -224,20 +222,17 @@ struct ItemTransactionEditView: View {
         }
         
         // MARK: Price
-        VStack(alignment: .leading) {
-          
-          Text("\(priceLabel) (\(document.currencyCode))") 
-            .font(Self.verticalLabelFont)
-          
-            CurrencyTextField(amount: $viewModel.priceInfo.price,
-                              focusedBinding: $focusField, value: .price,
-                              alignment: .leading)
-              .labelsHidden()
-            #if os(iOS)
-              .keyboardType(.decimalPad)
-            #endif
-              .multilineTextAlignment(.trailing)
-          
+        VerticalField {
+          CurrencyTextField(amount: $viewModel.priceInfo.price,
+                            focusedBinding: $focusField, value: .price,
+                            alignment: .leading)
+          .labelsHidden()
+#if os(iOS)
+          .keyboardType(.decimalPad)
+#endif
+          .multilineTextAlignment(.trailing)
+        } label: {
+          Text("\(priceLabel) (\(document.currencyCode))", comment: "PriceTypeLabel[space]CurrencyCode")
         }
         
         quantityInputControl
@@ -265,10 +260,7 @@ struct ItemTransactionEditView: View {
             Text("Explicit After Tax Total", comment: "Toggle title that switches explicit after tax total input")
           }
           if viewModel.hasExplicitAfterTaxTotal {
-            VStack(alignment: .leading) {
-              Text("After Tax Total (\(document.currencyCode))", comment: "Label of after tax total text field")
-                .font(Self.verticalLabelFont)
-              
+            VerticalField {
               CurrencyTextField(amount: $viewModel.explicitAfterTaxTotal,
                                 focusedBinding: $focusField,
                                 value: Field.explicitTotalAfterTax,
@@ -279,6 +271,8 @@ struct ItemTransactionEditView: View {
 #endif
                   .multilineTextAlignment(.trailing)
               
+            } label: {
+              Text("After Tax Total (\(document.currencyCode))", comment: "Label of after tax total text field")
             }
           }
         } footer: {
@@ -349,41 +343,38 @@ struct ItemTransactionEditView: View {
   }
   
   var quantityInputControl: some View {
-    VStack(alignment: .leading) {
-        
-      Text("Quantity", comment: "Label that specifies quantity of a item in a transaction")
-          .font(Self.verticalLabelFont)
-        TextField("", text: $viewModel.quantityText)
-          .multilineTextAlignment(.leading)
+    VerticalField {
+      TextField("", text: $viewModel.quantityText)
+        .multilineTextAlignment(.leading)
 #if os(iOS)
-          .keyboardType(.numberPad)
-          .submitLabel(.done)
+        .keyboardType(.numberPad)
+        .submitLabel(.done)
 #endif
-          .lineLimit(1)
-          .truncationMode(.tail)
-          .focused($focusField, equals: .quantity)
-          .onChange(of: viewModel.quantityText, perform: { newValue in
-            if newValue == "" {
-              viewModel.quantityText = "0"
-            } else {
-              let quantity = ItemQuantity(newValue) ?? lastValidQuantity
-              lastValidQuantity = quantity
-              viewModel.quantityText = "\(quantity)"
-            }
-          })
-          .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-              if focusField == .quantity {
-                quickQuantityButtons
-                  .font(.footnote)
-                  .frame(maxWidth: .infinity, alignment: .center)
-                  .padding(6)
-                  .padding(.top, 6)
-              }
+        .lineLimit(1)
+        .truncationMode(.tail)
+        .focused($focusField, equals: .quantity)
+        .onChange(of: viewModel.quantityText, perform: { newValue in
+          if newValue == "" {
+            viewModel.quantityText = "0"
+          } else {
+            let quantity = ItemQuantity(newValue) ?? lastValidQuantity
+            lastValidQuantity = quantity
+            viewModel.quantityText = "\(quantity)"
+          }
+        })
+        .toolbar {
+          ToolbarItemGroup(placement: .keyboard) {
+            if focusField == .quantity {
+              quickQuantityButtons
+                .font(.footnote)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(6)
+                .padding(.top, 6)
             }
           }
-        
-      
+        }
+    } label: {
+      Text("Quantity", comment: "Label that specifies quantity of a item in a transaction")
     }
   }
   
@@ -448,9 +439,7 @@ struct ItemTransactionEditView: View {
   var regularTaxItems: some View {
     Group {
       ForEach($viewModel.priceInfo.regularTaxItems) { item in
-        VStack(alignment: .leading) {
-          Text("Regular Tax")
-            .font(Self.verticalLabelFont)
+        VerticalField("Regular Tax") {
           HStack {
             TextField("Tax Name", text: item.name)
             TextField("", value: item.rate, format: .percent)
@@ -485,9 +474,7 @@ struct ItemTransactionEditView: View {
   var compoundTaxItems: some View {
     Group {
       ForEach($viewModel.priceInfo.compoundTaxItems) { item in
-        VStack(alignment: .leading) {
-          Text("Compound Tax")
-            .font(Self.verticalLabelFont)
+        VerticalField("Compound Tax") {
           HStack {
             TextField("Tax Name", text: item.name)
             TextField("", value: item.rate, format: .percent)
@@ -523,9 +510,7 @@ struct ItemTransactionEditView: View {
   var fixedTaxItems: some View {
     Group {
       ForEach($viewModel.priceInfo.fixedAmountTaxItems) { $item in
-        VStack(alignment: .leading) {
-          Text("Fixed Tax")
-            .font(Self.verticalLabelFont)
+        VerticalField("Fixed Tax") {
           HStack {
             TextField("Tax Name", text: $item.name)
             CurrencyTextField(amount: $item.amount,

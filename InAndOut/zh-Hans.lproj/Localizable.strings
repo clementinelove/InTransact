@@ -1,3 +1,9 @@
+/* Item Name Placeholder in template row */
+"(Unnamed Item)" = "（未命名产品）";
+
+/* Item Name Placeholder in template row */
+"(Unnamed Variant)" = "（未命名变体）";
+
 /* No comment provided by engineer. */
 "%@ (%@)" = "%@（%@）";
 
@@ -188,7 +194,7 @@
 "Items In" = "进货";
 
 /* Footer text that explains the meaning of each transaction type */
-"Items In: records items moving in\nItems Out: records items moving out" = "进货：记录进货条目\\n出货：记录出货条目";
+"Items In: records items moving in\nItems Out: records items moving out" = "进货：记录进货条目\n出货：记录出货条目";
 
 /* No comment provided by engineer. */
 "Items Out" = "出货";
