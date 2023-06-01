@@ -6,8 +6,9 @@ Whether you are a sole trader or a small business owner, InTransact provides a s
 to track your transaction history. You can record purchase and sales information, 
 keep track of your transaction records and monitor real-time stock level status.
 
-## Privacy 
+## Privacy 隐私条款
 This app does not collect any data.
+该应用不收集任何数据。
 
 ## Support
 Since I build this project for hobby purposes, I cannot guarantee to give you the support you need.
