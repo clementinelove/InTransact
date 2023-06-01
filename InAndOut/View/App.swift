@@ -15,6 +15,7 @@ struct InAndOutApp: App {
   
   @State private var fileName: String? = nil
   @State private var fileURL: URL? = nil
+  @AppStorage("isFirstUse") private var isFirstUse: Bool?
   
   var body: some Scene {
     DocumentGroup(newDocument: { InTransactDocument() } ) { configuration  in
@@ -23,8 +24,20 @@ struct InAndOutApp: App {
         .task(id: configuration.fileURL) {
           fileURL = configuration.fileURL
         }
-        
+        .sheet(isPresented: Binding(get: {
+          isFirstUse == nil || isFirstUse == true
+        }, set: { dismiss in
+          isFirstUse = false
+        }), onDismiss: {
+          Task { @MainActor in
+            isFirstUse = false
+          }
+        }) {
+          WelcomeView()
+        }
+      
       // TODO: add first time feature introduction popup
     }
+    
   }
 }

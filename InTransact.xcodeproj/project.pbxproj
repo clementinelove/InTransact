@@ -27,6 +27,7 @@
 		5855051E2A27B339005482CF /* TransactionSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5855051D2A27B339005482CF /* TransactionSearchResultView.swift */; };
 		585505202A27BACB005482CF /* VerticalField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5855051F2A27BACA005482CF /* VerticalField.swift */; };
 		585505222A27C3E5005482CF /* MockSampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505212A27C3E5005482CF /* MockSampleData.swift */; };
+		585505242A28EE29005482CF /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505232A28EE29005482CF /* WelcomeView.swift */; };
 		5858FB192A07D17F005FAAA6 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB182A07D17F005FAAA6 /* App.swift */; };
 		5858FB1B2A07D17F005FAAA6 /* InAndOutDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB1A2A07D17F005FAAA6 /* InAndOutDocument.swift */; };
 		5858FB1F2A07D180005FAAA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5858FB1E2A07D180005FAAA6 /* Assets.xcassets */; };
@@ -102,6 +103,7 @@
 		5855051D2A27B339005482CF /* TransactionSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSearchResultView.swift; sourceTree = "<group>"; };
 		5855051F2A27BACA005482CF /* VerticalField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalField.swift; sourceTree = "<group>"; };
 		585505212A27C3E5005482CF /* MockSampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSampleData.swift; sourceTree = "<group>"; };
+		585505232A28EE29005482CF /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		5858FB152A07D17F005FAAA6 /* InTransact.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InTransact.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5858FB182A07D17F005FAAA6 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		5858FB1A2A07D17F005FAAA6 /* InAndOutDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAndOutDocument.swift; sourceTree = "<group>"; };
@@ -279,12 +281,12 @@
 		5858FB6A2A0A302C005FAAA6 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				582758BD2A1B6687004F0B91 /* DocumentExportView.swift */,
 				589E20282A0D33C7008A5BDA /* Controls */,
 				5858FB182A07D17F005FAAA6 /* App.swift */,
 				589E20242A0CFB39008A5BDA /* DocumentMainView.swift */,
 				5855051D2A27B339005482CF /* TransactionSearchResultView.swift */,
 				5843B9D22A12EA530048C0CA /* DocumentSettingsView.swift */,
+				582758BD2A1B6687004F0B91 /* DocumentExportView.swift */,
 				585E82922A118FD300B79AD2 /* TransactionMainView.swift */,
 				5858FB492A07D191005FAAA6 /* TransactionDetailView.swift */,
 				5858FB462A07D191005FAAA6 /* TransactionRowView.swift */,
@@ -302,6 +304,7 @@
 				585505172A273F7E005482CF /* ContactTemplateList.swift */,
 				585505192A2740E2005482CF /* ContactEditView.swift */,
 				5855051B2A278BDC005482CF /* ContactView.swift */,
+				585505232A28EE29005482CF /* WelcomeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				5843B9DB2A13D1F50048C0CA /* DocumentPreviewView.swift in Sources */,
 				589E208F2A10CE6A008A5BDA /* DocumentMainView.swift in Sources */,
 				589E209C2A110B19008A5BDA /* Copyable.swift in Sources */,
+				585505242A28EE29005482CF /* WelcomeView.swift in Sources */,
 				585505202A27BACB005482CF /* VerticalField.swift in Sources */,
 				5843B9DF2A14CC600048C0CA /* Setting.swift in Sources */,
 				5843B9E82A151F610048C0CA /* CurrencyTextField.swift in Sources */,
