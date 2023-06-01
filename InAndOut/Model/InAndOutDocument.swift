@@ -90,9 +90,6 @@ extension InTransactDocument {
 extension InTransactDocument {
   
   func saveContact(_ contact: Contact, undoManager: UndoManager? = nil) {
-    if let undoManager {
-      print("Undo available")
-    }
     // Copy old templates.
     let oldTemplates = content.contactTemplates
     
