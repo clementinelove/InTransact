@@ -78,7 +78,7 @@ class TransactionViewModel: ObservableObject {
                 transactionType: transactionType,
                 transactionID: transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? UUID().uuidString,
                 invoiceID: invoiceID.trimmingCharacters(in: .whitespacesAndNewlines),
-                counterpartyContact: counterparty.isAllEmpty ? nil : counterparty,
+                counterpartyContact: counterparty.compacted,
                 subtransactions: subtransactions,
                 // Remove redundant items
                 fixedCosts: fixedCosts.filter { item in

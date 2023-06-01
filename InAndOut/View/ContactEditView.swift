@@ -129,10 +129,29 @@ struct Contact: Codable, Hashable {
   
   var mainName: String {
     if isCompany {
-      return name
-    } else {
       return companyName
+    } else {
+      return name
     }
+  }
+  
+  var compacted: Contact? {
+    guard !isAllEmpty else { return nil }
+    
+    var contact = self
+    if isCompany {
+      contact.name = ""
+    } else {
+      contact.name = name.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines)
+    }
+    contact.companyName = companyName.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines)
+    contact.email = email.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines)
+    contact.phoneNumber = phoneNumber.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines)
+    contact.account = account.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines)
+    contact.taxID = taxID.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines)
+    contact.address = address.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines)
+    contact.notes = notes.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines)
+    return contact
   }
   
   static func fresh() -> Contact {

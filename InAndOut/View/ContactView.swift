@@ -25,16 +25,19 @@ struct ContactView: View {
       VStack(alignment: .leading, spacing: 10) {
         ZStack(alignment: .trailingLastTextBaseline) {
           VStack(alignment: .leading) {
-            if !contact.isCompany && !contact.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-              Text(verbatim: contact.name)
-                .font(.headline)
-                .multilineTextAlignment(.leading)
+            VStack(alignment: .leading, spacing: 6) {
+              if !contact.isCompany && !contact.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                Text(verbatim: contact.name)
+                  .font(.headline)
+                  .multilineTextAlignment(.leading)
+              }
+              if let companyName = contact.companyName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
+                Text(verbatim: companyName)
+                  .font(contact.isCompany ? .headline: .subheadline)
+                  .multilineTextAlignment(.leading)
+              }
             }
-            if let companyName = contact.companyName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
-              Text(verbatim: companyName)
-                .font(contact.isCompany ? .headline: .body)
-                .multilineTextAlignment(.leading)
-            }
+            
             
             if let phoneNumber = contact.phoneNumber.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
               if let phoneURL = URL(string: "tel:\(phoneNumber.replacingOccurrences(of: " ", with: ""))") {
