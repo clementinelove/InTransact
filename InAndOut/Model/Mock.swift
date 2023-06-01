@@ -22,6 +22,10 @@ extension INTDocument {
     
     INTDocument(settings: Setting(),
                 itemTemplates: [
+                  .mock(),
+                  .mock()
+                ], contactTemplates: [
+                  .mock(),
                   .mock()
                 ],
                 transactions: (0...10).map { _ in .mock() })

@@ -21,7 +21,7 @@
 		5843B9E82A151F610048C0CA /* CurrencyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9E72A151F610048C0CA /* CurrencyTextField.swift */; };
 		5843B9EA2A168AC00048C0CA /* SeparatedValueBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9E92A168AC00048C0CA /* SeparatedValueBuilder.swift */; };
 		5843B9EC2A177B1A0048C0CA /* CurrencyCalculatationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5843B9EB2A177B1A0048C0CA /* CurrencyCalculatationTest.swift */; };
-		585505182A273F7E005482CF /* ContactTemplateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505172A273F7E005482CF /* ContactTemplateList.swift */; };
+		585505182A273F7E005482CF /* SavedContactTemplateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505172A273F7E005482CF /* SavedContactTemplateList.swift */; };
 		5855051A2A2740E2005482CF /* ContactEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505192A2740E2005482CF /* ContactEditView.swift */; };
 		5855051C2A278BDC005482CF /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5855051B2A278BDC005482CF /* ContactView.swift */; };
 		5855051E2A27B339005482CF /* TransactionSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5855051D2A27B339005482CF /* TransactionSearchResultView.swift */; };
@@ -82,7 +82,6 @@
 
 /* Begin PBXFileReference section */
 		582758BD2A1B6687004F0B91 /* DocumentExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentExportView.swift; sourceTree = "<group>"; };
-		582820342A196D310001CCA0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		582820392A1A39740001CCA0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		5828203B2A1A39760001CCA0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		5843B9D22A12EA530048C0CA /* DocumentSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSettingsView.swift; sourceTree = "<group>"; };
@@ -97,7 +96,7 @@
 		5843B9E72A151F610048C0CA /* CurrencyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTextField.swift; sourceTree = "<group>"; };
 		5843B9E92A168AC00048C0CA /* SeparatedValueBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatedValueBuilder.swift; sourceTree = "<group>"; };
 		5843B9EB2A177B1A0048C0CA /* CurrencyCalculatationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCalculatationTest.swift; sourceTree = "<group>"; };
-		585505172A273F7E005482CF /* ContactTemplateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTemplateList.swift; sourceTree = "<group>"; };
+		585505172A273F7E005482CF /* SavedContactTemplateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedContactTemplateList.swift; sourceTree = "<group>"; };
 		585505192A2740E2005482CF /* ContactEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactEditView.swift; sourceTree = "<group>"; };
 		5855051B2A278BDC005482CF /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
 		5855051D2A27B339005482CF /* TransactionSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSearchResultView.swift; sourceTree = "<group>"; };
@@ -174,14 +173,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		582167FA2A192E6900E87CE5 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				582820332A196D310001CCA0 /* Localizable.strings */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		5843B9E02A14CC680048C0CA /* DocumentModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,7 +212,6 @@
 		5858FB172A07D17F005FAAA6 /* InAndOut */ = {
 			isa = PBXGroup;
 			children = (
-				582167FA2A192E6900E87CE5 /* Resources */,
 				5858FB6F2A0B79B4005FAAA6 /* README.md */,
 				5858FB1E2A07D180005FAAA6 /* Assets.xcassets */,
 				5858FB202A07D180005FAAA6 /* Info.plist */,
@@ -301,7 +291,7 @@
 				5843B9D62A13893C0048C0CA /* TransactionFilterBadge.swift */,
 				5843B9D82A138ED10048C0CA /* EmptyListPlaceholder.swift */,
 				5843B9DA2A13D1F50048C0CA /* DocumentPreviewView.swift */,
-				585505172A273F7E005482CF /* ContactTemplateList.swift */,
+				585505172A273F7E005482CF /* SavedContactTemplateList.swift */,
 				585505192A2740E2005482CF /* ContactEditView.swift */,
 				5855051B2A278BDC005482CF /* ContactView.swift */,
 				585505232A28EE29005482CF /* WelcomeView.swift */,
@@ -484,7 +474,7 @@
 				589E20982A10CE6A008A5BDA /* ItemTemplateEditView.swift in Sources */,
 				5858FB672A0A2FCA005FAAA6 /* Formatters.swift in Sources */,
 				5843B9D52A137C050048C0CA /* CurrencyPickerContent.swift in Sources */,
-				585505182A273F7E005482CF /* ContactTemplateList.swift in Sources */,
+				585505182A273F7E005482CF /* SavedContactTemplateList.swift in Sources */,
 				5843B9D72A13893C0048C0CA /* TransactionFilterBadge.swift in Sources */,
 				582758BE2A1B6687004F0B91 /* DocumentExportView.swift in Sources */,
 				5843B9DD2A143E260048C0CA /* CSVSupport.swift in Sources */,
@@ -558,14 +548,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		582820332A196D310001CCA0 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				582820342A196D310001CCA0 /* zh-Hans */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
 		5828203A2A1A39740001CCA0 /* Localizable.stringsdict */ = {
 			isa = PBXVariantGroup;
 			children = (

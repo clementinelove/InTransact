@@ -89,6 +89,58 @@ extension InTransactDocument {
 // MARK: - Undo Actions
 extension InTransactDocument {
   
+  func saveContact(_ contact: Contact, undoManager: UndoManager? = nil) {
+    if let undoManager {
+      print("Undo available")
+    }
+    // Copy old templates.
+    let oldTemplates = content.contactTemplates
+    
+    // Make new template from the given item transaction.
+    let newTemplate = ContactTemplate(contact: contact)
+    content.contactTemplates.updateOrAppend(newTemplate)
+    
+    undoManager?.registerUndo(withTarget: self) { doc in
+      doc.updateContactTemplates(newTemplates: oldTemplates, undoManager: undoManager)
+    }
+  }
+  
+  func updateContactTemplates(newTemplates: OrderedSet<ContactTemplate>, undoManager: UndoManager? = nil) {
+    let oldTemplates = content.contactTemplates // copy old templates
+    content.contactTemplates = newTemplates
+    
+    undoManager?.registerUndo(withTarget: self) { doc in
+      doc.updateContactTemplates(newTemplates: oldTemplates, undoManager: undoManager)
+    }
+  }
+  
+  func saveAsItemTemplate(_ itemTransaction: ItemTransaction, undoManager: UndoManager? = nil) {
+    // Copy old templates.
+    let oldTemplates = content.itemTemplates
+    
+    // Make new template from the given item transaction.
+    let itemName = itemTransaction.itemName
+    let variantName = itemTransaction.variant?.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? ""
+    let newTemplate = ItemTemplate(itemID: itemTransaction.itemID,
+                                   itemName: itemName,
+                                   variantName: variantName,
+                                   priceInfo: itemTransaction.priceInfo)
+    content.itemTemplates.updateOrAppend(newTemplate)
+    
+    undoManager?.registerUndo(withTarget: self) { doc in
+      doc.updateItemTemplates(newTemplates: oldTemplates, undoManager: undoManager)
+    }
+  }
+  
+  func updateItemTemplates(newTemplates: OrderedSet<ItemTemplate>, undoManager: UndoManager? = nil) {
+    let oldTemplates = content.itemTemplates // copy old templates
+    content.itemTemplates = newTemplates
+    
+    undoManager?.registerUndo(withTarget: self) { doc in
+      doc.updateItemTemplates(newTemplates: oldTemplates, undoManager: undoManager)
+    }
+  }
+  
   func updateSettings(_ newSettings: Setting, undoManager: UndoManager? = nil) {
     let oldSettings = content.settings
     content.settings = newSettings

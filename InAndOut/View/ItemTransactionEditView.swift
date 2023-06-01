@@ -162,15 +162,15 @@ struct ItemTransactionEditView: View {
   @EnvironmentObject private var document: InTransactDocument
   @State private var isShowingRepeatedTaxItemNameAlert = false
   private let editMode: FormEditMode
-  private let onCommit: ((ItemTransaction) -> Void)
+  private let onCommit: ((ItemTransaction, _ saveAsTemplate: Bool) -> Void) // Bool = saveAsTemplate
   
-  init(edit item: ItemTransaction, onCommit: @escaping (ItemTransaction) -> Void) {
+  init(edit item: ItemTransaction, onCommit: @escaping (ItemTransaction, _ saveAsTemplate: Bool) -> Void) {
     self.editMode = .edit
     self._viewModel = StateObject(wrappedValue: ItemTransactionViewModel(edit: item))
     self.onCommit = onCommit
   }
   
-  init(onSave: @escaping (ItemTransaction) -> Void) {
+  init(onSave: @escaping (ItemTransaction, _ saveAsTemplate: Bool) -> Void) {
     self.editMode = .new
     self._viewModel = StateObject(wrappedValue: ItemTransactionViewModel(edit: ItemTransaction.fresh()))
     self.onCommit = onSave
@@ -285,7 +285,7 @@ struct ItemTransactionEditView: View {
       Section {
         Toggle("Save Item Info as Template", isOn: $viewModel.saveAsItemTemplate)
       } footer: {
-        Text("Save these information as template when the transaction is saved. This will override exising template for the same item name and variant.", comment: "Section footer text that explains the use when user choose to save item information they entered in a form as a template")
+        Text("Save these information as template when the transaction is saved. This will override exising template for the same item name and variant. The template will only be saved to this document when the current transaction saves.", comment: "Section footer text that explains the use when user choose to save item information they entered in a form as a template")
       }
       
     }
@@ -558,11 +558,8 @@ struct ItemTransactionEditView: View {
       } else {
         
         let resultItemTransaction = viewModel.updatedItemTransaction
-        if viewModel.saveAsItemTemplate {
-          document.content.saveAsTemplate(resultItemTransaction)
-        }
         
-        onCommit(resultItemTransaction)
+        onCommit(resultItemTransaction, viewModel.saveAsItemTemplate)
         dismiss()
       }
     }
@@ -576,7 +573,7 @@ struct ItemTransactionEditView: View {
       } else {
         // onCommit(_:) called because there is a bug that causes animation stutters when cancelled
         if editMode == .edit {
-          onCommit(viewModel.updatedItemTransaction)
+          onCommit(viewModel.updatedItemTransaction, false)
         }
         dismiss()
       }
@@ -587,12 +584,12 @@ struct ItemTransactionEditView: View {
 struct ItemTransactionEditView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationStack {
-      ItemTransactionEditView(edit: .fresh()) { _ in }
+      ItemTransactionEditView(edit: .fresh()) { _, _ in }
         .environmentObject(InTransactDocument.mock())
     }
     .previewDisplayName("Edit")
     NavigationStack {
-      ItemTransactionEditView { _ in
+      ItemTransactionEditView { _, _ in
         // save ...
       }
       .environmentObject(InTransactDocument.mock())

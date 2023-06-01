@@ -23,6 +23,7 @@ struct ContactView: View {
         .alignmentGuide(.listRowSeparatorLeading) { $0[.leading] }
     } else {
       VStack(alignment: .leading, spacing: 10) {
+        // MARK: 'Non-Detail' Container
         ZStack(alignment: .trailingLastTextBaseline) {
           VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: 6) {
@@ -37,7 +38,6 @@ struct ContactView: View {
                   .multilineTextAlignment(.leading)
               }
             }
-            
             
             if let phoneNumber = contact.phoneNumber.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
               if let phoneURL = URL(string: "tel:\(phoneNumber.replacingOccurrences(of: " ", with: ""))") {

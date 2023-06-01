@@ -100,6 +100,7 @@ struct TransactionEditView: View {
   }
   
   @Environment(\.dismiss) private var dismiss
+  @Environment(\.undoManager) private var undoManager
   
   @EnvironmentObject private var document: InTransactDocument
   @StateObject private var viewModel: TransactionViewModel
@@ -261,15 +262,6 @@ struct TransactionEditView: View {
       NavigationStack {
         ContactEditView(contact: $viewModel.counterparty)
           .navigationTitle("Edit Contact")
-          .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-              Button("Done") {
-                withAnimation {
-                  isEditingContact = false
-                }
-              }
-            }
-          }
 #if os(iOS)
           .toolbarRole(.navigationStack)
 #endif
@@ -284,9 +276,12 @@ struct TransactionEditView: View {
       }
     }) { item in
       NavigationStack {
-        ItemTransactionEditView(edit: item.wrappedValue) { resultItemTransaction in
+        ItemTransactionEditView(edit: item.wrappedValue) { resultItemTransaction, saveAsTemplate in
           item.wrappedValue = resultItemTransaction
-          // Don't save here
+          // Doesn't work
+          if saveAsTemplate {
+            document.saveAsItemTemplate(resultItemTransaction, undoManager: undoManager)
+          }
         }
           #if os(iOS)
         .toolbarRole(.navigationStack)
@@ -302,8 +297,11 @@ struct TransactionEditView: View {
       }
     }) {
       NavigationStack {
-        ItemTransactionEditView { subtransaction in
-          viewModel.append(subtransaction: subtransaction)
+        ItemTransactionEditView { itemTransaction, saveAsTemplate in
+          viewModel.append(subtransaction: itemTransaction)
+          if saveAsTemplate {
+            document.saveAsItemTemplate(itemTransaction, undoManager: undoManager)
+          }
         }
         #if os(iOS)
         .toolbarRole(.navigationStack)

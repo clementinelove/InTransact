@@ -171,7 +171,6 @@ struct ItemTemplateDetailView: View {
       } footer: {
         Text("When the price type used in the template is not an after tax unit price, the price per unit (after tax) is calculated using the after tax item total divides the quantity.")
           .fontWeight(.medium)
-          
       }
       .listSectionSeparator(.hidden)
     }
@@ -279,7 +278,7 @@ struct ItemTemplateListView_Previews: PreviewProvider {
       
       ItemTemplateDetailView(itemTemplate: .mock())
         .environmentObject(InTransactDocument.mock())
-      ItemTransactionEditView(edit: .mock(), onCommit: { _ in })
+      ItemTransactionEditView(edit: .mock(), onCommit: { _, _ in })
         .environmentObject(InTransactDocument.mock())
     }
 }

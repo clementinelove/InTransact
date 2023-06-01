@@ -42,8 +42,6 @@ struct WelcomeView: View {
                 Text("Easily backup, restore, and share your transactions data.")
               }
 
-              
-
             }
             
             VStack(alignment: .leading) {
@@ -61,7 +59,7 @@ struct WelcomeView: View {
               VStack(alignment: .leading) {
                 Text("Export to CSV")
                   .font(.headline)
-                Text("Export the data to spreadsheet format so you can continue.")
+                Text("Export the data to tables so you can continue your work using spreadsheet applications.")
               }
             }
           }

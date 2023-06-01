@@ -35,9 +35,6 @@ struct InAndOutApp: App {
         }) {
           WelcomeView()
         }
-      
-      // TODO: add first time feature introduction popup
     }
-    
   }
 }

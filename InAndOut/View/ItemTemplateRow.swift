@@ -12,8 +12,8 @@ struct ItemTemplateRow: View {
   let itemTemplate: ItemTemplate
   
   static let itemIDPlaceholder = String(localized: "No Item ID", comment: "Item ID Placeholder in template row")
-  static let itemNamePlaceholder = String(localized: "(Unnamed Item)", comment: "Item Name Placeholder in template row")
-  static let variantNamePlaceholder = String(localized: "(Unnamed Variant)", comment: "Item Name Placeholder in template row")
+  static let itemNamePlaceholder = String(localized: "Unnamed Item", comment: "Item Name Placeholder in template row")
+  static let variantNamePlaceholder = String(localized: "Unnamed Variant", comment: "Item Name Placeholder in template row")
   
   var body: some View {
     VStack(alignment: .leading, spacing: 4) {

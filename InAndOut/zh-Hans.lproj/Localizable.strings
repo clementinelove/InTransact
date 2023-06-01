@@ -1,9 +1,3 @@
-/* Item Name Placeholder in template row */
-"(Unnamed Item)" = "（未命名产品）";
-
-/* Item Name Placeholder in template row */
-"(Unnamed Variant)" = "（未命名变体）";
-
 /* PriceTypeLabel[space]CurrencyCode */
 "%@ (%@)" = "%@（%@）";
 
@@ -18,6 +12,9 @@
 
 /* No comment provided by engineer. */
 "%@, %lld Decimal Places" = "%@，精确到小数后%lld位";
+
+/* No comment provided by engineer. */
+"© 2023 Yuhao Zhang" = "© 2023 张羽皓";
 
 /* Explains the meaning of regular tax and compound tax */
 "A regular tax is calculated based on its price before tax; a compound tax is calculated after all regular tax were applied." = "常规税基于税前价格计算；复率税基于应用了常规税的价格计算。";
@@ -58,6 +55,9 @@
 /* Label of after tax total text field */
 "After Tax Total (%@)" = "税后总额（%@）";
 
+/* Button to apply a contact template */
+"Apply" = "应用";
+
 /* No comment provided by engineer. */
 "Apply This Template" = "应用该模版";
 
@@ -84,6 +84,9 @@
 
 /* No comment provided by engineer. */
 "Contact Type" = "类型";
+
+/* Button to dismiss the welcome landing page */
+"Continue" = "继续";
 
 /* No comment provided by engineer. */
 "Copy Info from Item Template" = "从产品模版复制信息";
@@ -113,10 +116,16 @@
 "Delete Transaction \"%@\"?" = "确定删除交易“%@”吗？";
 
 /* No comment provided by engineer. */
+"Designed with Heart and Soul" = "倾心制作";
+
+/* No comment provided by engineer. */
 "Discard Changes" = "放弃更改";
 
 /* No comment provided by engineer. */
 "Do you wish to discard all changes?" = "确定放弃所有更改吗？";
+
+/* No comment provided by engineer. */
+"Document Based" = "文档为中心";
 
 /* No comment provided by engineer. */
 "Document Currency" = "文档货币单位";
@@ -135,6 +144,9 @@
 
 /* Button title that sort transactions by earliest date first */
 "Earliest First" = "最早的排最前";
+
+/* No comment provided by engineer. */
+"Easily backup, restore, and share your transactions data." = "轻松备份或分享你的交易数据。";
 
 /* No comment provided by engineer. */
 "Edit" = "编辑";
@@ -160,6 +172,12 @@
 /* Toggle title that switches explicit after tax total input */
 "Explicit After Tax Total" = "覆写税后总额";
 
+/* No comment provided by engineer. */
+"Export the data to tables so you can continue your work using spreadsheet applications." = "将数据导出为表格，在电子表格应用中继续您的工作。";
+
+/* No comment provided by engineer. */
+"Export to CSV" = "导出到CSV";
+
 /* Button title that exports the document in the csv format */
 "Export To CSV" = "导出到CSV";
 
@@ -177,6 +195,9 @@
 
 /* No comment provided by engineer. */
 "Hello, World!" = "你好，世界！";
+
+/* No comment provided by engineer. */
+"Hi!" = "你好！";
 
 /* Transaction type 'items in' shorthand */
 "In" = "进货";
@@ -308,6 +329,12 @@
 "Random UUID" = "随机UUID";
 
 /* No comment provided by engineer. */
+"Record Anywhere" = "随时记录";
+
+/* No comment provided by engineer. */
+"Record transactions data and track current stock level of different items." = "记录交易数据，追踪不同产品的库存情况。";
+
+/* No comment provided by engineer. */
 "Regular Tax" = "常规税";
 
 /* No comment provided by engineer. */
@@ -326,16 +353,22 @@
 "Roundings" = "舍入";
 
 /* No comment provided by engineer. */
+"Save Contact For Future Use" = "保存联系人";
+
+/* No comment provided by engineer. */
 "Save Item Info as Template" = "将产品信息保存为模版";
 
 /* Section footer text that explains the use when user choose to save item information they entered in a form as a template */
-"Save these information as template when the transaction is saved. This will override exising template for the same item name and variant." = "在保存交易时将这些信息保存为模版。这将覆盖有同样产品名和变体名的现有模版。";
+"Save these information as template when the transaction is saved. This will override exising template for the same item name and variant. The template will only be saved to this document when the current transaction saves." = "在保存交易时将这些信息保存为模版。这将覆盖有同样产品名和变体名的现有模版。只有在当前交易保存时才会将该模版写入该文档。";
 
 /* No comment provided by engineer. */
 "Saved Contacts" = "已保存的联系人";
 
 /* No comment provided by engineer. */
 "Search Location..." = "搜索位置……";
+
+/* Button to show the list of saved contacts */
+"Select from Saved Contacts" = "从已保存的联系人中选择";
 
 /* Button of Document Settings */
 "Settings" = "设置";
@@ -404,6 +437,9 @@
 "This is nice" = "这很棒";
 
 /* No comment provided by engineer. */
+"This will override existing contact template with the same name. The new contact will only be saved to this document when the current transaction saves." = "这会覆盖已存在的同名联系人。新的联系人只会在当前交易保存时写入该文档。";
+
+/* No comment provided by engineer. */
 "Title" = "标题";
 
 /* No comment provided by engineer. */
@@ -414,6 +450,9 @@
 
 /* No comment provided by engineer. */
 "Total Before Tax" = "税前总额";
+
+/* No comment provided by engineer. */
+"Track Transactions/Item Counts/Keeper Names/Counterparties/Prices and Taxes" = "追踪交易/产品数量/记录人员/交易对象/价格与税务";
 
 /* Navigation title of a transaction */
 "Transaction" = "交易";
@@ -466,6 +505,12 @@
 /* Placeholder for empty item name */
 "Unknown Item Name" = "未知产品名称";
 
+/* Item Name Placeholder in template row */
+"Unnamed Item" = "未命名产品";
+
+/* Item Name Placeholder in template row */
+"Unnamed Variant" = "未命名变体";
+
 /* File name without extension for exported file when the document doesn't have a title */
 "Untitled" = "未命名";
 
@@ -476,10 +521,10 @@
 "Update Settings" = "更新设置";
 
 /* No comment provided by engineer. */
-"Use" = "使用";
+"Variant Name" = "变体名称";
 
 /* No comment provided by engineer. */
-"Variant Name" = "变体名称";
+"Welcome to InTransact" = "欢迎使用进销记";
 
 /* No comment provided by engineer. */
 "When the price type used in the template is not an after tax unit price, the price per unit (after tax) is calculated using the after tax item total divides the quantity." = "当模版所用的价格类型不是税后单价时，产品条目的税后单价是将条目税后总额除以数量计算得出。";

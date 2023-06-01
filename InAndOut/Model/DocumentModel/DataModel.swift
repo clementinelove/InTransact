@@ -75,18 +75,6 @@ struct INTDocument: Identifiable, Codable {
   var itemTemplates: OrderedSet<ItemTemplate> = []
   var contactTemplates: OrderedSet<ContactTemplate> = []
   var transactions: [Transaction] = []
-  
-  mutating func saveAsTemplate(_ itemTransaction: ItemTransaction) {
-    // FIXME: currently, this will only be saved along with the saved transaction. If transaction is not saved, then this won't be saved
-    let itemName = itemTransaction.itemName
-    let variantName = itemTransaction.variant?.emptyStringIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? ""
-    let newTemplate = ItemTemplate(itemID: itemTransaction.itemID,
-                                   itemName: itemName,
-                                   variantName: variantName,
-                                   priceInfo: itemTransaction.priceInfo)
-    
-    itemTemplates.updateOrAppend(newTemplate)
-  }
 }
 
 extension UTType {

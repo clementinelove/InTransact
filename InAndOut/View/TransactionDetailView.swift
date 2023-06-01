@@ -101,7 +101,7 @@ struct TransactionDetailView: View {
                 if counterparty.isCompany {
                   Image(systemName: "building.2.crop.circle")
                 } else {
-                  Image(systemName: "person.circle")
+                  Image(systemName: "person.crop.circle")
                 }
               }
             }

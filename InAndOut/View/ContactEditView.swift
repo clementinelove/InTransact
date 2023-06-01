@@ -10,17 +10,34 @@ import NTPlatformKit
 
 struct ContactEditView: View {
   
+  @Environment(\.undoManager) private var undoManager
   @Environment(\.dismiss) private var dismiss
   @EnvironmentObject private var document: InTransactDocument
   @Binding var contact: Contact
   @State private var magicHappens: Bool = false
+  @State private var saveContactForFutureUse: Bool = false
+  @State private var isShowingSavedContacts = false
+  
   
   var body: some View {
     Form {
-      // TODO: Future - copy from templates
-//      Section {
-//
-//      }
+      
+      // MARK: Copy from templates
+      if document.content.contactTemplates.count > 0 {
+        Section {
+          Button {
+            isShowingSavedContacts = true
+          } label: {
+            Label {
+              Text("Select from Saved Contacts", comment: "Button to show the list of saved contacts")
+            } icon: {
+              Image(systemName: "plus.square.on.square")
+            }
+          }
+        }
+      }
+      
+      
       Section {
         
         Picker(selection: $contact.isCompany.animated) {
@@ -69,17 +86,47 @@ struct ContactEditView: View {
           .frame(minHeight: 120, alignment: .topLeading)
       }
       
-      // TODO: future - save as template
-//      Section {
-//        Toggle("Save Contact For Future Use", isOn: .constant(true))
-//      } footer: {
-//        Text("This will override existing contact template with the same name.")
-//      }
+      // MARK: Save as template
+      Section {
+        Toggle("Save Contact For Future Use", isOn: $saveContactForFutureUse)
+      } footer: {
+        Text("This will override existing contact template with the same name. The new contact will only be saved to this document when the current transaction saves.")
+      }
     }
     .onAppear {
       // This is so stupid: SwiftUI won't behave properly when nothing happens in a view, it just needs something to happen to the binding to be able to animate properly, really annoying. If you remove this line, the animation triggered by 'Done' button would be stutter again
       contact = contact
     }
+    .toolbar {
+      ToolbarItem(placement: .confirmationAction) {
+        Button("Done") {
+          if saveContactForFutureUse {
+            if let compactedContact = contact.compacted {
+              document.saveContact(compactedContact, undoManager: undoManager)
+            }
+          }
+          dismiss()
+        }
+      }
+    }
+    .sheet(isPresented: $isShowingSavedContacts) {
+      NavigationStack {
+        SavedContactTemplateList { selectedContact in
+          contact = selectedContact
+        }
+        #if os(iOS)
+        .toolbarRole(.navigationStack)
+        #endif
+        .toolbar {
+          ToolbarItem(placement: .primaryAction) {
+            Button("Done") {
+              isShowingSavedContacts = false
+            }
+          }
+        }
+      }
+    }
+    
 #if os(iOS)
     .navigationBarTitleDisplayMode(.inline)
 #endif
