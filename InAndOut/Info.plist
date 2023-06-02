@@ -5,20 +5,18 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeIconSystemGenerated</key>
-			<integer>1</integer>
 			<key>CFBundleTypeName</key>
 			<string>InTransact Document</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
-			<string>Default</string>
+			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.intransact.document</string>
 			</array>
 			<key>NSUbiquitousDocumentUserActivityType</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER).example-document</string>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).int</string>
 		</dict>
 	</array>
 	<key>UTExportedTypeDeclarations</key>
@@ -31,15 +29,6 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>InTransact Document</string>
-			<key>UTTypeIcons</key>
-			<dict>
-				<key>UTTypeIconBackgroundName</key>
-				<string>int-fill</string>
-				<key>UTTypeIconBadgeName</key>
-				<string>int-image</string>
-				<key>UTTypeIconText</key>
-				<string>INT</string>
-			</dict>
 			<key>UTTypeIdentifier</key>
 			<string>com.intransact.document</string>
 			<key>UTTypeTagSpecification</key>
@@ -48,6 +37,8 @@
 				<array>
 					<string>int</string>
 				</array>
+				<key>public.mime-type</key>
+				<array/>
 			</dict>
 		</dict>
 	</array>

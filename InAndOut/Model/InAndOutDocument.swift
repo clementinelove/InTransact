@@ -22,7 +22,6 @@ final class InTransactDocument: ReferenceFileDocument {
   @Environment(\.editMode) var editMode
 #endif // os(iOS)
   
-  
   static var readableContentTypes: [UTType] { [.inTransactDocument] }
   
   func snapshot(contentType: UTType) throws -> INTDocument {

@@ -78,6 +78,7 @@ struct INTDocument: Identifiable, Codable {
 }
 
 extension UTType {
+  
   static let inTransactDocument: UTType = UTType(exportedAs: "com.intransact.document")
 }
 
