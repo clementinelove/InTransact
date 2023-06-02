@@ -64,7 +64,7 @@ class TransactionViewModel: ObservableObject {
   var hasChanges: Bool {
     return self.transactionType != transaction.transactionType ||
     self.transactionID.trimmingCharacters(in: .whitespacesAndNewlines) != transaction.transactionID ||
-    self.counterparty != transaction.counterpartyContact ||
+    self.counterparty != transaction.counterpartyContact?.compacted ||
     self.invoiceID.trimmingCharacters(in: .whitespacesAndNewlines) != transaction.invoiceID ||
     self.date != transaction.date ||
     self.keeperName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) != transaction.keeperName?.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ||

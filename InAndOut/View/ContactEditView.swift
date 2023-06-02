@@ -18,7 +18,6 @@ struct ContactEditView: View {
   @State private var saveContactForFutureUse: Bool = false
   @State private var isShowingSavedContacts = false
   
-  
   var body: some View {
     Form {
       
