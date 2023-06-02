@@ -28,7 +28,7 @@ final class InTransactDocument: ReferenceFileDocument {
     content // Make a copy
   }
   
-  init(mock: Bool = false) {
+  init(mock: Bool = true) {
     if mock {
       self.content = .mock()
     } else {
@@ -53,6 +53,12 @@ final class InTransactDocument: ReferenceFileDocument {
     return fileWrapper
   }
   
+}
+
+extension InTransactDocument {
+  static func mock() -> InTransactDocument {
+    InTransactDocument(mock: true)
+  }
 }
 
 // MARK: - Shortcuts

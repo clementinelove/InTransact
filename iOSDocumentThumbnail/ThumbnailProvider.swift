@@ -5,14 +5,43 @@
 //  Created by Yuhao Zhang on 2023-06-02.
 //
 
-import UIKit
+import SwiftUI
 import QuickLookThumbnailing
 
 class ThumbnailProvider: QLThumbnailProvider {
     
-    override func provideThumbnail(for request: QLFileThumbnailRequest, _ handler: @escaping (QLThumbnailReply?, Error?) -> Void) {
+  @MainActor override func provideThumbnail(for request: QLFileThumbnailRequest, _ handler: @escaping (QLThumbnailReply?, Error?) -> Void) {
       
-      handler(QLThumbnailReply(imageFileURL: Bundle.main.url(forResource: "FileThumbnail", withExtension: "png")!), nil)
+      do {
+        let fileData = try Data(contentsOf: request.fileURL)
+        let document = try JSONDecoder().decode(INTDocument.self, from: fileData)
+        
+        let aspectWidth = request.maximumSize.height / DocumentThumbnailView.aspectRatio
+        let width = min(request.maximumSize.width, aspectWidth)
+        let height = request.maximumSize.height
+        let contextSize = CGSize(width: width, height: request.maximumSize.height)
+        let expectAspectRatio: Double = height / width
+        handler(QLThumbnailReply(contextSize: contextSize, currentContextDrawing: { () -> Bool in
+          
+          // Draw the thumbnail here.
+          if let image = ImageRenderer(content: DocumentThumbnailView(document: document,
+                                                                      aspectRatio: expectAspectRatio))
+            .uiImage {
+            image.draw(in: CGRect(x: 0, y: 0,
+                                  width: contextSize.width,
+                                  height: contextSize.height))
+            // Return true if the thumbnail was successfully drawn inside this block.
+            return true
+          } else {
+            return false
+          }
+        }), nil)
+      } catch {
+//        handler(QLThumbnailReply(imageFileURL: Bundle.main.url(forResource: "FileThumbnail", withExtension: "png")!), nil)
+        handler(nil, error)
+      }
+//    handler(QLThumbnailReply(imageFileURL: Bundle.main.url(forResource: "FileThumbnail", withExtension: "png")!), nil)
+      
         // There are three ways to provide a thumbnail through a QLThumbnailReply. Only one of them should be used.
         
         // First way: Draw the thumbnail into the current context, set up with UIKit's coordinate system.

@@ -10,12 +10,6 @@ import DequeModule
 
 // TODO: Deque Module is everywhere and it's not necessary
 
-extension InTransactDocument {
-  static func mock() -> InTransactDocument {
-    InTransactDocument(mock: true)
-  }
-}
-
 extension INTDocument {
   static func mock() -> Self {
 //    INTDocument()
