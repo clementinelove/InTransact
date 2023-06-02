@@ -65,6 +65,7 @@
 		588155F32A2A35AB00E767D6 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 588155F22A2A35AB00E767D6 /* OrderedCollections */; };
 		588155F42A2A35BB00E767D6 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505212A27C3E5005482CF /* MockData.swift */; };
 		588155F72A2A3E2F00E767D6 /* DocumentThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588155DD2A2A2BF600E767D6 /* DocumentThumbnailView.swift */; };
+		588156012A2A7FB900E767D6 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 588156002A2A7FB900E767D6 /* ZIPFoundation */; };
 		589E203A2A0EC9D5008A5BDA /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20392A0EC9D5008A5BDA /* DocumentViewModel.swift */; };
 		589E208F2A10CE6A008A5BDA /* DocumentMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20242A0CFB39008A5BDA /* DocumentMainView.swift */; };
 		589E20902A10CE6A008A5BDA /* ItemTemplateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20372A0E6E7D008A5BDA /* ItemTemplateListView.swift */; };
@@ -206,6 +207,7 @@
 				5858FB5C2A07E8DE005FAAA6 /* NTPlatformKit in Frameworks */,
 				5858FB652A09A25D005FAAA6 /* OrderedCollections in Frameworks */,
 				5858FB632A09A25D005FAAA6 /* DequeModule in Frameworks */,
+				588156012A2A7FB900E767D6 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +433,7 @@
 				5858FB602A09A25D005FAAA6 /* Collections */,
 				5858FB622A09A25D005FAAA6 /* DequeModule */,
 				5858FB642A09A25D005FAAA6 /* OrderedCollections */,
+				588156002A2A7FB900E767D6 /* ZIPFoundation */,
 			);
 			productName = InAndOut;
 			productReference = 5858FB152A07D17F005FAAA6 /* InTransact.app */;
@@ -531,6 +534,8 @@
 			mainGroup = 5858FB0C2A07D17F005FAAA6;
 			packageReferences = (
 				5858FB5F2A09A25D005FAAA6 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				588155F82A2A5EA500E767D6 /* XCRemoteSwiftPackageReference "ZipArchive" */,
+				588155FB2A2A79AE00E767D6 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			productRefGroup = 5858FB162A07D17F005FAAA6 /* Products */;
 			projectDirPath = "";
@@ -1128,6 +1133,22 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		588155F82A2A5EA500E767D6 /* XCRemoteSwiftPackageReference "ZipArchive" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ZipArchive/ZipArchive.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		588155FB2A2A79AE00E767D6 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation#credits";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.16;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1158,6 +1179,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5858FB5F2A09A25D005FAAA6 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
+		};
+		588156002A2A7FB900E767D6 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 588155FB2A2A79AE00E767D6 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

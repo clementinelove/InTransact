@@ -135,6 +135,11 @@ struct DocumentExportView: View {
       .navigationBarTitleDisplayMode(.inline)
 #endif
       .navigationTitle("Export To CSV")
+      .onDisappear {
+        Task(priority: .userInitiated) {
+          try exporter.document.content.clearExportDirectory()
+        }
+      }
     }
 }
 

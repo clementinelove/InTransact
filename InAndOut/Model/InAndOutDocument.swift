@@ -10,6 +10,7 @@ import UniformTypeIdentifiers
 import DequeModule
 import OrderedCollections
 import OSLog
+import ZIPFoundation
 
 fileprivate let logger = Logger(subsystem: Global.subsystem, category: "InTransactDocument")
 
@@ -36,23 +37,59 @@ final class InTransactDocument: ReferenceFileDocument {
     }
   }
   
+  static let transactionsFileName = "transactions.json"
+  static let extractDirectory = FileManager.default.temporaryDirectory
+  static let transactionsFileURL = extractDirectory.appending(path: transactionsFileName, directoryHint: .notDirectory)
+  
   init(configuration: ReadConfiguration) throws {
-    guard let data = configuration.file.regularFileContents
-    else {
+    logger.debug("Start Reading File")
+    guard let data = configuration.file.regularFileContents else {
+      logger.debug("File is corrupted")
       throw CocoaError(.fileReadCorruptFile)
     }
-    // TODO: decode
-    self.content = try JSONDecoder().decode(INTDocument.self, from: data)
-//    self.content = INTDocument.mock() // for testing
+    guard let archive = Archive(data: data, accessMode: .read, preferredEncoding: .utf8) else {
+      logger.debug("Fail to read archive from data")
+      throw Archive.ArchiveError.unreadableArchive
+    }
+    guard let entry = archive[Self.transactionsFileName] else {
+      logger.debug("Unable to find entry \(Self.transactionsFileName) from archive")
+      throw Archive.ArchiveError.invalidEntryPath
+    }
+    
+    do {
+      try archive.extract(entry, to: Self.transactionsFileURL)
+    } catch {
+      logger.debug("Unable to extract \(Self.transactionsFileName) from archive to \(Self.extractDirectory): \(error.localizedDescription)")
+      throw Archive.ArchiveError.unreadableArchive
+    }
+    self.content = try JSONDecoder().decode(INTDocument.self, from: Data(contentsOf: Self.transactionsFileURL))
+    
+    // clean-up the extract directory
+    try FileManager.default.removeItem(at: Self.transactionsFileURL)
+    logger.debug("Read Successful")
   }
   
   func fileWrapper(snapshot: INTDocument, configuration: WriteConfiguration) throws -> FileWrapper {
     logger.debug("Save called")
     let data = try JSONEncoder().encode(snapshot)
-    let fileWrapper = FileWrapper(regularFileWithContents: data)
+    try data.write(to: Self.transactionsFileURL)
+    guard let archive = Archive(accessMode: .create) else {
+      logger.error("Unable to create new archive during save")
+      throw Archive.ArchiveError.unwritableArchive
+    }
+    try archive.addEntry(with: Self.transactionsFileName, fileURL: Self.transactionsFileURL)
+    guard let archiveData = archive.data else {
+      logger.debug("Unable to create data from archive")
+      throw Archive.ArchiveError.unwritableArchive
+    }
+    let fileWrapper = FileWrapper(regularFileWithContents: archiveData)
+    // clean-up the extract directory
+    try FileManager.default.removeItem(at: Self.transactionsFileURL)
+    
+    logger.debug("Successfully Generate New Archive")
     return fileWrapper
-  }
   
+  }
 }
 
 extension InTransactDocument {

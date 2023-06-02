@@ -125,8 +125,14 @@ enum INTExportColumn: Identifiable {
   })
 }
 
+import os.log
+
+fileprivate let logger = Logger(subsystem: Global.subsystem, category: "CSVExporter")
+
 extension INTDocument {
   
+  static let documentExportPath: URL = FileManager.default.temporaryDirectory.appending(path: "exports", directoryHint: .isDirectory)
+  static func exportFilePath(fileName: String) -> URL { documentExportPath.appending(path: fileName, directoryHint: .notDirectory) }
   enum Granularity {
     case transaction
     case item
@@ -162,12 +168,21 @@ extension INTDocument {
         svDocumentString.append(buildRow(rowCellValues, separator: seperator, recordSeperator: recordSeparator))
       }
     }
-    var temporaryFilePath = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
-    temporaryFilePath.append(path: fileName)
     
+    try FileManager.default.createDirectory(at: Self.documentExportPath, withIntermediateDirectories: false)
+    logger.debug("Export Directory Created")
+    let exportFilePath = Self.exportFilePath(fileName: fileName)
     // TODO: create file if file doesn't exist?
-    try svDocumentString.write(to: temporaryFilePath, atomically: true, encoding: .utf16)
-    return temporaryFilePath
+    
+    try svDocumentString.write(to: exportFilePath, atomically: true, encoding: .utf16)
+    logger.debug("New Export Write To \(exportFilePath.debugDescription)")
+    return exportFilePath
+  }
+  
+  func clearExportDirectory() throws {
+    logger.debug("Start Cleaning Export Directory")
+    try FileManager.default.removeItem(at: Self.documentExportPath)
+    logger.debug("Finish Cleaning Export Directory")
   }
 }
 
