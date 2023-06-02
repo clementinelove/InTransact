@@ -10,7 +10,7 @@ import NTPlatformKit
 
 struct ContactEditView: View {
   
-  @Environment(\.undoManager) private var undoManager
+  let undoManager: UndoManager?
   @Environment(\.dismiss) private var dismiss
   @EnvironmentObject private var document: InTransactDocument
   @Binding var contact: Contact
@@ -90,7 +90,7 @@ struct ContactEditView: View {
       Section {
         Toggle("Save Contact For Future Use", isOn: $saveContactForFutureUse)
       } footer: {
-        Text("This will override existing contact template with the same name. The new contact will only be saved to this document when the current transaction saves.")
+        Text("This will override existing contact template with the same name.")
       }
     }
     .onAppear {
@@ -234,7 +234,7 @@ struct Contact: Codable, Hashable {
 struct ContactEditView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationStack {
-      ContactEditView(contact: .constant(.fresh()))
+      ContactEditView(undoManager: UndoManager(), contact: .constant(.fresh()))
         .environmentObject(InTransactDocument.mock())
     }
   }

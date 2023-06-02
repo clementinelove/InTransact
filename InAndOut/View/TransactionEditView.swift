@@ -100,7 +100,6 @@ struct TransactionEditView: View {
   }
   
   @Environment(\.dismiss) private var dismiss
-  @Environment(\.undoManager) private var undoManager
   
   @EnvironmentObject private var document: InTransactDocument
   @StateObject private var viewModel: TransactionViewModel
@@ -109,6 +108,8 @@ struct TransactionEditView: View {
   @State private var attemptToDiscardChanges: Bool = false
   @State private var isEditingContact: Bool = false
   @FocusState private var focusField: Field?
+  /** Only the undoManager in the main view can be used for saving purposes */
+  private let undoManager: UndoManager?
   private let dismissAfterCompletion: Bool
   private let editMode: FormEditMode
   private var onCommit: (Transaction) -> Void
@@ -116,7 +117,8 @@ struct TransactionEditView: View {
   
   /// - parameters:
   ///   - dismissAfterCompletion: Dismiss the edit view after editing completes. This is useful user do not want to dismiss the transaction inspector when finishing editing.
-  init(edit transaction: Transaction? = nil, dismissAfterCompletion: Bool = false, onCommit: @escaping (Transaction) -> Void, onCompletion: (() -> Void)? = nil) {
+  init(undoManager: UndoManager? = nil, edit transaction: Transaction? = nil, dismissAfterCompletion: Bool = false, onCommit: @escaping (Transaction) -> Void, onCompletion: (() -> Void)? = nil) {
+    self.undoManager = undoManager
     self._viewModel = StateObject(wrappedValue: TransactionViewModel(edit: transaction))
     self.editMode = (transaction == nil) ? .new : .edit
     self.dismissAfterCompletion = (editMode == .new)
@@ -260,7 +262,7 @@ struct TransactionEditView: View {
       }
     } content: {
       NavigationStack {
-        ContactEditView(contact: $viewModel.counterparty)
+        ContactEditView(undoManager: undoManager, contact: $viewModel.counterparty)
           .navigationTitle("Edit Contact")
 #if os(iOS)
           .toolbarRole(.navigationStack)

@@ -285,7 +285,7 @@ struct ItemTransactionEditView: View {
       Section {
         Toggle("Save Item Info as Template", isOn: $viewModel.saveAsItemTemplate)
       } footer: {
-        Text("Save these information as template when the transaction is saved. This will override exising template for the same item name and variant. The template will only be saved to this document when the current transaction saves.", comment: "Section footer text that explains the use when user choose to save item information they entered in a form as a template")
+        Text("Save these information as template when the transaction is saved. This will override exising template for the same item name and variant.", comment: "Section footer text that explains the use when user choose to save item information they entered in a form as a template")
       }
       
     }

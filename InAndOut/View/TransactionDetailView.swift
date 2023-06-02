@@ -148,7 +148,7 @@ struct TransactionDetailView: View {
       }
     } content: {
       NavigationStack {
-        TransactionEditView(edit: transaction) { editedTransaction in
+        TransactionEditView(undoManager: undoManager, edit: transaction) { editedTransaction in
           document.replaceTransactionContent(with: editedTransaction, undoManager: undoManager)
         }
         #if os(iOS)

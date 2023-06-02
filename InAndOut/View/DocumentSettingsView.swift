@@ -12,7 +12,6 @@ import NTPlatformKit
 struct DocumentSettingsView: View {
   
   @EnvironmentObject private var document: InTransactDocument
-  @Environment(\.undoManager) private var undoManager
   @Environment(\.dismiss) private var dismiss
   @State private var isExpandingTaxItemRoundingSettings = false
   @State private var isExpandingItemSubtotalRoundingSettings = false

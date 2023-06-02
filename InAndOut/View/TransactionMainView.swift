@@ -10,7 +10,6 @@ import SwiftUI
 // This view is mainly for experiment and not in use in the moment.
 struct TransactionMainView: View {
   @EnvironmentObject private var document: InTransactDocument
-  @Environment(\.undoManager) var undoManager
   @State private var isAddNewTransactionPresented = false
   var body: some View {
     VStack(spacing: 0) {

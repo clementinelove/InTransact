@@ -213,11 +213,12 @@ struct DocumentMainView: View {
       }
     } content: {
       NavigationStack {
-        TransactionEditView { transaction in
+        TransactionEditView(undoManager: undoManager) { transaction in
           withAnimation {
             document.addNewTransaction(transaction, undoManager: undoManager)
           }
         }
+        
         #if os(iOS)
 .toolbarRole(.navigationStack)
 #endif
@@ -496,7 +497,7 @@ struct DocumentMainView: View {
             }
           } else {
             // During editing, transactionIndex can't be changed. otherwise it will cause serious problem
-            TransactionEditView(edit: document.content.transactions[index]) { transaction in
+            TransactionEditView(undoManager: undoManager, edit: document.content.transactions[index]) { transaction in
               print(transaction.invoiceID)
               document.replaceTransactionContent(with: transaction, undoManager: undoManager)
             } onCompletion: {

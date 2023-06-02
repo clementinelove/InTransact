@@ -359,7 +359,7 @@
 "Save Item Info as Template" = "将产品信息保存为模版";
 
 /* Section footer text that explains the use when user choose to save item information they entered in a form as a template */
-"Save these information as template when the transaction is saved. This will override exising template for the same item name and variant. The template will only be saved to this document when the current transaction saves." = "在保存交易时将这些信息保存为模版。这将覆盖有同样产品名和变体名的现有模版。只有在当前交易保存时才会将该模版写入该文档。";
+"Save these information as template when the transaction is saved. This will override exising template for the same item name and variant." = "在保存交易时将这些信息保存为模版。这将覆盖有同样产品名和变体名的现有模版。";
 
 /* No comment provided by engineer. */
 "Saved Contacts" = "已保存的联系人";
@@ -437,7 +437,7 @@
 "This is nice" = "这很棒";
 
 /* No comment provided by engineer. */
-"This will override existing contact template with the same name. The new contact will only be saved to this document when the current transaction saves." = "这会覆盖已存在的同名联系人。新的联系人只会在当前交易保存时写入该文档。";
+"This will override existing contact template with the same name." = "这会覆盖已存在的同名联系人。";
 
 /* No comment provided by engineer. */
 "Title" = "标题";
