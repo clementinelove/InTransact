@@ -64,7 +64,7 @@ class TransactionViewModel: ObservableObject {
   var hasChanges: Bool {
     return self.transactionType != transaction.transactionType ||
     self.transactionID.trimmingCharacters(in: .whitespacesAndNewlines) != transaction.transactionID ||
-    self.counterparty != transaction.counterpartyContact?.compacted ||
+    self.counterparty.compacted != transaction.counterpartyContact?.compacted ||
     self.invoiceID.trimmingCharacters(in: .whitespacesAndNewlines) != transaction.invoiceID ||
     self.date != transaction.date ||
     self.keeperName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) != transaction.keeperName?.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ||
@@ -337,6 +337,7 @@ struct TransactionEditView: View {
     editMode == .edit ? "Edit Transaction" : "New Transaction"
   }
   
+  // FIXME: animation stutters when there is <= 1 transaction (occassionally)
   @ViewBuilder
   var confirmationButton: some View {
     Button(editMode == .edit ? "Done" : "Add") {
@@ -350,6 +351,7 @@ struct TransactionEditView: View {
     .animationDisabled()
   }
   
+  // FIXME: animation stutters when there is <= 1 transaction (occassionally)
   var cancelButton: some View {
     Button("Cancel") {
       if viewModel.hasChanges {

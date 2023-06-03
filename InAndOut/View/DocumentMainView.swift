@@ -485,6 +485,7 @@ struct DocumentMainView: View {
               ToolbarItem(placement: .cancellationAction) {
                 Button {
                   // dismiss sheet
+                  // FIXME: animation stutters when there is only one transaction (occassionally)
                   Task { @MainActor in
                     transactionInspectorState.showInspector = false
                   }
