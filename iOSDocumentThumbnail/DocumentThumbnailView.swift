@@ -27,7 +27,8 @@ struct DocumentThumbnailView: View {
       Group {
         if document.transactions.count > 0 {
           LazyVStack(alignment: .leading) {
-            ForEach(document.transactions) { transaction in
+            // I don't think preview is ever gonna contain more than 40 transactions on iOS...?
+            ForEach(document.transactions.prefix(40).sorted { $0.date > $1.date } ) { transaction in
               VStack(alignment: .leading, spacing: 8) {
                 // MARK: Primary Info: ID, Date, Total
                 VStack(alignment: .leading) {
@@ -109,123 +110,6 @@ struct DocumentThumbnailView: View {
       .precision(.fractionLength(scale)))
   }
 }
-
-
-
-/*
-struct TransactionRowView: View {
-  
-  private static let localizationTable = "TransactionRow"
-  var transaction: Transaction
-  let currencyIdentifier: String
-  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-  
-  var body: some View {
-    let layout = dynamicTypeSize >= .accessibility1 ? AnyLayout(VStackLayout(alignment: .leading)) : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
-    
-    VStack(alignment: .leading, spacing: 4) {
-      // MARK: Date and Transaction Identifier
-      Text(transaction.transactionID.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) ?? String(localized: "No ID Specified", comment: "Transaction ID placeholder when its value is not available"))
-        .textCase(.uppercase)
-        .font(.system(.caption, design: .monospaced))
-#if os(iOS)
-        .foregroundColor(.accentColor)
-#elseif os(macOS)
-        .foregroundColor(.primary)
-#endif
-        .fontWeight(.medium)
-        .lineLimit(1)
-        .font(.caption)
-      
-      layout {
-        Text(transactionDateFormatter.string(from: transaction.date))
-          .font(.headline)
-          .fontWeight(.semibold)
-          .lineLimit(1)
-        Spacer()
-        
-        Text(document.formattedTransactionTotal(transaction.total(roundingRules: document.roundingRules)))
-          .lineLimit(1)
-          .layoutPriority(1)
-          .font(.subheadline)
-          .baselineOffset(1)
-      }
-      
-      .padding(.bottom, 14)
-      
-      layout {
-        let type = transaction.transactionType
-        HStack(alignment: .firstTextBaseline, spacing: 4) {
-          Image(systemName: type == .itemsIn ? "arrow.down.circle": "arrow.up.circle")
-          if type == .itemsIn {
-            Text("In", comment: "Transaction type 'items in' shorthand")
-          } else {
-            Text("Out", comment: "Transaction type 'items out' shorthand")
-          }
-        }
-        .lineLimit(1)
-        
-        Text("·").fontWeight(.bold)
-        
-        HStack(alignment: .firstTextBaseline, spacing: 4) {
-          
-          Text(transaction.date.formatted(.relative(presentation: .named)).localizedCapitalized)
-            .lineLimit(1)
-        }
-        
-        if let counterpartyName = transaction.counterpartyContact?.mainName.nilIfEmpty(afterTrimming: .whitespacesAndNewlines) {
-          Text("·").fontWeight(.bold)
-          
-          HStack(alignment: .firstTextBaseline, spacing: 4) {
-            
-            Text(counterpartyName)
-              .lineLimit(1)
-          }
-        }
-      }
-      .font(.callout)
-      .fontWeight(.medium)
-      .fontDesign(.rounded)
-      
-      
-      // MARK: Item Count and Total$
-      HStack(alignment: .firstTextBaseline) {
-        
-        // items count
-        //          let items = transaction.items
-        //          Text("(^[\(items.count) \(String(localized: "item"))](inflect: true))")
-        //            .lineLimit(1)
-        
-        // MARK: Item Details
-        Text(transaction.subtransactions.isEmpty ? String(localized: "No Items", comment: "Transaction item details placeholder when there is no item presented in the transaction") : itemDetails)
-          .lineLimit(1)
-          .baselineOffset(1)
-      }
-      .font(.footnote)
-      .foregroundStyle(.secondary)
-    }
-  }
-  
-  var itemDetails: String {
-    var itemNameToQuantity: [String: ItemQuantity] = [:]
-    for transaction in transaction.subtransactions {
-      let itemName = transaction.itemName
-      
-      if let quantity = itemNameToQuantity[itemName] {
-        itemNameToQuantity[itemName] = quantity + transaction.priceInfo.quantity
-      } else {
-        itemNameToQuantity[itemName] = transaction.priceInfo.quantity
-      }
-    }
-    return itemNameToQuantity.sorted { $0.key < $1.key }.map { (name, quantity) in
-      "\(quantity)\(Global.timesSymbol) \(name)"
-    }.joined(separator: ", ")
-  }
-  
-  
-}
-*/
-
 
 
 struct DocumentThumbnailView_Previews: PreviewProvider {

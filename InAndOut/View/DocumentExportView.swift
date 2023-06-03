@@ -7,6 +7,10 @@
 
 import SwiftUI
 import Combine
+import NTPlatformKit
+import os.log
+
+fileprivate let logger = Logger(subsystem: Global.subsystem, category: "DocumentExporter")
 
 class DocumentExporter: ObservableObject {
   let document: InTransactDocument
@@ -54,10 +58,16 @@ class DocumentExporter: ObservableObject {
   func generateDocument() async {
     csvGenerationTask?.cancel()
     csvGenerationTask = Task(priority: .userInitiated) {
-      isGeneratingDocument = true
+      await MainActor.run {
+        isGeneratingDocument = true
+      }
+      logger.debug("Start Generating Document")
       generatedDocumentPath = try document.content.separatedValueDocument(fileName: "\(documentTitle).csv", seperator: ",", columns: exportColumns)
+      logger.debug("Finish Generating Document")
       if !Task.isCancelled {
-        isGeneratingDocument = false
+        await MainActor.run {
+          isGeneratingDocument = false
+        }
       }
     }
   }
@@ -105,7 +115,8 @@ struct DocumentExportView: View {
       .safeAreaInset(edge: .bottom, spacing: 0) {
         VStack {
           if let filePath = exporter.generatedDocumentPath {
-            ShareLink(item: filePath) {
+          
+          ShareLink(item: filePath) {
               Text("Share")
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 11)
@@ -114,8 +125,9 @@ struct DocumentExportView: View {
             .buttonStyle(.borderedProminent)
             .padding()
             .disabled(exporter.isGeneratingDocument)
-            
             .labelStyle(.titleOnly)
+          } else {
+            ProgressView()
           }
         }
         .background(.thinMaterial)

@@ -29,7 +29,8 @@ final class InTransactDocument: ReferenceFileDocument {
     content // Make a copy
   }
   
-  init(mock: Bool = true) {
+  // MARK: Adjust Whether to Use Mock Data In New Document
+  init(mock: Bool = false) {
     if mock {
       self.content = .mock()
     } else {
@@ -38,53 +39,97 @@ final class InTransactDocument: ReferenceFileDocument {
   }
   
   static let transactionsFileName = "transactions.json"
+  static let metadataFileName = "metadata.json"
   static let extractDirectory = FileManager.default.temporaryDirectory
   static let transactionsFileURL = extractDirectory.appending(path: transactionsFileName, directoryHint: .notDirectory)
+  static let metadataFileURL = FileManager.default.temporaryDirectory.appending(path: metadataFileName,
+                                                                                directoryHint: .notDirectory)
   
+  // MARK: Read Document
   init(configuration: ReadConfiguration) throws {
     logger.debug("Start Reading File")
     guard let data = configuration.file.regularFileContents else {
-      logger.debug("File is corrupted")
+      logger.warning("File is corrupted")
       throw CocoaError(.fileReadCorruptFile)
     }
-    guard let archive = Archive(data: data, accessMode: .read, preferredEncoding: .utf8) else {
-      logger.debug("Fail to read archive from data")
+    let (metadata, content) = try Self.fileDataToDocumentData(data)
+    if let metadata {
+      logger.debug("Document Version: \(metadata.documentVersion)")
+    }
+    if let content {
+      self.content = content
+    } else {
+      throw CocoaError(.fileReadCorruptFile)
+      // TODO: make content optional because higher document version may not be readable
+    }
+    logger.debug("Read Successful")
+  }
+  
+  static func fileDataToDocumentData(_ fileData: Data) throws -> (metadata: DocumentMetadata?,
+                                                                  content: INTDocument?){
+    var metadata: DocumentMetadata? = nil
+    var content: INTDocument? = nil
+    guard let archive = Archive(data: fileData, accessMode: .read, preferredEncoding: .utf8) else {
+      logger.error("Fail to read archive from data")
       throw Archive.ArchiveError.unreadableArchive
     }
-    guard let entry = archive[Self.transactionsFileName] else {
-      logger.debug("Unable to find entry \(Self.transactionsFileName) from archive")
+    
+    if let metadataEntry = archive[Self.metadataFileName] {
+      
+      do {
+        _ = try archive.extract(metadataEntry, to: Self.metadataFileURL, skipCRC32: true)
+        metadata = try JSONDecoder().decode(DocumentMetadata.self, from: Data(contentsOf: Self.metadataFileURL))
+      } catch {
+        logger.error("Fail to extract metadata: \(error.localizedDescription)")
+      }
+    } else {
+      logger.warning("Metadata Unavailable: Unable to find entry \(Self.metadataFileName) from archive")
+      //      throw Archive.ArchiveError.invalidEntryPath
+    }
+    
+    guard let transactionsEntry = archive[Self.transactionsFileName] else {
+      logger.error("Unable to find entry \(Self.transactionsFileName) from archive")
       throw Archive.ArchiveError.invalidEntryPath
     }
     
     do {
-      try archive.extract(entry, to: Self.transactionsFileURL)
+      _ = try archive.extract(transactionsEntry, to: Self.transactionsFileURL, skipCRC32: true)
     } catch {
-      logger.debug("Unable to extract \(Self.transactionsFileName) from archive to \(Self.extractDirectory): \(error.localizedDescription)")
+      logger.error("Unable to extract \(Self.transactionsFileName) from archive to \(Self.extractDirectory): \(error.localizedDescription)")
       throw Archive.ArchiveError.unreadableArchive
     }
-    self.content = try JSONDecoder().decode(INTDocument.self, from: Data(contentsOf: Self.transactionsFileURL))
+    content = try JSONDecoder().decode(INTDocument.self, from: Data(contentsOf: Self.transactionsFileURL))
     
     // clean-up the extract directory
-    try FileManager.default.removeItem(at: Self.transactionsFileURL)
-    logger.debug("Read Successful")
+    try? FileManager.default.removeItem(at: Self.transactionsFileURL)
+    try? FileManager.default.removeItem(at: Self.metadataFileURL)
+    return (metadata, content)
   }
   
+  // MARK: Write Document
   func fileWrapper(snapshot: INTDocument, configuration: WriteConfiguration) throws -> FileWrapper {
     logger.debug("Save called")
     let data = try JSONEncoder().encode(snapshot)
+    let metadata = try JSONEncoder().encode(DocumentMetadata.current)
+    
     try data.write(to: Self.transactionsFileURL)
+    try metadata.write(to: Self.metadataFileURL)
+    
     guard let archive = Archive(accessMode: .create) else {
       logger.error("Unable to create new archive during save")
       throw Archive.ArchiveError.unwritableArchive
     }
     try archive.addEntry(with: Self.transactionsFileName, fileURL: Self.transactionsFileURL)
+    try archive.addEntry(with: Self.metadataFileName, fileURL: Self.metadataFileURL)
+    
     guard let archiveData = archive.data else {
-      logger.debug("Unable to create data from archive")
+      logger.error("Unable to create data from archive")
       throw Archive.ArchiveError.unwritableArchive
     }
     let fileWrapper = FileWrapper(regularFileWithContents: archiveData)
     // clean-up the extract directory
     try FileManager.default.removeItem(at: Self.transactionsFileURL)
+    try FileManager.default.removeItem(at: Self.metadataFileURL)
     
     logger.debug("Successfully Generate New Archive")
     return fileWrapper
@@ -125,6 +170,11 @@ extension InTransactDocument {
     price.formatted(.currency(code: currencyCode)
       .precision(.fractionLength(scale)))
   }
+}
+
+struct DocumentMetadata: Codable {
+  var documentVersion: Int = 1
+  static let current = DocumentMetadata()
 }
 
 

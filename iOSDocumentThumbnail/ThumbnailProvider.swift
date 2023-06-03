@@ -13,8 +13,14 @@ class ThumbnailProvider: QLThumbnailProvider {
   @MainActor override func provideThumbnail(for request: QLFileThumbnailRequest, _ handler: @escaping (QLThumbnailReply?, Error?) -> Void) {
       
       do {
-        let fileData = try Data(contentsOf: request.fileURL)
-        let document = try JSONDecoder().decode(INTDocument.self, from: fileData)
+        let (metadata, document) = try InTransactDocument.fileDataToDocumentData(Data(contentsOf: request.fileURL))
+        guard let document else {
+          throw CocoaError(.fileReadCorruptFile)
+        }
+        // TODO: in the future document and metadata will be handled differently because one might exist and one might not
+        guard let metadata else {
+          throw CocoaError(.fileReadCorruptFile)
+        }
         
         let aspectWidth = request.maximumSize.height / DocumentThumbnailView.aspectRatio
         let width = min(request.maximumSize.width, aspectWidth)

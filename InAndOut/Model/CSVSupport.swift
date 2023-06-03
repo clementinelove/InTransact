@@ -168,9 +168,15 @@ extension INTDocument {
         svDocumentString.append(buildRow(rowCellValues, separator: seperator, recordSeperator: recordSeparator))
       }
     }
+    try clearExportDirectory()
+    do {
+      logger.debug("Start Creating Export Directory")
+      try FileManager.default.createDirectory(at: Self.documentExportPath, withIntermediateDirectories: false)
+      logger.debug("Export Directory Created")
+    } catch {
+      logger.debug("Fail to Create Export Directory: \(error.localizedDescription)")
+    }
     
-    try FileManager.default.createDirectory(at: Self.documentExportPath, withIntermediateDirectories: false)
-    logger.debug("Export Directory Created")
     let exportFilePath = Self.exportFilePath(fileName: fileName)
     // TODO: create file if file doesn't exist?
     
@@ -181,7 +187,7 @@ extension INTDocument {
   
   func clearExportDirectory() throws {
     logger.debug("Start Cleaning Export Directory")
-    try FileManager.default.removeItem(at: Self.documentExportPath)
+    try? FileManager.default.removeItem(at: Self.documentExportPath)
     logger.debug("Finish Cleaning Export Directory")
   }
 }

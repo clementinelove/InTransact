@@ -66,6 +66,8 @@
 		588155F42A2A35BB00E767D6 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 585505212A27C3E5005482CF /* MockData.swift */; };
 		588155F72A2A3E2F00E767D6 /* DocumentThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588155DD2A2A2BF600E767D6 /* DocumentThumbnailView.swift */; };
 		588156012A2A7FB900E767D6 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 588156002A2A7FB900E767D6 /* ZIPFoundation */; };
+		588156022A2AC41500E767D6 /* InAndOutDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5858FB1A2A07D17F005FAAA6 /* InAndOutDocument.swift */; };
+		588156042A2AC51300E767D6 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 588156032A2AC51300E767D6 /* ZIPFoundation */; };
 		589E203A2A0EC9D5008A5BDA /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20392A0EC9D5008A5BDA /* DocumentViewModel.swift */; };
 		589E208F2A10CE6A008A5BDA /* DocumentMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20242A0CFB39008A5BDA /* DocumentMainView.swift */; };
 		589E20902A10CE6A008A5BDA /* ItemTemplateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589E20372A0E6E7D008A5BDA /* ItemTemplateListView.swift */; };
@@ -232,6 +234,7 @@
 				588155F12A2A359500E767D6 /* NTPlatformKit in Frameworks */,
 				58EBD5102A2A226500A4C425 /* QuickLookThumbnailing.framework in Frameworks */,
 				588155F32A2A35AB00E767D6 /* OrderedCollections in Frameworks */,
+				588156042A2AC51300E767D6 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +494,7 @@
 			packageProductDependencies = (
 				588155F02A2A359500E767D6 /* NTPlatformKit */,
 				588155F22A2A35AB00E767D6 /* OrderedCollections */,
+				588156032A2AC51300E767D6 /* ZIPFoundation */,
 			);
 			productName = iOSDocumentThumbnail;
 			productReference = 58EBD50F2A2A226500A4C425 /* iOSDocumentThumbnail.appex */;
@@ -661,6 +665,7 @@
 			files = (
 				588155EA2A2A2C8B00E767D6 /* Setting.swift in Sources */,
 				588155EE2A2A2E6900E767D6 /* Formatters.swift in Sources */,
+				588156022A2AC41500E767D6 /* InAndOutDocument.swift in Sources */,
 				588155E72A2A2C8100E767D6 /* SeparatedValueBuilder.swift in Sources */,
 				588155EB2A2A2C8D00E767D6 /* DataModel.swift in Sources */,
 				588155F42A2A35BB00E767D6 /* MockData.swift in Sources */,
@@ -1181,6 +1186,11 @@
 			productName = OrderedCollections;
 		};
 		588156002A2A7FB900E767D6 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 588155FB2A2A79AE00E767D6 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
+		588156032A2AC51300E767D6 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 588155FB2A2A79AE00E767D6 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
