@@ -1,10 +1,24 @@
+<a href="https://apps.apple.com/us/app/intransact/id6449409266?itscg=30200&amp;itsct=apps_box_appicon" style="width: 170px; height: 170px; border-radius: 22%; overflow: hidden; display: inline-block; vertical-align: middle;"><img src="https://is5-ssl.mzstatic.com/image/thumb/Purple116/v4/24/55/64/245564ae-f54f-1884-f7d3-a3ac0d0927b8/AppIcon-0-1x_U007ephone-85-220.jpeg/540x540bb.jpg" alt="InTransact" style="width: 170px; height: 170px; border-radius: 22%; overflow: hidden; display: inline-block; vertical-align: middle;"></a>
+
 # InTransact
+
 InTransact is an open sourced SwiftUI Document-Based iOS app,
-designed to help individuals and small businesses effortlessly manage their transactions and inventories.
+designed to help individuals and small businesses effortlessly manage their inventory changes through transactions.
 
 Whether you are a sole trader or a small business owner, InTransact provides a simple and intuitive way 
 to track your transaction history. You can record purchase and sales information, 
 keep track of your transaction records and monitor real-time stock level status.
+
+<a href="https://apps.apple.com/us/app/intransact/id6449409266?itsct=apps_box_badge&amp;itscg=30200" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1686355200" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
+
+## App Preview
+<div>
+  <img src="https://github.com/clementinelove/InTransact/blob/main/app-preview-en.png?raw=true" alt="App Preview Image 1" width="150"/>
+    <img src="https://github.com/clementinelove/InTransact/blob/main/app-preview-en-1.png?raw=true" alt="App Preview Image 2" width="150"/>
+    <img src="https://github.com/clementinelove/InTransact/blob/main/app-preview-en-2.png?raw=true" alt="App Preview Image 3" width="150"/>
+    <img src="https://github.com/clementinelove/InTransact/blob/main/app-preview-en-3.png?raw=true" alt="App Preview Image 4" width="150"/>
+    <img src="https://github.com/clementinelove/InTransact/blob/main/app-preview-en-4.png?raw=true" alt="App Preview Image 5" width="150"/>
+</div>
 
 ## Privacy 隐私条款
 This app does not collect any data.
