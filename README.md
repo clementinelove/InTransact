@@ -5,6 +5,8 @@
 InTransact is an open sourced SwiftUI Document-Based iOS app,
 designed to help individuals and small businesses effortlessly manage their inventory changes through transactions.
 
+Designed for iOS 16.
+
 Whether you are a sole trader or a small business owner, InTransact provides a simple and intuitive way 
 to track your transaction history. You can record purchase and sales information, 
 keep track of your transaction records and monitor real-time stock level status.
@@ -44,4 +46,3 @@ InTransact uses the line-level model to calculate tax for you, and you just need
 
 #### Export to CSV
 You can quickly export the data you need from an InTransact Document to CSV format so that you can achieve more with your favourite spreadsheet application.
-
